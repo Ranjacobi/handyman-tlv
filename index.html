@@ -712,6 +712,7 @@
       <ul class="hidden md:flex items-center gap-8 text-sm font-medium text-neutral-400" role="list">
         <li><a href="#services" class="hover:text-white transition-colors" data-i18n="nav.services">שירותים</a></li>
         <li><a href="#testimonials" class="hover:text-white transition-colors" data-i18n="nav.reviews">לקוחות</a></li>
+        <li><a href="#live-reviews" class="hover:text-white transition-colors" data-i18n="nav.community">תגובות</a></li>
         <li><a href="#faq" class="hover:text-white transition-colors" data-i18n="nav.faq">שאלות</a></li>
         <li><a href="#contact" class="hover:text-white transition-colors" data-i18n="nav.contact">צור קשר</a></li>
       </ul>
@@ -876,6 +877,9 @@
           </li>
           <li>
             <a href="#testimonials" class="mobile-link block py-4 text-4xl font-black text-white tracking-tight border-b border-charcoal-600/40 hover:text-neon transition-colors" data-i18n="nav.reviews">לקוחות</a>
+          </li>
+          <li>
+            <a href="#live-reviews" class="mobile-link block py-4 text-4xl font-black text-white tracking-tight border-b border-charcoal-600/40 hover:text-neon transition-colors" data-i18n="nav.community">תגובות</a>
           </li>
           <li>
             <a href="#faq" class="mobile-link block py-4 text-4xl font-black text-white tracking-tight border-b border-charcoal-600/40 hover:text-neon transition-colors" data-i18n="nav.faq">שאלות</a>
@@ -2062,7 +2066,7 @@
     /* ─── i18n Translations ───────────────────────────── */
     const I18N = {
       he: {
-        'nav.services': 'שירותים', 'nav.pricing': 'תמחור', 'nav.reviews': 'לקוחות', 'nav.faq': 'שאלות', 'nav.contact': 'צור קשר', 'nav.book': 'קבע תור',
+        'nav.services': 'שירותים', 'nav.pricing': 'תמחור', 'nav.reviews': 'לקוחות', 'nav.community': 'תגובות', 'nav.faq': 'שאלות', 'nav.contact': 'צור קשר', 'nav.book': 'קבע תור',
         'contact.label': 'צור קשר', 'contact.title1': 'בואו נדבר.', 'contact.title2': 'אנחנו כאן.',
         'contact.info.title': 'פרטי התקשרות',
         'contact.address.label': 'כתובת', 'contact.address.value': 'אבן גבירול 120, תל אביב יפו',
@@ -2120,7 +2124,7 @@
         'footer.copy': '© 2026 HandyMan TLV · כל הזכויות שמורות',
       },
       en: {
-        'nav.services': 'Services', 'nav.pricing': 'Pricing', 'nav.reviews': 'Reviews', 'nav.faq': 'FAQ', 'nav.contact': 'Contact', 'nav.book': 'Book now',
+        'nav.services': 'Services', 'nav.pricing': 'Pricing', 'nav.reviews': 'Reviews', 'nav.community': 'Comments', 'nav.faq': 'FAQ', 'nav.contact': 'Contact', 'nav.book': 'Book now',
         'contact.label': 'CONTACT', 'contact.title1': 'Let\'s talk.', 'contact.title2': 'We\'re here.',
         'contact.info.title': 'Contact details',
         'contact.address.label': 'Address', 'contact.address.value': '120 Ibn Gabirol St, Tel Aviv-Yafo',
@@ -2178,7 +2182,7 @@
         'footer.copy': '© 2026 HandyMan TLV · All rights reserved',
       },
       fr: {
-        'nav.services': 'Services', 'nav.pricing': 'Tarifs', 'nav.reviews': 'Avis', 'nav.faq': 'FAQ', 'nav.contact': 'Contact', 'nav.book': 'Réserver',
+        'nav.services': 'Services', 'nav.pricing': 'Tarifs', 'nav.reviews': 'Avis', 'nav.community': 'Commentaires', 'nav.faq': 'FAQ', 'nav.contact': 'Contact', 'nav.book': 'Réserver',
         'contact.label': 'CONTACT', 'contact.title1': 'Parlons-en.', 'contact.title2': 'On est là.',
         'contact.info.title': 'Coordonnées',
         'contact.address.label': 'Adresse', 'contact.address.value': '120 rue Ibn Gabirol, Tel Aviv-Yafo',
@@ -2236,7 +2240,7 @@
         'footer.copy': '© 2026 HandyMan TLV · Tous droits réservés',
       },
       ru: {
-        'nav.services': 'Услуги', 'nav.pricing': 'Цены', 'nav.reviews': 'Отзывы', 'nav.faq': 'FAQ', 'nav.contact': 'Контакты', 'nav.book': 'Записаться',
+        'nav.services': 'Услуги', 'nav.pricing': 'Цены', 'nav.reviews': 'Отзывы', 'nav.community': 'Комментарии', 'nav.faq': 'FAQ', 'nav.contact': 'Контакты', 'nav.book': 'Записаться',
         'contact.label': 'КОНТАКТЫ', 'contact.title1': 'Давайте поговорим.', 'contact.title2': 'Мы здесь.',
         'contact.info.title': 'Контактные данные',
         'contact.address.label': 'Адрес', 'contact.address.value': 'Ибн Гвироль 120, Тель-Авив-Яффо',
@@ -2294,7 +2298,7 @@
         'footer.copy': '© 2026 HandyMan TLV · Все права защищены',
       },
       es: {
-        'nav.services': 'Servicios', 'nav.pricing': 'Precios', 'nav.reviews': 'Reseñas', 'nav.faq': 'FAQ', 'nav.contact': 'Contacto', 'nav.book': 'Reservar',
+        'nav.services': 'Servicios', 'nav.pricing': 'Precios', 'nav.reviews': 'Reseñas', 'nav.community': 'Comentarios', 'nav.faq': 'FAQ', 'nav.contact': 'Contacto', 'nav.book': 'Reservar',
         'contact.label': 'CONTACTO', 'contact.title1': 'Hablemos.', 'contact.title2': 'Aquí estamos.',
         'contact.info.title': 'Datos de contacto',
         'contact.address.label': 'Dirección', 'contact.address.value': 'Ibn Gabirol 120, Tel Aviv-Yafo',
@@ -2447,11 +2451,24 @@
       });
     }
 
-    // Init language: URL param > localStorage > default 'he'
+    // Detect best supported language from the browser
+    function detectBrowserLang() {
+      const supported = ['he', 'en', 'fr', 'ru', 'es'];
+      const langs = (navigator.languages && navigator.languages.length)
+        ? navigator.languages
+        : [navigator.language || navigator.userLanguage || 'en'];
+      for (const l of langs) {
+        const code = String(l).toLowerCase().split('-')[0];
+        if (supported.includes(code)) return code;
+      }
+      return 'he'; // fallback (Israeli business)
+    }
+
+    // Init language: URL param > saved choice > browser language > 'he'
     const urlLang = new URLSearchParams(location.search).get('lang');
     let savedLang = null;
     try { savedLang = localStorage.getItem(STORAGE_KEY); } catch(e) {}
-    setLang(urlLang || savedLang || 'he');
+    setLang(urlLang || savedLang || detectBrowserLang());
 
     /* ─── Theme Toggle (Light / Dark) ─────────────────── */
     const THEME_KEY = 'handymantlv-theme';
