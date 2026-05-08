@@ -425,6 +425,63 @@
       100% { transform: scale(0.8); opacity: 0;   }
     }
 
+    /* ─── Construction Hazard Tape Divider ────────────── */
+    .hazard-tape {
+      height: 14px;
+      position: relative;
+      overflow: hidden;
+      background: repeating-linear-gradient(
+        -45deg,
+        #FF5F1F 0,
+        #FF5F1F 18px,
+        #08080A 18px,
+        #08080A 36px
+      );
+    }
+    .hazard-tape::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.35), transparent 30%, transparent 70%, rgba(0,0,0,0.35));
+      pointer-events: none;
+    }
+    html.light .hazard-tape {
+      background: repeating-linear-gradient(
+        -45deg,
+        #FF5F1F 0,
+        #FF5F1F 18px,
+        #18181B 18px,
+        #18181B 36px
+      );
+    }
+
+    /* ─── Blueprint Grid Background ───────────────────── */
+    .blueprint-bg {
+      background-image:
+        linear-gradient(rgba(255,95,31,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,95,31,0.04) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: radial-gradient(ellipse 90% 80% at 50% 50%, black 30%, transparent 75%);
+      -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 50%, black 30%, transparent 75%);
+    }
+    html.light .blueprint-bg {
+      background-image:
+        linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px);
+    }
+
+    /* ─── Tape Measure Edge ───────────────────────────── */
+    .tape-measure {
+      height: 12px;
+      background-image:
+        repeating-linear-gradient(90deg, rgba(255,95,31,0.5) 0 1px, transparent 1px 8px),
+        linear-gradient(180deg, rgba(255,95,31,0.08), transparent);
+    }
+    html.light .tape-measure {
+      background-image:
+        repeating-linear-gradient(90deg, rgba(255,95,31,0.6) 0 1px, transparent 1px 8px),
+        linear-gradient(180deg, rgba(255,95,31,0.12), transparent);
+    }
+
     /* ─── Live Reviews ────────────────────────────────── */
     .rating-star {
       width: 32px; height: 32px;
@@ -1201,6 +1258,9 @@
       </div>
     </section>
 
+    <!-- Construction hazard tape divider -->
+    <div class="hazard-tape" role="presentation" aria-hidden="true"></div>
+
     <!-- ════════════════════════════════════════════════════
          BENTO SERVICES GRID
     ═══════════════════════════════════════════════════════ -->
@@ -1329,9 +1389,30 @@
     <!-- ════════════════════════════════════════════════════
          WHY · 3 PROMISES
     ═══════════════════════════════════════════════════════ -->
-    <section class="py-24 sm:py-32 bg-charcoal-900 border-y border-charcoal-600/40 relative" aria-labelledby="why-heading">
+    <section class="py-24 sm:py-32 bg-charcoal-900 border-y border-charcoal-600/40 relative overflow-hidden" aria-labelledby="why-heading">
 
-      <div class="max-w-7xl mx-auto px-5 sm:px-8">
+      <!-- Blueprint grid background -->
+      <div class="blueprint-bg absolute inset-0 pointer-events-none" aria-hidden="true"></div>
+
+      <!-- Blueprint corner crosshairs -->
+      <div class="absolute top-8 left-8 w-8 h-8 pointer-events-none opacity-50" aria-hidden="true">
+        <div class="absolute top-0 left-0 w-full h-px bg-neon"></div>
+        <div class="absolute top-0 left-0 h-full w-px bg-neon"></div>
+      </div>
+      <div class="absolute top-8 right-8 w-8 h-8 pointer-events-none opacity-50" aria-hidden="true">
+        <div class="absolute top-0 right-0 w-full h-px bg-neon"></div>
+        <div class="absolute top-0 right-0 h-full w-px bg-neon"></div>
+      </div>
+      <div class="absolute bottom-8 left-8 w-8 h-8 pointer-events-none opacity-50" aria-hidden="true">
+        <div class="absolute bottom-0 left-0 w-full h-px bg-neon"></div>
+        <div class="absolute bottom-0 left-0 h-full w-px bg-neon"></div>
+      </div>
+      <div class="absolute bottom-8 right-8 w-8 h-8 pointer-events-none opacity-50" aria-hidden="true">
+        <div class="absolute bottom-0 right-0 w-full h-px bg-neon"></div>
+        <div class="absolute bottom-0 right-0 h-full w-px bg-neon"></div>
+      </div>
+
+      <div class="relative max-w-7xl mx-auto px-5 sm:px-8">
 
         <div class="max-w-3xl mb-16">
           <p class="text-neon text-xs font-bold tracking-[0.25em] uppercase mb-4" data-i18n="why.label">למה אנחנו</p>
@@ -1343,25 +1424,55 @@
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-charcoal-600/40 rounded-3xl overflow-hidden border border-charcoal-600/40">
 
-          <div class="bg-charcoal-900 p-8 sm:p-10 group">
-            <div class="text-7xl font-black text-neon/20 group-hover:text-neon/40 transition-colors leading-none mb-5">01</div>
-            <h3 class="text-2xl font-bold text-white tracking-tight mb-3" data-i18n="why.1.title">תגובה מיידית</h3>
+          <div class="bg-charcoal-900 p-8 sm:p-10 group relative overflow-hidden">
+            <!-- Stopwatch decorative icon -->
+            <svg class="absolute -top-2 -end-2 w-28 h-28 text-neon/[0.06] group-hover:text-neon/[0.12] transition-colors pointer-events-none" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 1.5h6M12 1.5v3"/>
+            </svg>
+            <div class="relative flex items-end gap-3 mb-5">
+              <div class="text-7xl font-black text-neon/20 group-hover:text-neon/40 transition-colors leading-none">01</div>
+              <svg class="w-6 h-6 text-neon mb-2 opacity-70" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/>
+              </svg>
+            </div>
+            <h3 class="relative text-2xl font-bold text-white tracking-tight mb-3" data-i18n="why.1.title">תגובה מיידית</h3>
             <p class="text-neutral-400 leading-relaxed" data-i18n="why.1.desc">
               שירות 7 ימים בשבוע, 08:00 עד 22:00. וואטסאפ פתוח, מענה אישי. לא פוקחים – לא נעלמים.
             </p>
           </div>
 
-          <div class="bg-charcoal-900 p-8 sm:p-10 group">
-            <div class="text-7xl font-black text-neon/20 group-hover:text-neon/40 transition-colors leading-none mb-5">02</div>
-            <h3 class="text-2xl font-bold text-white tracking-tight mb-3" data-i18n="why.2.title">מחיר שקוף</h3>
+          <div class="bg-charcoal-900 p-8 sm:p-10 group relative overflow-hidden">
+            <!-- Tape measure decorative icon -->
+            <svg class="absolute -top-2 -end-2 w-28 h-28 text-neon/[0.06] group-hover:text-neon/[0.12] transition-colors pointer-events-none" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="3" y="6" width="18" height="12" rx="2"/>
+              <circle cx="9" cy="12" r="3"/>
+              <path d="M9 12h12"/>
+            </svg>
+            <div class="relative flex items-end gap-3 mb-5">
+              <div class="text-7xl font-black text-neon/20 group-hover:text-neon/40 transition-colors leading-none">02</div>
+              <svg class="w-6 h-6 text-neon mb-2 opacity-70" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+            </div>
+            <h3 class="relative text-2xl font-bold text-white tracking-tight mb-3" data-i18n="why.2.title">מחיר שקוף</h3>
             <p class="text-neutral-400 leading-relaxed" data-i18n="why.2.desc">
               מחיר הוגן, ידוע מראש. שולחים תמונה – מקבלים הצעה. בלי תמחור על מקום, בלי הפתעות.
             </p>
           </div>
 
-          <div class="bg-charcoal-900 p-8 sm:p-10 group">
-            <div class="text-7xl font-black text-neon/20 group-hover:text-neon/40 transition-colors leading-none mb-5">03</div>
-            <h3 class="text-2xl font-bold text-white tracking-tight mb-3" data-i18n="why.3.title">עוזבים נקי</h3>
+          <div class="bg-charcoal-900 p-8 sm:p-10 group relative overflow-hidden">
+            <!-- Sparkle decorative icon -->
+            <svg class="absolute -top-2 -end-2 w-28 h-28 text-neon/[0.06] group-hover:text-neon/[0.12] transition-colors pointer-events-none" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z"/>
+            </svg>
+            <div class="relative flex items-end gap-3 mb-5">
+              <div class="text-7xl font-black text-neon/20 group-hover:text-neon/40 transition-colors leading-none">03</div>
+              <svg class="w-6 h-6 text-neon mb-2 opacity-70" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"/>
+              </svg>
+            </div>
+            <h3 class="relative text-2xl font-bold text-white tracking-tight mb-3" data-i18n="why.3.title">עוזבים נקי</h3>
             <p class="text-neutral-400 leading-relaxed" data-i18n="why.3.desc">
               מגיעים עם כל הציוד, אוספים אחרי עצמנו. הבית נשאר כמו שמצאנו אותו – רק שעובד.
             </p>
@@ -1535,6 +1646,9 @@
     <section id="live-reviews" class="py-24 sm:py-32 bg-charcoal-900 border-y border-charcoal-600/40 relative overflow-hidden" aria-labelledby="live-rev-heading">
 
       <div class="blob bg-neon w-96 h-96 -top-40 right-0 opacity-10" aria-hidden="true"></div>
+
+      <!-- Tape measure ruler along top edge -->
+      <div class="tape-measure absolute top-0 inset-x-0 pointer-events-none" aria-hidden="true"></div>
 
       <div class="relative max-w-7xl mx-auto px-5 sm:px-8">
 
@@ -1713,6 +1827,21 @@
 
       <div class="blob bg-neon w-96 h-96 -top-40 -left-20 opacity-10" aria-hidden="true"></div>
       <div class="blob bg-amber-500 w-80 h-80 bottom-10 -right-20 opacity-10" style="animation-delay:-2s" aria-hidden="true"></div>
+
+      <!-- Bauhaus arched balcony decoration (iconic of Tel Aviv's White City) -->
+      <svg class="absolute top-12 inset-x-0 mx-auto w-72 max-w-full opacity-[0.05] pointer-events-none" viewBox="0 0 300 100" aria-hidden="true">
+        <g fill="none" stroke="currentColor" stroke-width="1.5" class="text-neon">
+          <!-- Three stacked arched balconies -->
+          <path d="M30,90 L30,55 Q30,35 50,35 L250,35 Q270,35 270,55 L270,90"/>
+          <path d="M50,90 L50,65 Q50,50 65,50 L235,50 Q250,50 250,65 L250,90"/>
+          <path d="M70,90 L70,75 Q70,65 80,65 L220,65 Q230,65 230,75 L230,90"/>
+          <!-- Vertical balcony bars -->
+          <line x1="80" y1="35" x2="80" y2="50"/>
+          <line x1="120" y1="35" x2="120" y2="50"/>
+          <line x1="180" y1="35" x2="180" y2="50"/>
+          <line x1="220" y1="35" x2="220" y2="50"/>
+        </g>
+      </svg>
 
       <div class="relative max-w-7xl mx-auto px-5 sm:px-8">
 
@@ -1999,8 +2128,20 @@
   <!-- ════════════════════════════════════════════════════
        FOOTER
   ═══════════════════════════════════════════════════════ -->
-  <footer class="bg-charcoal-900 border-t border-charcoal-600/40 py-12" role="contentinfo">
-    <div class="max-w-7xl mx-auto px-5 sm:px-8">
+  <footer class="bg-charcoal-900 border-t border-charcoal-600/40 py-12 relative overflow-hidden" role="contentinfo">
+
+    <!-- Mediterranean wave (TLV beach reference) -->
+    <svg class="absolute top-0 inset-x-0 w-full h-8 text-neon/10" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0,30 C240,5 480,55 720,30 C960,5 1200,55 1440,30 L1440,60 L0,60 Z" fill="currentColor"/>
+      <path d="M0,42 C240,22 480,62 720,42 C960,22 1200,62 1440,42 L1440,60 L0,60 Z" fill="currentColor" opacity="0.5"/>
+    </svg>
+
+    <!-- TLV coordinate badge -->
+    <div class="absolute top-3 end-5 text-neutral-700 text-[9px] tracking-[0.3em] font-mono uppercase pointer-events-none hidden sm:block" aria-hidden="true">
+      TLV · 32.0853°N · 34.7818°E
+    </div>
+
+    <div class="relative max-w-7xl mx-auto px-5 sm:px-8">
 
       <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 mb-10">
 
