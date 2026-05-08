@@ -134,6 +134,11 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin="" defer></script>
 
+  <!-- Firebase (Google Auth + Firestore) — for live reviews -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js" defer></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js" defer></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js" defer></script>
+
   <script>
     tailwind.config = {
       theme: {
@@ -420,18 +425,64 @@
       100% { transform: scale(0.8); opacity: 0;   }
     }
 
+    /* ─── Live Reviews ────────────────────────────────── */
+    .rating-star {
+      width: 32px; height: 32px;
+      display: inline-flex; align-items: center; justify-content: center;
+      cursor: pointer; border: 0; background: transparent;
+      color: rgba(255,255,255,0.18);
+      transition: color 0.15s ease, transform 0.15s ease;
+      padding: 0;
+    }
+    .rating-star:hover { transform: scale(1.12); }
+    .rating-star.star-active { color: #FACC15; }
+    .rating-star:focus-visible { outline: 2px solid #FF5F1F; outline-offset: 2px; border-radius: 4px; }
+    html.light .rating-star { color: rgba(0,0,0,0.15); }
+    html.light .rating-star.star-active { color: #F59E0B; }
+
+    .review-card {
+      animation: review-in 0.4s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    @keyframes review-in {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
     /* ─── Light Mode Overrides ────────────────────────── */
     html.light body { background: #FAFAFA; color: #18181B; }
     html.light ::-webkit-scrollbar-track { background: #F4F4F5; }
 
     /* Backgrounds */
     html.light .bg-charcoal-950 { background-color: #FAFAFA !important; }
+    html.light .bg-charcoal-950\/95 { background-color: rgba(250,250,250,0.96) !important; }
+    html.light .bg-charcoal-950\/90 { background-color: rgba(250,250,250,0.92) !important; }
+    html.light .bg-charcoal-950\/85 { background-color: rgba(250,250,250,0.88) !important; }
+    html.light .bg-charcoal-950\/60 { background-color: rgba(250,250,250,0.6) !important; }
     html.light .bg-charcoal-900 { background-color: #F4F4F5 !important; }
     html.light .bg-charcoal-800 { background-color: #FFFFFF !important; }
     html.light .bg-charcoal-700 { background-color: #F4F4F5 !important; }
     html.light .bg-charcoal-700\/60 { background-color: rgba(244,244,245,0.7) !important; }
+    html.light .bg-charcoal-700\/40 { background-color: rgba(244,244,245,0.5) !important; }
     html.light .bg-charcoal-600 { background-color: #E4E4E7 !important; }
     html.light .bg-charcoal-600\/40 { background-color: rgba(228,228,231,0.5) !important; }
+    html.light .bg-charcoal-600\/60 { background-color: rgba(228,228,231,0.6) !important; }
+
+    /* Mobile menu: ensure backdrop blur uses light surface */
+    html.light #mobile-menu #mobile-backdrop {
+      background: rgba(255,255,255,0.96) !important;
+    }
+    html.light #mobile-menu .text-white { color: #18181B !important; }
+    html.light #mobile-menu .border-charcoal-600\/40 { border-color: rgba(0,0,0,0.08) !important; }
+    html.light #mobile-menu .text-neutral-400,
+    html.light #mobile-menu .text-neutral-500 { color: #71717A !important; }
+    html.light #mobile-toggle,
+    html.light #mobile-close,
+    html.light #theme-toggle-mobile {
+      background: rgba(0,0,0,0.04) !important;
+    }
+    html.light #mobile-toggle svg,
+    html.light #mobile-close svg,
+    html.light #theme-toggle-mobile svg { color: #18181B !important; }
 
     /* Text */
     html.light .text-white { color: #18181B !important; }
@@ -1344,16 +1395,6 @@
             </h2>
           </div>
 
-          <a
-            href="https://www.google.com/maps/search/?api=1&query=Ibn+Gabirol+120+Tel+Aviv"
-            target="_blank" rel="noopener noreferrer"
-            class="btn-ghost inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-white font-bold text-sm focus:outline-none focus:ring-2 focus:ring-neon"
-          >
-            <span data-i18n="rev.viewAll">צפה בכל הביקורות</span>
-            <svg class="w-3.5 h-3.5 nav-arrow" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-            </svg>
-          </a>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -1485,125 +1526,181 @@
     </section>
 
     <!-- ════════════════════════════════════════════════════
-         FACEBOOK PAGE FEED
+         LIVE REVIEWS (Google Sign-In + Firebase)
     ═══════════════════════════════════════════════════════ -->
-    <section id="facebook" class="py-24 sm:py-32 bg-charcoal-900 border-y border-charcoal-600/40 relative overflow-hidden" aria-labelledby="fb-heading">
+    <section id="live-reviews" class="py-24 sm:py-32 bg-charcoal-900 border-y border-charcoal-600/40 relative overflow-hidden" aria-labelledby="live-rev-heading">
 
-      <div class="blob bg-blue-500 w-96 h-96 -top-40 right-0 opacity-10" aria-hidden="true"></div>
+      <div class="blob bg-neon w-96 h-96 -top-40 right-0 opacity-10" aria-hidden="true"></div>
 
       <div class="relative max-w-7xl mx-auto px-5 sm:px-8">
 
         <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
           <div class="max-w-2xl">
-            <div class="flex items-center gap-3 mb-4">
-              <p class="text-neon text-xs font-bold tracking-[0.25em] uppercase" data-i18n="fb.label">פייסבוק</p>
+            <div class="flex items-center gap-3 mb-4 flex-wrap">
+              <p class="text-neon text-xs font-bold tracking-[0.25em] uppercase" data-i18n="lr.label">תגובות חיות</p>
               <span class="inline-flex items-center gap-1.5 glass rounded-full px-2.5 py-1 text-[10px] font-bold text-neutral-300">
-                <svg class="w-3 h-3 text-[#1877F2]" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                <svg class="w-3 h-3" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                  <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                  <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                  <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
                 </svg>
-                <span data-i18n="fb.live">בזמן אמת</span>
+                <span data-i18n="lr.gauth">מאומת עם Google</span>
               </span>
             </div>
-            <h2 id="fb-heading" class="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tighter leading-[1.05]">
-              <span data-i18n="fb.title1">מה קורה</span><br/>
-              <span class="text-neutral-500" data-i18n="fb.title2">בפייסבוק.</span>
+            <h2 id="live-rev-heading" class="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tighter leading-[1.05]">
+              <span data-i18n="lr.title1">השאירו תגובה.</span><br/>
+              <span class="text-neutral-500" data-i18n="lr.title2">בלי פילטרים.</span>
             </h2>
           </div>
 
-          <a
-            href="https://www.facebook.com/HnadymanTLV"
-            target="_blank" rel="noopener noreferrer"
-            class="btn-ghost inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-white font-bold text-sm focus:outline-none focus:ring-2 focus:ring-neon"
-          >
-            <svg class="w-4 h-4 text-[#1877F2]" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-            </svg>
-            <span data-i18n="fb.visit">בקרו בדף שלנו</span>
-          </a>
+          <div id="reviews-summary" class="hidden flex items-center gap-3 glass rounded-2xl px-4 py-3">
+            <div class="text-3xl font-black text-white" id="reviews-avg">—</div>
+            <div>
+              <div class="flex gap-0.5" id="reviews-avg-stars" aria-label="ממוצע דירוג"></div>
+              <div class="text-neutral-500 text-xs mt-0.5">
+                <span id="reviews-count">0</span>
+                <span data-i18n="lr.count.suffix"> תגובות</span>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <!-- Facebook Page Plugin (official Meta embed, no API key, no watermark) -->
         <div class="grid lg:grid-cols-3 gap-5">
 
-          <!-- Left: FB feed -->
-          <div class="lg:col-span-2 glass-strong rounded-3xl p-3 sm:p-5 overflow-hidden">
-            <div class="rounded-2xl overflow-hidden bg-white" style="min-height: 480px;">
-              <iframe
-                title="HandyMan TLV - Facebook"
-                src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FHnadymanTLV&tabs=timeline&width=500&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true"
-                width="100%" height="500"
-                style="border:none;overflow:hidden;width:100%"
-                scrolling="no" frameborder="0"
-                allowfullscreen="true"
-                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-              ></iframe>
+          <!-- LEFT: Auth + Form -->
+          <div class="lg:col-span-1">
+            <div class="glass-strong rounded-3xl p-7 lg:sticky lg:top-28">
+
+              <!-- Auth: signed out -->
+              <div id="auth-out">
+                <div class="w-12 h-12 rounded-2xl bg-neon-dim border border-neon/30 flex items-center justify-center mb-5">
+                  <svg class="w-6 h-6 text-neon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                  </svg>
+                </div>
+                <h3 class="text-xl font-bold text-white tracking-tight mb-2" data-i18n="lr.share.title">השאירו תגובה</h3>
+                <p class="text-neutral-400 text-sm leading-relaxed mb-6" data-i18n="lr.share.desc">
+                  התחברו עם Google כדי לפרסם תגובה. השם והתמונה שלכם יוצגו ליד התגובה.
+                </p>
+
+                <button
+                  id="google-signin"
+                  type="button"
+                  class="w-full flex items-center justify-center gap-2.5 rounded-full px-5 py-3.5 bg-white hover:bg-neutral-100 text-charcoal-950 font-bold text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-neon focus:ring-offset-2 focus:ring-offset-charcoal-900"
+                >
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                  </svg>
+                  <span data-i18n="lr.signin">המשך עם Google</span>
+                </button>
+
+                <p class="text-[10px] text-neutral-600 leading-relaxed text-center mt-3" data-i18n="lr.legal">
+                  בהגשת התגובה את/ה מסכים/ה שהיא תופיע באתר באופן ציבורי.
+                </p>
+              </div>
+
+              <!-- Auth: signed in -->
+              <div id="auth-in" class="hidden">
+                <div class="flex items-center gap-3 mb-5 pb-5 border-b border-charcoal-600/40">
+                  <img id="user-photo" alt="" referrerpolicy="no-referrer" class="w-12 h-12 rounded-full bg-charcoal-700 object-cover flex-shrink-0" />
+                  <div class="flex-1 min-w-0">
+                    <div id="user-name" class="text-white font-bold text-sm truncate"></div>
+                    <button id="sign-out" type="button" class="text-neutral-500 hover:text-neon text-xs transition-colors" data-i18n="lr.signout">התנתק</button>
+                  </div>
+                </div>
+
+                <form id="review-form" class="space-y-4">
+                  <div>
+                    <label class="block text-[10px] font-bold tracking-widest text-neutral-500 uppercase mb-2" data-i18n="lr.rating.label">דירוג</label>
+                    <div class="rating-input flex gap-1" role="radiogroup" aria-label="rating"></div>
+                    <input type="hidden" id="rating-value" value="5" />
+                  </div>
+
+                  <div>
+                    <label for="review-text" class="sr-only" data-i18n="lr.text.label">תגובה</label>
+                    <textarea
+                      id="review-text" required minlength="3" maxlength="500" rows="4"
+                      class="w-full bg-charcoal-700/60 border border-charcoal-500 rounded-xl px-4 py-3 text-white placeholder-neutral-500 text-sm focus:outline-none focus:border-neon focus:bg-charcoal-700 transition-colors resize-none"
+                      placeholder="ספרו על העבודה..."
+                      data-i18n-attr="placeholder:lr.text.ph"
+                    ></textarea>
+                    <div class="text-[10px] text-neutral-600 text-end mt-1">
+                      <span id="char-count">0</span> / 500
+                    </div>
+                  </div>
+
+                  <button
+                    type="submit"
+                    id="review-submit"
+                    class="btn-glow w-full flex items-center justify-center gap-2 rounded-full px-5 py-3.5 text-white font-bold text-sm focus:outline-none focus:ring-2 focus:ring-neon disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <span id="submit-label" data-i18n="lr.submit">פרסום תגובה</span>
+                    <svg id="submit-spinner" class="hidden w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                      <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" opacity="0.25"/>
+                      <path d="M4 12a8 8 0 018-8" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                    </svg>
+                  </button>
+
+                  <p id="review-error"  class="text-red-400 text-xs hidden"></p>
+                  <p id="review-success" class="text-emerald-400 text-xs hidden" data-i18n="lr.success">התגובה פורסמה. תודה!</p>
+                </form>
+              </div>
+
             </div>
           </div>
 
-          <!-- Right: stats / call to action -->
-          <div class="space-y-5">
-
-            <div class="glass-strong rounded-3xl p-7">
-              <div class="w-12 h-12 rounded-2xl bg-[#1877F2]/15 border border-[#1877F2]/30 flex items-center justify-center mb-5">
-                <svg class="w-6 h-6 text-[#1877F2]" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                </svg>
+          <!-- RIGHT: Reviews list -->
+          <div class="lg:col-span-2">
+            <div id="reviews-list" class="space-y-4">
+              <!-- Loading state -->
+              <div class="glass rounded-3xl p-10 text-center">
+                <div class="inline-block w-6 h-6 border-2 border-neon/40 border-t-neon rounded-full animate-spin mb-3"></div>
+                <p class="text-neutral-500 text-sm" data-i18n="lr.loading">טוען תגובות...</p>
               </div>
-              <h3 class="text-xl font-bold text-white tracking-tight mb-2" data-i18n="fb.cta.title">תנו לייק. תהיו בעניינים.</h3>
-              <p class="text-neutral-400 text-sm leading-relaxed mb-6" data-i18n="fb.cta.desc">
-                עדכונים על עבודות חדשות, טיפים שימושיים וקופונים בלעדיים.
-              </p>
-              <a
-                href="https://www.facebook.com/HnadymanTLV"
-                target="_blank" rel="noopener noreferrer"
-                class="block text-center bg-[#1877F2] hover:bg-[#1565d8] rounded-full py-3 text-white font-bold text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-[#1877F2]"
-                data-i18n="fb.cta.button"
-              >עקבו אחרינו בפייסבוק</a>
             </div>
 
-            <div class="glass rounded-3xl p-7">
-              <p class="text-xs font-bold tracking-widest text-neutral-500 uppercase mb-2" data-i18n="fb.share.label">שיתוף</p>
-              <p class="text-white text-sm leading-relaxed mb-4" data-i18n="fb.share.text">
-                מרוצים מהשירות? שתפו את החברים שלכם בתל אביב.
-              </p>
-              <div class="flex items-center gap-2">
-                <a
-                  href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.handymantlv.com"
-                  target="_blank" rel="noopener noreferrer"
-                  aria-label="שתף בפייסבוק"
-                  class="w-10 h-10 rounded-full glass flex items-center justify-center text-neutral-400 hover:text-[#1877F2] hover:border-[#1877F2]/40 transition-colors"
-                >
-                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            <!-- Setup notice (shown if Firebase not configured) -->
+            <div id="firebase-setup" class="hidden glass rounded-3xl p-7 border-amber-500/30">
+              <div class="flex items-start gap-3 mb-4">
+                <div class="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center flex-shrink-0">
+                  <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
                   </svg>
-                </a>
-                <a
-                  href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fwww.handymantlv.com&text=HandyMan%20TLV"
-                  target="_blank" rel="noopener noreferrer"
-                  aria-label="שתף ב-X"
-                  class="w-10 h-10 rounded-full glass flex items-center justify-center text-neutral-400 hover:text-white hover:border-neon/40 transition-colors"
-                >
-                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                  </svg>
-                </a>
-                <a
-                  href="https://wa.me/?text=https%3A%2F%2Fwww.handymantlv.com"
-                  target="_blank" rel="noopener noreferrer"
-                  aria-label="שתף בוואטסאפ"
-                  class="w-10 h-10 rounded-full glass flex items-center justify-center text-neutral-400 hover:text-[#25D366] hover:border-[#25D366]/40 transition-colors"
-                >
-                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                  </svg>
-                </a>
+                </div>
+                <div class="flex-1">
+                  <h3 class="text-white font-bold text-sm mb-1">Firebase דורש הגדרה חד-פעמית</h3>
+                  <p class="text-neutral-400 text-xs leading-relaxed">המערכת תהפוך לפעילה ברגע שתוסיף את ה-Firebase config. עיין בהוראות במסוף או בהערות הקוד.</p>
+                </div>
               </div>
+              <ol class="text-neutral-300 text-xs space-y-2 ps-5 list-decimal" dir="rtl">
+                <li>צור פרויקט חינמי ב-<a href="https://console.firebase.google.com" target="_blank" rel="noopener" class="text-neon hover:underline">Firebase Console</a></li>
+                <li>הוסף Web App וקבל את ה-config</li>
+                <li>הפעל <strong>Authentication → Sign-in method → Google</strong></li>
+                <li>הפעל <strong>Firestore Database</strong> (Production mode)</li>
+                <li>החלף את <code class="bg-charcoal-700 px-1.5 py-0.5 rounded text-[10px]">FIREBASE_CONFIG</code> ב-<code class="bg-charcoal-700 px-1.5 py-0.5 rounded text-[10px]">index.html</code></li>
+              </ol>
+            </div>
+
+            <!-- Empty state (shown if no reviews yet) -->
+            <div id="reviews-empty" class="hidden glass rounded-3xl p-10 text-center">
+              <div class="w-14 h-14 rounded-2xl bg-neon-dim border border-neon/30 flex items-center justify-center mx-auto mb-4">
+                <svg class="w-7 h-7 text-neon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 01.778-.332 48.294 48.294 0 005.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
+                </svg>
+              </div>
+              <h3 class="text-white font-bold text-base mb-1" data-i18n="lr.empty.title">אין עדיין תגובות</h3>
+              <p class="text-neutral-500 text-sm" data-i18n="lr.empty.desc">היו הראשונים לשתף את החוויה שלכם.</p>
             </div>
           </div>
 
         </div>
       </div>
     </section>
+
 
     <!-- ════════════════════════════════════════════════════
          CONTACT
@@ -2542,6 +2639,273 @@
         el.style.setProperty('--mouse-y', `${e.clientY - r.top}px`);
       });
     });
+
+    /* ═══════════════════════════════════════════════════
+       ░ FIREBASE SETUP — One-time configuration
+       ░
+       ░ 1. Create free project at https://console.firebase.google.com
+       ░ 2. Add Web App, copy config values below
+       ░ 3. Authentication → Sign-in method → enable "Google"
+       ░ 4. Authorized domains → add your live domain (e.g. handymantlv.com)
+       ░ 5. Build → Firestore Database → Create (Production mode)
+       ░ 6. Firestore → Rules → paste:
+       ░    rules_version = '2';
+       ░    service cloud.firestore {
+       ░      match /databases/{database}/documents {
+       ░        match /reviews/{id} {
+       ░          allow read: if true;
+       ░          allow create: if request.auth != null
+       ░            && request.auth.uid == request.resource.data.uid
+       ░            && request.resource.data.text is string
+       ░            && request.resource.data.text.size() in [3, 500]
+       ░            && request.resource.data.rating is number
+       ░            && request.resource.data.rating in [1, 2, 3, 4, 5];
+       ░          allow update, delete: if false;
+       ░        }
+       ░      }
+       ░    }
+       ═══════════════════════════════════════════════════ */
+    const FIREBASE_CONFIG = {
+      apiKey:            "REPLACE_API_KEY",
+      authDomain:        "REPLACE_PROJECT.firebaseapp.com",
+      projectId:         "REPLACE_PROJECT_ID",
+      storageBucket:     "REPLACE_PROJECT.appspot.com",
+      messagingSenderId: "REPLACE_SENDER_ID",
+      appId:             "REPLACE_APP_ID"
+    };
+
+    const FB_CONFIGURED = !FIREBASE_CONFIG.apiKey.startsWith("REPLACE_");
+
+    /* ─── Live Reviews Section ────────────────────────── */
+    function bootReviews() {
+      const setupNotice  = document.getElementById('firebase-setup');
+      const loadingEl    = document.querySelector('#reviews-list > .glass');
+      const listEl       = document.getElementById('reviews-list');
+      const emptyEl      = document.getElementById('reviews-empty');
+      const summaryEl    = document.getElementById('reviews-summary');
+      const authOut      = document.getElementById('auth-out');
+      const authIn       = document.getElementById('auth-in');
+      const signinBtn    = document.getElementById('google-signin');
+      const signoutBtn   = document.getElementById('sign-out');
+      const userPhoto    = document.getElementById('user-photo');
+      const userName     = document.getElementById('user-name');
+      const reviewForm   = document.getElementById('review-form');
+      const reviewText   = document.getElementById('review-text');
+      const charCount    = document.getElementById('char-count');
+      const submitBtn    = document.getElementById('review-submit');
+      const submitLabel  = document.getElementById('submit-label');
+      const submitSpinner= document.getElementById('submit-spinner');
+      const errorEl      = document.getElementById('review-error');
+      const successEl    = document.getElementById('review-success');
+      const ratingInput  = document.querySelector('.rating-input');
+      const ratingValue  = document.getElementById('rating-value');
+
+      // ── Build star rating UI ──
+      const starSvg = '<svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>';
+      function setRating(n) {
+        ratingValue.value = n;
+        ratingInput.querySelectorAll('.rating-star').forEach((s, i) => {
+          s.classList.toggle('star-active', i < n);
+        });
+      }
+      if (ratingInput) {
+        for (let i = 1; i <= 5; i++) {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'rating-star';
+          btn.dataset.rating = i;
+          btn.setAttribute('aria-label', i + ' / 5');
+          btn.innerHTML = starSvg;
+          btn.addEventListener('click', () => setRating(i));
+          ratingInput.appendChild(btn);
+        }
+        setRating(5);
+      }
+
+      // ── Char counter ──
+      reviewText?.addEventListener('input', () => {
+        charCount.textContent = reviewText.value.length;
+      });
+
+      // ── If Firebase isn't configured: show setup notice ──
+      if (!FB_CONFIGURED) {
+        if (loadingEl) loadingEl.remove();
+        setupNotice?.classList.remove('hidden');
+        signinBtn?.setAttribute('disabled', 'true');
+        signinBtn?.classList.add('opacity-50', 'cursor-not-allowed');
+        return;
+      }
+
+      // ── Init Firebase (compat SDK already loaded via <script defer>) ──
+      if (typeof firebase === 'undefined') {
+        // Defer scripts not ready yet — wait
+        return setTimeout(bootReviews, 200);
+      }
+
+      firebase.initializeApp(FIREBASE_CONFIG);
+      const auth = firebase.auth();
+      const db = firebase.firestore();
+      const provider = new firebase.auth.GoogleAuthProvider();
+      provider.setCustomParameters({ prompt: 'select_account' });
+
+      // ── Auth state ──
+      auth.onAuthStateChanged(user => {
+        if (user) {
+          authOut.classList.add('hidden');
+          authIn.classList.remove('hidden');
+          userPhoto.src  = user.photoURL || '';
+          userName.textContent = user.displayName || 'Anonymous';
+        } else {
+          authOut.classList.remove('hidden');
+          authIn.classList.add('hidden');
+        }
+      });
+
+      signinBtn?.addEventListener('click', async () => {
+        try {
+          errorEl.classList.add('hidden');
+          await auth.signInWithPopup(provider);
+        } catch (err) {
+          if (err.code !== 'auth/popup-closed-by-user' && err.code !== 'auth/cancelled-popup-request') {
+            showError(err.message || 'Sign in failed');
+          }
+        }
+      });
+
+      signoutBtn?.addEventListener('click', () => auth.signOut());
+
+      // ── Submit review ──
+      function showError(msg) {
+        errorEl.textContent = msg;
+        errorEl.classList.remove('hidden');
+        successEl.classList.add('hidden');
+      }
+      function showSuccess() {
+        successEl.classList.remove('hidden');
+        errorEl.classList.add('hidden');
+        setTimeout(() => successEl.classList.add('hidden'), 4000);
+      }
+      function setSubmitting(busy) {
+        submitBtn.disabled = busy;
+        submitLabel.classList.toggle('hidden', busy);
+        submitSpinner.classList.toggle('hidden', !busy);
+      }
+
+      reviewForm?.addEventListener('submit', async e => {
+        e.preventDefault();
+        const user = auth.currentUser;
+        if (!user) return;
+
+        const text = reviewText.value.trim();
+        const rating = parseInt(ratingValue.value, 10);
+        if (text.length < 3 || text.length > 500) return showError('תגובה חייבת להיות בין 3 ל-500 תווים.');
+        if (![1,2,3,4,5].includes(rating)) return showError('בחר דירוג בין 1 ל-5.');
+
+        setSubmitting(true);
+        try {
+          await db.collection('reviews').add({
+            uid:       user.uid,
+            name:      user.displayName || 'Anonymous',
+            photoURL:  user.photoURL || null,
+            rating:    rating,
+            text:      text,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+          reviewText.value = '';
+          charCount.textContent = '0';
+          setRating(5);
+          showSuccess();
+        } catch (err) {
+          showError(err.message || 'שליחה נכשלה.');
+        } finally {
+          setSubmitting(false);
+        }
+      });
+
+      // ── Render reviews list (real-time) ──
+      function relativeTime(date, lang) {
+        if (!date) return '';
+        try {
+          const rtf = new Intl.RelativeTimeFormat(lang || 'he', { numeric: 'auto' });
+          const diff = (date.getTime() - Date.now()) / 1000;
+          const units = [['year',31536000],['month',2592000],['week',604800],['day',86400],['hour',3600],['minute',60]];
+          for (const [u, s] of units) {
+            if (Math.abs(diff) >= s) return rtf.format(Math.round(diff / s), u);
+          }
+          return rtf.format(Math.round(diff), 'second');
+        } catch (_) { return date.toLocaleDateString(); }
+      }
+
+      function escapeHtml(s) {
+        return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+      }
+
+      function renderReview(r) {
+        const lang = document.documentElement.lang || 'he';
+        const stars = Array.from({length:5}, (_, i) =>
+          `<svg class="w-4 h-4 ${i < r.rating ? 'text-yellow-400' : 'text-neutral-700'}" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>`
+        ).join('');
+        const date = r.createdAt && r.createdAt.toDate ? r.createdAt.toDate() : null;
+        const initials = (r.name || '?').charAt(0);
+        const photo = r.photoURL
+          ? `<img src="${escapeHtml(r.photoURL)}" alt="" referrerpolicy="no-referrer" class="w-11 h-11 rounded-full object-cover bg-charcoal-700 flex-shrink-0" />`
+          : `<div class="w-11 h-11 rounded-full bg-gradient-to-br from-neon to-neon-soft flex items-center justify-center text-white font-black flex-shrink-0">${escapeHtml(initials)}</div>`;
+        return `
+          <article class="review-card glass rounded-3xl p-6 sm:p-7">
+            <header class="flex items-start gap-3 mb-4">
+              ${photo}
+              <div class="flex-1 min-w-0">
+                <div class="text-white font-bold text-sm truncate">${escapeHtml(r.name || '')}</div>
+                <div class="flex items-center gap-2 mt-1">
+                  <div class="flex gap-0.5">${stars}</div>
+                  ${date ? `<span class="text-neutral-600 text-xs">·</span><time class="text-neutral-500 text-xs">${escapeHtml(relativeTime(date, lang))}</time>` : ''}
+                </div>
+              </div>
+            </header>
+            <p class="text-neutral-300 text-sm sm:text-base leading-relaxed whitespace-pre-wrap">${escapeHtml(r.text || '')}</p>
+          </article>
+        `;
+      }
+
+      db.collection('reviews')
+        .orderBy('createdAt', 'desc')
+        .limit(50)
+        .onSnapshot(snap => {
+          if (loadingEl) loadingEl.remove();
+          const reviews = snap.docs.map(d => d.data());
+
+          if (reviews.length === 0) {
+            listEl.innerHTML = '';
+            emptyEl?.classList.remove('hidden');
+            summaryEl?.classList.add('hidden');
+            return;
+          }
+
+          emptyEl?.classList.add('hidden');
+          listEl.innerHTML = reviews.map(renderReview).join('');
+
+          // Aggregate
+          const avg = reviews.reduce((s, r) => s + (r.rating || 0), 0) / reviews.length;
+          const avgEl = document.getElementById('reviews-avg');
+          const cntEl = document.getElementById('reviews-count');
+          const starsEl = document.getElementById('reviews-avg-stars');
+          if (avgEl) avgEl.textContent = avg.toFixed(1);
+          if (cntEl) cntEl.textContent = reviews.length;
+          if (starsEl) starsEl.innerHTML = Array.from({length:5}, (_, i) =>
+            `<svg class="w-3 h-3 ${i < Math.round(avg) ? 'text-yellow-400' : 'text-neutral-700'}" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>`
+          ).join('');
+          summaryEl?.classList.remove('hidden');
+        }, err => {
+          console.error('Reviews load error:', err);
+          if (loadingEl) loadingEl.innerHTML = '<p class="text-red-400 text-sm">שגיאה בטעינת התגובות.</p>';
+        });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', bootReviews);
+    } else {
+      bootReviews();
+    }
 
     /* ─── Smooth scroll ───────────────────────────────── */
     document.querySelectorAll('a[href^="#"]').forEach(link => {
