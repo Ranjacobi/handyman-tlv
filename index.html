@@ -1,0 +1,1807 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="HandyMan TLV – שירות הנדימן פרימיום בתל אביב. מתקנים את תל אביב, בסטייל. שירות 7 ימים בשבוע 08:00–22:00. וואטסאפ: 058-760-0505" />
+  <title>HandyMan TLV · מתקנים את תל אביב. בסטייל.</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Assistant:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            heebo: ['Heebo', 'system-ui', 'sans-serif'],
+            assistant: ['Assistant', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            charcoal: {
+              950: '#08080A',
+              900: '#0E0E10',
+              800: '#121214',
+              700: '#18181C',
+              600: '#1E1E22',
+              500: '#28282E',
+              400: '#3A3A42',
+            },
+            neon: {
+              DEFAULT: '#FF5F1F',
+              soft:    '#FF8347',
+              dim:     'rgba(255,95,31,0.18)',
+              glow:    'rgba(255,95,31,0.45)',
+            },
+          },
+          letterSpacing: {
+            tightest: '-0.06em',
+            tighter: '-0.04em',
+          },
+          animation: {
+            'marquee': 'marquee 35s linear infinite',
+            'glow-pulse': 'glow-pulse 2.4s ease-in-out infinite',
+            'slow-spin': 'spin 12s linear infinite',
+            'float': 'float 4s ease-in-out infinite',
+          },
+          keyframes: {
+            marquee: {
+              '0%':   { transform: 'translateX(0%)' },
+              '100%': { transform: 'translateX(100%)' },
+            },
+            'glow-pulse': {
+              '0%, 100%': { boxShadow: '0 0 0 0 rgba(255,95,31,0.5), 0 8px 32px rgba(255,95,31,0.25)' },
+              '50%':      { boxShadow: '0 0 0 10px rgba(255,95,31,0), 0 8px 32px rgba(255,95,31,0.45)' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%':      { transform: 'translateY(-10px)' },
+            },
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    * { font-family: 'Heebo', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    html { scroll-behavior: smooth; }
+    body { background: #08080A; }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0E0E10; }
+    ::-webkit-scrollbar-thumb { background: #FF5F1F; border-radius: 3px; }
+
+    /* ─── Hero video & overlay ─────────────────────────── */
+    .hero-video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: grayscale(40%) contrast(1.1) brightness(0.6);
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(120% 80% at 50% 100%, rgba(255,95,31,0.18) 0%, transparent 55%),
+        linear-gradient(180deg, rgba(8,8,10,0.55) 0%, rgba(8,8,10,0.4) 35%, rgba(8,8,10,0.92) 100%);
+    }
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black, transparent 70%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black, transparent 70%);
+    }
+
+    /* ─── Hero text highlight ──────────────────────────── */
+    .highlight {
+      background-image: linear-gradient(120deg, rgba(255,95,31,0.0) 0%, rgba(255,95,31,0.35) 30%, rgba(255,95,31,0.35) 70%, rgba(255,95,31,0.0) 100%);
+      background-repeat: no-repeat;
+      background-size: 0% 60%;
+      background-position: 100% 88%;
+      animation: highlight-sweep 1.6s 0.8s ease-out forwards;
+      padding: 0 0.1em;
+    }
+    @keyframes highlight-sweep {
+      to { background-size: 100% 60%; }
+    }
+
+    /* ─── Glow CTA ─────────────────────────────────────── */
+    .btn-glow {
+      position: relative;
+      background: linear-gradient(135deg, #FF5F1F 0%, #FF7A3D 100%);
+      box-shadow: 0 0 0 0 rgba(255,95,31,0.5), 0 8px 32px rgba(255,95,31,0.25);
+      transition: transform 0.18s ease, box-shadow 0.25s ease;
+    }
+    .btn-glow:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 0 6px rgba(255,95,31,0.18), 0 12px 48px rgba(255,95,31,0.55);
+    }
+    .btn-glow::before {
+      content: '';
+      position: absolute; inset: -2px;
+      border-radius: inherit;
+      background: linear-gradient(135deg, #FF5F1F, #FFB07A, #FF5F1F);
+      filter: blur(14px);
+      opacity: 0;
+      z-index: -1;
+      transition: opacity 0.25s ease;
+    }
+    .btn-glow:hover::before { opacity: 0.7; }
+
+    .btn-ghost {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: all 0.2s ease;
+    }
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,95,31,0.6);
+    }
+
+    /* ─── Marquee ──────────────────────────────────────── */
+    .marquee-track {
+      display: flex;
+      animation: marquee-rtl 38s linear infinite;
+      width: max-content;
+    }
+    @keyframes marquee-rtl {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(50%); }
+    }
+    .marquee-fade {
+      mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+      -webkit-mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+    }
+
+    /* ─── Glassmorphism cards ──────────────────────────── */
+    .glass {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(16px) saturate(140%);
+      -webkit-backdrop-filter: blur(16px) saturate(140%);
+    }
+    .glass-strong {
+      background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(24px) saturate(160%);
+      -webkit-backdrop-filter: blur(24px) saturate(160%);
+    }
+
+    /* ─── Bento card hover ─────────────────────────────── */
+    .bento {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), border-color 0.3s ease;
+      isolation: isolate;
+    }
+    .bento::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,95,31,0.12), transparent 40%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+    .bento:hover {
+      border-color: rgba(255,95,31,0.4);
+      transform: translateY(-4px);
+    }
+    .bento:hover::after { opacity: 1; }
+
+    /* Grain texture overlay (subtle) */
+    .grain::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+      opacity: 0.04;
+      pointer-events: none;
+      mix-blend-mode: overlay;
+    }
+
+    /* Ambient glow blobs */
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      opacity: 0.35;
+      animation: float 7s ease-in-out infinite;
+    }
+
+    /* Smooth nav blur */
+    .nav-glass {
+      background: rgba(8,8,10,0.6);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    /* FAQ accordion */
+    details > summary { list-style: none; cursor: pointer; }
+    details > summary::-webkit-details-marker { display: none; }
+    details[open] .faq-icon { transform: rotate(45deg); }
+    .faq-icon { transition: transform 0.25s ease; }
+
+    /* WhatsApp pulse */
+    .wa-fab {
+      animation: glow-pulse 2.6s ease-in-out infinite;
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .hero-video { display: none; }
+    }
+  </style>
+</head>
+
+<body class="bg-charcoal-950 text-neutral-100 antialiased overflow-x-hidden font-heebo">
+
+  <!-- ════════════════════════════════════════════════════
+       FLOATING WHATSAPP CTA
+  ═══════════════════════════════════════════════════════ -->
+  <a
+    href="https://wa.me/972587600505?text=%D7%94%D7%99%2C%20%D7%A6%D7%A8%D7%99%D7%9A%20%D7%94%D7%A0%D7%93%D7%99%D7%9E%D7%9F"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="פתח שיחת וואטסאפ"
+    class="wa-fab fixed bottom-5 left-5 z-50 group flex items-center gap-2.5 rounded-full px-5 py-3.5 text-white font-bold text-sm bg-[#25D366] hover:bg-[#1DA851] transition-colors"
+    style="box-shadow: 0 0 0 0 rgba(37,211,102,0.5), 0 8px 32px rgba(37,211,102,0.4);"
+  >
+    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+    <span data-i18n="fab.message">שלח הודעה</span>
+  </a>
+
+  <!-- ════════════════════════════════════════════════════
+       NAVBAR
+  ═══════════════════════════════════════════════════════ -->
+  <header class="fixed top-0 inset-x-0 z-40 nav-glass">
+    <nav class="max-w-7xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between" aria-label="ניווט ראשי">
+      <a href="#" class="flex items-center gap-2.5 group">
+        <span class="relative w-8 h-8 rounded-lg bg-neon flex items-center justify-center flex-shrink-0 group-hover:rotate-12 transition-transform">
+          <span class="absolute inset-0 rounded-lg bg-neon blur-md opacity-50 group-hover:opacity-80 transition-opacity"></span>
+          <svg class="relative w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63" />
+          </svg>
+        </span>
+        <div class="leading-none">
+          <span class="font-black text-white text-base tracking-tight">HandyMan</span>
+          <span class="block text-[10px] text-neon font-bold mt-0.5 tracking-widest">TLV</span>
+        </div>
+      </a>
+
+      <ul class="hidden md:flex items-center gap-8 text-sm font-medium text-neutral-400" role="list">
+        <li><a href="#services" class="hover:text-white transition-colors" data-i18n="nav.services">שירותים</a></li>
+        <li><a href="#testimonials" class="hover:text-white transition-colors" data-i18n="nav.reviews">לקוחות</a></li>
+        <li><a href="#faq" class="hover:text-white transition-colors" data-i18n="nav.faq">שאלות</a></li>
+        <li><a href="#contact" class="hover:text-white transition-colors" data-i18n="nav.contact">צור קשר</a></li>
+      </ul>
+
+      <div class="flex items-center gap-2">
+
+        <!-- Language Switcher -->
+        <div class="relative" data-lang-switcher>
+          <button
+            type="button"
+            id="lang-btn"
+            aria-haspopup="menu"
+            aria-expanded="false"
+            aria-label="Change language"
+            class="flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-bold text-neutral-300 hover:text-white border border-charcoal-500 hover:border-neon/40 transition-colors focus:outline-none focus:ring-2 focus:ring-neon"
+          >
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
+            </svg>
+            <span data-lang-current>HE</span>
+            <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+            </svg>
+          </button>
+          <div
+            id="lang-menu"
+            role="menu"
+            aria-labelledby="lang-btn"
+            class="hidden absolute top-[calc(100%+8px)] start-0 min-w-[160px] glass-strong rounded-2xl p-1.5 z-50 shadow-2xl"
+            style="box-shadow: 0 20px 60px rgba(0,0,0,0.5);"
+          >
+            <button data-lang-btn="he" role="menuitem" class="lang-option w-full flex items-center justify-between gap-3 px-3 py-2 rounded-xl text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white transition-colors">
+              <span>עברית</span>
+              <span class="text-[10px] font-bold text-neutral-500">HE</span>
+            </button>
+            <button data-lang-btn="en" role="menuitem" class="lang-option w-full flex items-center justify-between gap-3 px-3 py-2 rounded-xl text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white transition-colors">
+              <span>English</span>
+              <span class="text-[10px] font-bold text-neutral-500">EN</span>
+            </button>
+            <button data-lang-btn="fr" role="menuitem" class="lang-option w-full flex items-center justify-between gap-3 px-3 py-2 rounded-xl text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white transition-colors">
+              <span>Français</span>
+              <span class="text-[10px] font-bold text-neutral-500">FR</span>
+            </button>
+            <button data-lang-btn="ru" role="menuitem" class="lang-option w-full flex items-center justify-between gap-3 px-3 py-2 rounded-xl text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white transition-colors">
+              <span>Русский</span>
+              <span class="text-[10px] font-bold text-neutral-500">RU</span>
+            </button>
+            <button data-lang-btn="es" role="menuitem" class="lang-option w-full flex items-center justify-between gap-3 px-3 py-2 rounded-xl text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white transition-colors">
+              <span>Español</span>
+              <span class="text-[10px] font-bold text-neutral-500">ES</span>
+            </button>
+          </div>
+        </div>
+
+        <a
+          href="https://wa.me/972587600505"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-glow hidden sm:flex items-center gap-2 rounded-full px-5 py-2.5 text-white font-bold text-sm focus:outline-none focus:ring-2 focus:ring-neon focus:ring-offset-2 focus:ring-offset-charcoal-950"
+        >
+          <span data-i18n="nav.book">קבע תור</span>
+          <svg class="w-3.5 h-3.5 nav-arrow" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+          </svg>
+        </a>
+
+        <!-- Hamburger (mobile only) -->
+        <button
+          type="button"
+          id="mobile-toggle"
+          aria-label="פתח תפריט"
+          aria-controls="mobile-menu"
+          aria-expanded="false"
+          class="md:hidden flex items-center justify-center w-10 h-10 rounded-full border border-charcoal-500 hover:border-neon/40 transition-colors focus:outline-none focus:ring-2 focus:ring-neon"
+        >
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ════════════════════════════════════════════════════
+       MOBILE MENU DRAWER
+  ═══════════════════════════════════════════════════════ -->
+  <div
+    id="mobile-menu"
+    role="dialog"
+    aria-modal="true"
+    aria-label="תפריט ניווט"
+    class="fixed inset-0 z-[60] hidden md:hidden"
+  >
+    <!-- Backdrop -->
+    <div id="mobile-backdrop" class="absolute inset-0 bg-charcoal-950/95" style="backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%);"></div>
+
+    <!-- Content -->
+    <div class="relative h-full flex flex-col p-6">
+
+      <!-- Top bar -->
+      <div class="flex items-center justify-between mb-12">
+        <div class="flex items-center gap-2.5">
+          <span class="relative w-8 h-8 rounded-lg bg-neon flex items-center justify-center">
+            <span class="absolute inset-0 rounded-lg bg-neon blur-md opacity-50"></span>
+            <svg class="relative w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63" />
+            </svg>
+          </span>
+          <div class="leading-none">
+            <span class="font-black text-white text-base tracking-tight">HandyMan</span>
+            <span class="block text-[10px] text-neon font-bold mt-0.5 tracking-widest">TLV</span>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          id="mobile-close"
+          aria-label="סגור תפריט"
+          class="flex items-center justify-center w-10 h-10 rounded-full border border-charcoal-500 hover:border-neon/40 transition-colors focus:outline-none focus:ring-2 focus:ring-neon"
+        >
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Nav links -->
+      <nav class="flex-1 flex items-center" aria-label="ניווט מובייל">
+        <ul class="w-full space-y-2" role="list">
+          <li>
+            <a href="#services" class="mobile-link block py-4 text-4xl font-black text-white tracking-tight border-b border-charcoal-600/40 hover:text-neon transition-colors" data-i18n="nav.services">שירותים</a>
+          </li>
+          <li>
+            <a href="#testimonials" class="mobile-link block py-4 text-4xl font-black text-white tracking-tight border-b border-charcoal-600/40 hover:text-neon transition-colors" data-i18n="nav.reviews">לקוחות</a>
+          </li>
+          <li>
+            <a href="#faq" class="mobile-link block py-4 text-4xl font-black text-white tracking-tight border-b border-charcoal-600/40 hover:text-neon transition-colors" data-i18n="nav.faq">שאלות</a>
+          </li>
+          <li>
+            <a href="#contact" class="mobile-link block py-4 text-4xl font-black text-white tracking-tight border-b border-charcoal-600/40 hover:text-neon transition-colors" data-i18n="nav.contact">צור קשר</a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Mobile CTA + contact -->
+      <div class="pt-6 space-y-3">
+        <a
+          href="https://wa.me/972587600505"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-glow mobile-link flex items-center justify-center gap-2 rounded-full px-6 py-4 text-white font-bold text-base"
+        >
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          <span data-i18n="nav.book">קבע תור</span>
+        </a>
+        <a
+          href="tel:+972587600505"
+          class="block text-center py-3 text-neutral-400 text-sm font-medium hover:text-white transition-colors"
+        >
+          058-760-0505
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <main id="main-content">
+
+    <!-- ════════════════════════════════════════════════════
+         HERO – Video Background
+    ═══════════════════════════════════════════════════════ -->
+    <section
+      class="relative min-h-dvh flex items-center justify-center overflow-hidden grain"
+      aria-label="כותרת ראשית"
+    >
+      <!-- Video background (replace src with your own footage) -->
+      <video
+        class="hero-video"
+        autoplay muted loop playsinline preload="auto"
+        poster="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080'%3E%3Crect width='1920' height='1080' fill='%23121214'/%3E%3C/svg%3E"
+      >
+        <source src="https://videos.pexels.com/video-files/4480534/4480534-uhd_2560_1440_25fps.mp4" type="video/mp4" />
+        <source src="https://videos.pexels.com/video-files/4480534/4480534-hd_1280_720_25fps.mp4" type="video/mp4" />
+      </video>
+
+      <div class="hero-overlay" aria-hidden="true"></div>
+      <div class="hero-grid" aria-hidden="true"></div>
+
+      <!-- Ambient glows -->
+      <div class="blob bg-neon w-96 h-96 -top-20 -right-20" aria-hidden="true"></div>
+      <div class="blob bg-amber-500 w-80 h-80 bottom-10 left-10 opacity-20" style="animation-delay:-3s" aria-hidden="true"></div>
+
+      <!-- ─── Floating Tool Icons (decorative) ────────── -->
+      <svg class="absolute top-24 right-8 sm:right-16 w-12 sm:w-16 text-neon/30 animate-float" style="animation-delay:-1s" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+        <!-- Wrench -->
+        <path d="M48 8 L40 16 L48 24 L56 16 Z" stroke-linejoin="round"/>
+        <path d="M44 20 L20 44" stroke-linecap="round"/>
+        <circle cx="14" cy="50" r="6"/>
+      </svg>
+
+      <svg class="absolute top-32 left-12 sm:left-24 w-10 sm:w-14 text-white/15 animate-float" style="animation-delay:-2.5s" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <!-- Drill -->
+        <rect x="8" y="22" width="28" height="20" rx="3"/>
+        <path d="M36 28 L48 28 L52 32 L48 36 L36 36 Z" stroke-linejoin="round"/>
+        <path d="M52 32 L62 32" stroke-linecap="round"/>
+        <path d="M16 42 L16 52 L24 52 L24 42" stroke-linecap="round"/>
+      </svg>
+
+      <svg class="absolute bottom-40 right-12 sm:right-32 w-8 sm:w-12 text-neon/25 animate-float" style="animation-delay:-4s" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+        <!-- Screw -->
+        <circle cx="32" cy="14" r="8"/>
+        <path d="M28 14 L36 14 M30 10 L34 18 M30 18 L34 10"/>
+        <path d="M32 22 L32 56 M26 28 L38 32 M26 36 L38 40 M26 44 L38 48 M28 54 L36 54" stroke-linecap="round"/>
+      </svg>
+
+      <svg class="hidden sm:block absolute bottom-48 left-20 w-10 text-white/12 animate-float" style="animation-delay:-1.5s" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <!-- Hammer -->
+        <path d="M14 14 L34 14 L38 20 L38 26 L14 26 Z" stroke-linejoin="round"/>
+        <path d="M28 26 L26 52 L22 56 L18 52 L20 26"/>
+      </svg>
+
+      <!-- Blueprint corner marks -->
+      <div class="absolute top-20 left-6 sm:top-24 sm:left-10 text-neutral-700 text-[10px] tracking-[0.3em] font-mono pointer-events-none" aria-hidden="true">
+        <div class="flex items-center gap-2">
+          <span class="w-3 h-px bg-neon/50"></span>
+          N 32°04'
+        </div>
+        <div class="mt-1 ml-1">E 34°46'</div>
+      </div>
+      <div class="absolute bottom-32 left-6 sm:bottom-40 sm:left-10 text-neutral-700 text-[10px] tracking-[0.3em] font-mono pointer-events-none" aria-hidden="true">
+        <div class="opacity-60">TLV / 03</div>
+      </div>
+
+      <!-- ─── Tel Aviv Skyline Silhouette ────────────── -->
+      <svg class="absolute bottom-0 inset-x-0 w-full h-28 sm:h-36 pointer-events-none" viewBox="0 0 1440 180" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+        <defs>
+          <linearGradient id="skylineGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="rgba(255,255,255,0.08)"/>
+            <stop offset="100%" stop-color="rgba(255,255,255,0.02)"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Bauhaus low buildings (left) -->
+        <g fill="url(#skylineGrad)" stroke="rgba(255,255,255,0.12)" stroke-width="0.5">
+          <path d="M0,180 L0,140 L40,140 L40,150 L80,150 L80,135 L80,135 Q80,128 87,128 L113,128 Q120,128 120,135 L120,180 Z"/>
+          <rect x="130" y="138" width="50" height="42"/>
+          <path d="M190,180 L190,125 Q190,118 197,118 L223,118 Q230,118 230,125 L230,180 Z"/>
+          <rect x="240" y="145" width="40" height="35"/>
+          <!-- Bauhaus with curved balcony -->
+          <path d="M290,180 L290,120 L350,120 L350,180 Z"/>
+        </g>
+        <!-- Bauhaus balcony curve detail -->
+        <path d="M300,140 Q320,134 340,140" stroke="rgba(255,95,31,0.4)" stroke-width="1" fill="none"/>
+        <path d="M300,155 Q320,149 340,155" stroke="rgba(255,255,255,0.08)" stroke-width="0.5" fill="none"/>
+
+        <!-- Mid-rise residential -->
+        <g fill="url(#skylineGrad)" stroke="rgba(255,255,255,0.12)" stroke-width="0.5">
+          <rect x="360" y="100" width="36" height="80"/>
+          <rect x="400" y="115" width="40" height="65"/>
+          <rect x="445" y="90" width="32" height="90"/>
+          <rect x="482" y="120" width="38" height="60"/>
+        </g>
+
+        <!-- Shalom Tower -->
+        <g fill="url(#skylineGrad)" stroke="rgba(255,255,255,0.18)" stroke-width="0.5">
+          <path d="M540,180 L540,40 L555,30 L575,30 L590,40 L590,180 Z"/>
+          <rect x="557" y="20" width="16" height="14"/>
+        </g>
+
+        <!-- Mid towers -->
+        <g fill="url(#skylineGrad)" stroke="rgba(255,255,255,0.12)" stroke-width="0.5">
+          <rect x="610" y="95" width="42" height="85"/>
+          <rect x="660" y="80" width="38" height="100"/>
+          <rect x="705" y="105" width="40" height="75"/>
+        </g>
+
+        <!-- Azrieli Towers (signature TLV) -->
+        <g stroke="rgba(255,95,31,0.45)" stroke-width="1" fill="url(#skylineGrad)">
+          <!-- Triangle -->
+          <path d="M780,180 L820,30 L860,180 Z"/>
+          <!-- Circle (rounded) -->
+          <path d="M880,180 L880,55 Q880,40 895,32 L915,28 Q930,32 930,52 L930,180 Z"/>
+          <!-- Square -->
+          <rect x="950" y="50" width="48" height="130"/>
+        </g>
+
+        <!-- Antennas/spires on Azrieli -->
+        <g stroke="rgba(255,95,31,0.6)" stroke-width="1" fill="none" stroke-linecap="round">
+          <line x1="820" y1="30" x2="820" y2="14"/>
+          <line x1="905" y1="28" x2="905" y2="14"/>
+          <line x1="974" y1="50" x2="974" y2="34"/>
+          <circle cx="820" cy="14" r="1.5" fill="rgba(255,95,31,0.8)"/>
+          <circle cx="974" cy="34" r="1.5" fill="rgba(255,95,31,0.8)"/>
+        </g>
+
+        <!-- More towers -->
+        <g fill="url(#skylineGrad)" stroke="rgba(255,255,255,0.12)" stroke-width="0.5">
+          <rect x="1010" y="80" width="42" height="100"/>
+          <path d="M1060,180 L1060,70 L1075,60 L1100,60 L1115,70 L1115,180 Z"/>
+          <rect x="1130" y="105" width="38" height="75"/>
+          <rect x="1175" y="90" width="44" height="90"/>
+        </g>
+
+        <!-- Bauhaus right side -->
+        <g fill="url(#skylineGrad)" stroke="rgba(255,255,255,0.12)" stroke-width="0.5">
+          <path d="M1230,180 L1230,130 Q1230,123 1237,123 L1273,123 Q1280,123 1280,130 L1280,180 Z"/>
+          <rect x="1290" y="140" width="50" height="40"/>
+          <rect x="1350" y="148" width="46" height="32"/>
+          <path d="M1406,180 L1406,135 L1440,135 L1440,180 Z"/>
+        </g>
+
+        <!-- Palm trees -->
+        <g stroke="rgba(255,255,255,0.18)" stroke-width="1.2" fill="none" stroke-linecap="round">
+          <!-- Palm 1 -->
+          <line x1="200" y1="180" x2="202" y2="155"/>
+          <path d="M202,155 Q190,148 184,150 M202,155 Q214,148 220,150 M202,155 Q198,143 195,138 M202,155 Q206,143 209,138"/>
+          <!-- Palm 2 -->
+          <line x1="780" y1="180" x2="781" y2="160"/>
+          <path d="M781,160 Q772,154 768,156 M781,160 Q790,154 794,156 M781,160 Q778,150 776,146 M781,160 Q784,150 786,146"/>
+          <!-- Palm 3 -->
+          <line x1="1230" y1="180" x2="1232" y2="158"/>
+          <path d="M1232,158 Q1222,151 1217,153 M1232,158 Q1242,151 1247,153 M1232,158 Q1228,146 1226,141 M1232,158 Q1236,146 1238,141"/>
+        </g>
+
+        <!-- Window dots (lit up) -->
+        <g fill="rgba(255,200,140,0.5)">
+          <rect x="555" y="90" width="2" height="2"/>
+          <rect x="565" y="120" width="2" height="2"/>
+          <rect x="575" y="140" width="2" height="2"/>
+          <rect x="965" y="80" width="2" height="2"/>
+          <rect x="975" y="110" width="2" height="2"/>
+          <rect x="985" y="135" width="2" height="2"/>
+          <rect x="1075" y="95" width="2" height="2"/>
+          <rect x="1095" y="130" width="2" height="2"/>
+        </g>
+      </svg>
+
+      <div class="relative z-10 max-w-5xl mx-auto px-5 sm:px-8 text-center pt-20 pb-16">
+
+        <!-- Live badge -->
+        <div class="inline-flex items-center gap-2 glass rounded-full px-3.5 py-1.5 mb-8">
+          <span class="relative flex h-2 w-2" aria-hidden="true">
+            <span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+          </span>
+          <span class="text-xs font-medium text-neutral-300 tracking-wide" data-i18n="hero.badge">פעיל עכשיו · 7 ימים בשבוע</span>
+        </div>
+
+        <!-- Massive headline -->
+        <h1 class="font-black text-white tracking-tightest leading-[0.95] mb-6">
+          <span class="block text-5xl sm:text-7xl md:text-8xl lg:text-[10rem]" style="text-shadow: 0 4px 40px rgba(0,0,0,0.5)">
+            <span data-i18n="hero.fixing">מתקנים את</span>
+            <span class="highlight relative inline-block" data-i18n="hero.tlv">תל אביב</span><span data-i18n="hero.dot">.</span>
+          </span>
+          <span class="block text-5xl sm:text-7xl md:text-8xl lg:text-[10rem] text-neon mt-1" style="text-shadow: 0 4px 60px rgba(255,95,31,0.4)" data-i18n="hero.style">
+            בסטייל.
+          </span>
+        </h1>
+
+        <p class="text-lg sm:text-xl md:text-2xl text-neutral-300 font-light leading-relaxed max-w-2xl mx-auto mb-10" data-i18n="hero.subtitle">
+          הנדימן מקצועי. שירות פרימיום.<br/>
+          <span class="text-neutral-500">אפס כאב ראש.</span>
+        </p>
+
+        <!-- Dual CTA -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5">
+          <a
+            href="https://wa.me/972587600505?text=%D7%94%D7%99%2C%20%D7%A6%D7%A8%D7%99%D7%9A%20%D7%A2%D7%96%D7%A8%D7%94%20%D7%91%D7%91%D7%99%D7%AA"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-glow inline-flex items-center justify-center gap-2.5 rounded-full px-7 py-4 text-white font-bold text-base focus:outline-none focus:ring-2 focus:ring-neon focus:ring-offset-2 focus:ring-offset-charcoal-950 w-full sm:w-auto"
+          >
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            <span data-i18n="hero.cta.wa">התחל בוואטסאפ</span>
+          </a>
+
+          <a
+            href="tel:+972587600505"
+            class="btn-ghost inline-flex items-center justify-center gap-2.5 rounded-full px-7 py-4 text-white font-bold text-base w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-neon focus:ring-offset-2 focus:ring-offset-charcoal-950"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 6.75z" />
+            </svg>
+            058-760-0505
+          </a>
+        </div>
+
+        <!-- Scroll cue -->
+        <div class="mt-16 inline-flex flex-col items-center gap-1.5 text-neutral-600 text-[10px] tracking-[0.3em] uppercase" aria-hidden="true">
+          <span data-i18n="hero.scroll">גלול</span>
+          <div class="w-px h-10 bg-gradient-to-b from-neutral-600 to-transparent"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════
+         MARQUEE – Neighborhoods
+    ═══════════════════════════════════════════════════════ -->
+    <section
+      class="py-10 bg-charcoal-950 border-y border-charcoal-600/40 marquee-fade overflow-hidden"
+      aria-label="אזורי שירות"
+    >
+      <div class="marquee-track">
+        <!-- Group 1 -->
+        <div class="flex items-center gap-12 px-6 text-3xl sm:text-5xl font-black text-neutral-300 tracking-tighter whitespace-nowrap">
+          <span>צפון ישן</span>
+          <span class="text-neon">•</span>
+          <span>רוטשילד</span>
+          <span class="text-neon">•</span>
+          <span>פלורנטין</span>
+          <span class="text-neon">•</span>
+          <span>רמת אביב</span>
+          <span class="text-neon">•</span>
+          <span>נווה צדק</span>
+          <span class="text-neon">•</span>
+          <span>נווה אביבים</span>
+          <span class="text-neon">•</span>
+          <span>אבן גבירול</span>
+          <span class="text-neon">•</span>
+          <span>לב העיר</span>
+          <span class="text-neon">•</span>
+          <span>פארק הירקון</span>
+          <span class="text-neon">•</span>
+          <span>יפו העתיקה</span>
+          <span class="text-neon">•</span>
+        </div>
+        <!-- Group 2 (duplicate for infinite loop) -->
+        <div class="flex items-center gap-12 px-6 text-3xl sm:text-5xl font-black text-neutral-300 tracking-tighter whitespace-nowrap" aria-hidden="true">
+          <span>צפון ישן</span>
+          <span class="text-neon">•</span>
+          <span>רוטשילד</span>
+          <span class="text-neon">•</span>
+          <span>פלורנטין</span>
+          <span class="text-neon">•</span>
+          <span>רמת אביב</span>
+          <span class="text-neon">•</span>
+          <span>נווה צדק</span>
+          <span class="text-neon">•</span>
+          <span>נווה אביבים</span>
+          <span class="text-neon">•</span>
+          <span>אבן גבירול</span>
+          <span class="text-neon">•</span>
+          <span>לב העיר</span>
+          <span class="text-neon">•</span>
+          <span>פארק הירקון</span>
+          <span class="text-neon">•</span>
+          <span>יפו העתיקה</span>
+          <span class="text-neon">•</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════
+         BENTO SERVICES GRID
+    ═══════════════════════════════════════════════════════ -->
+    <section id="services" class="py-24 sm:py-32 bg-charcoal-950 relative overflow-hidden" aria-labelledby="services-heading">
+
+      <div class="blob bg-neon w-96 h-96 top-1/3 -right-40 opacity-10" aria-hidden="true"></div>
+
+      <div class="relative max-w-7xl mx-auto px-5 sm:px-8">
+
+        <div class="max-w-3xl mb-14">
+          <p class="text-neon text-xs font-bold tracking-[0.25em] uppercase mb-4" data-i18n="services.label">השירותים</p>
+          <h2 id="services-heading" class="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tighter leading-[1.05]">
+            <span data-i18n="services.title1">כל מה שהבית צריך.</span><br/>
+            <span class="text-neutral-500" data-i18n="services.title2">בשיחה אחת.</span>
+          </h2>
+        </div>
+
+        <!-- Bento Grid: 4 cols x 3 rows on desktop -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 grid-rows-[auto] gap-3.5 auto-rows-[180px]">
+
+          <!-- Tile 1: BIG — Furniture (2x2) -->
+          <article class="bento glass rounded-3xl p-7 sm:col-span-2 lg:row-span-2 flex flex-col justify-between relative">
+            <div class="flex items-start justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-neon-dim border border-neon/30 flex items-center justify-center">
+                <svg class="w-6 h-6 text-neon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+                </svg>
+              </div>
+              <span class="text-[10px] font-bold tracking-widest text-neutral-500">01</span>
+            </div>
+            <div class="mt-auto pt-12">
+              <h3 class="text-3xl sm:text-4xl font-black text-white tracking-tight mb-2" data-i18n="svc.furniture.title">רהיטים ונגרות</h3>
+              <p class="text-neutral-400 text-base leading-relaxed max-w-sm" data-i18n="svc.furniture.desc">
+                ספות, שולחנות, כסאות, רהיטי עתיקה. הרכבה ותיקון של כל פריט – מ-IKEA ועד נגרות עדינה.
+              </p>
+            </div>
+
+            <!-- Decorative gradient corner -->
+            <div class="absolute -bottom-20 -left-20 w-56 h-56 rounded-full bg-neon opacity-10 blur-3xl" aria-hidden="true"></div>
+          </article>
+
+          <!-- Tile 2: Doors -->
+          <article class="bento glass rounded-3xl p-6 flex flex-col justify-between">
+            <div class="w-10 h-10 rounded-xl bg-neon-dim border border-neon/30 flex items-center justify-center">
+              <svg class="w-5 h-5 text-neon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-white tracking-tight" data-i18n="svc.doors.title">דלתות ומנעולים</h3>
+              <p class="text-neutral-500 text-sm mt-1" data-i18n="svc.doors.desc">ידיות, צירים, זכוכיות.</p>
+            </div>
+          </article>
+
+          <!-- Tile 3: Electrical -->
+          <article class="bento glass rounded-3xl p-6 flex flex-col justify-between">
+            <div class="w-10 h-10 rounded-xl bg-neon-dim border border-neon/30 flex items-center justify-center">
+              <svg class="w-5 h-5 text-neon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-white tracking-tight" data-i18n="svc.electric.title">חשמל קל</h3>
+              <p class="text-neutral-500 text-sm mt-1" data-i18n="svc.electric.desc">שקעים, מתגים, תאורה.</p>
+            </div>
+          </article>
+
+          <!-- Tile 4: TV mount (wide 2x1) -->
+          <article class="bento glass rounded-3xl p-7 sm:col-span-2 flex items-center gap-6 relative overflow-hidden">
+            <div class="w-12 h-12 rounded-2xl bg-neon-dim border border-neon/30 flex items-center justify-center flex-shrink-0">
+              <svg class="w-6 h-6 text-neon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 20.25h12m-7.5-3v3m3-3v3m-10.125-3h17.25c.621 0 1.125-.504 1.125-1.125V4.875c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125z" />
+              </svg>
+            </div>
+            <div class="flex-1">
+              <h3 class="text-2xl sm:text-3xl font-black text-white tracking-tight" data-i18n="svc.tv.title">תליית טלוויזיה ומדפים</h3>
+              <p class="text-neutral-400 text-sm sm:text-base mt-1" data-i18n="svc.tv.desc">תליה מהירה, ישרה ומדויקת.</p>
+            </div>
+            <!-- Decorative TV silhouette -->
+            <div class="hidden md:block absolute -left-6 -bottom-6 w-32 h-20 rounded-lg border border-neutral-700 bg-charcoal-700/40" aria-hidden="true"></div>
+          </article>
+
+          <!-- Tile 5: Walls/Paint (wide 2x1) -->
+          <article class="bento glass rounded-3xl p-7 sm:col-span-2 lg:col-span-2 flex items-center gap-6 relative overflow-hidden">
+            <div class="w-12 h-12 rounded-2xl bg-neon-dim border border-neon/30 flex items-center justify-center flex-shrink-0">
+              <svg class="w-6 h-6 text-neon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42" />
+              </svg>
+            </div>
+            <div class="flex-1">
+              <h3 class="text-2xl sm:text-3xl font-black text-white tracking-tight" data-i18n="svc.walls.title">גבס, צבע ותריסים</h3>
+              <p class="text-neutral-400 text-sm sm:text-base mt-1" data-i18n="svc.walls.desc">סדקים, חורים, תיקוני צבע, החלפת תריסים.</p>
+            </div>
+          </article>
+
+          <!-- Tile 6: Stereo / Electronics -->
+          <article class="bento glass rounded-3xl p-6 flex flex-col justify-between">
+            <div class="w-10 h-10 rounded-xl bg-neon-dim border border-neon/30 flex items-center justify-center">
+              <svg class="w-5 h-5 text-neon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-white tracking-tight" data-i18n="svc.electronics.title">אלקטרוניקה</h3>
+              <p class="text-neutral-500 text-sm mt-1" data-i18n="svc.electronics.desc">סטריאו, תיקוני TV.</p>
+            </div>
+          </article>
+
+          <!-- Tile 7: Antique furniture restoration -->
+          <article class="bento glass rounded-3xl p-6 flex flex-col justify-between">
+            <div class="w-10 h-10 rounded-xl bg-neon-dim border border-neon/30 flex items-center justify-center">
+              <svg class="w-5 h-5 text-neon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-white tracking-tight" data-i18n="svc.antique.title">שיפוץ רהיטים</h3>
+              <p class="text-neutral-500 text-sm mt-1" data-i18n="svc.antique.desc">תיקון וחידוש לרהיטים ישנים.</p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════
+         WHY · 3 PROMISES
+    ═══════════════════════════════════════════════════════ -->
+    <section class="py-24 sm:py-32 bg-charcoal-900 border-y border-charcoal-600/40 relative" aria-labelledby="why-heading">
+
+      <div class="max-w-7xl mx-auto px-5 sm:px-8">
+
+        <div class="max-w-3xl mb-16">
+          <p class="text-neon text-xs font-bold tracking-[0.25em] uppercase mb-4" data-i18n="why.label">למה אנחנו</p>
+          <h2 id="why-heading" class="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tighter leading-[1.05]">
+            <span data-i18n="why.title1">שלוש סיבות.</span><br/>
+            <span class="text-neutral-500" data-i18n="why.title2">אפס פשרות.</span>
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-charcoal-600/40 rounded-3xl overflow-hidden border border-charcoal-600/40">
+
+          <div class="bg-charcoal-900 p-8 sm:p-10 group">
+            <div class="text-7xl font-black text-neon/20 group-hover:text-neon/40 transition-colors leading-none mb-5">01</div>
+            <h3 class="text-2xl font-bold text-white tracking-tight mb-3" data-i18n="why.1.title">תגובה מיידית</h3>
+            <p class="text-neutral-400 leading-relaxed" data-i18n="why.1.desc">
+              שירות 7 ימים בשבוע, 08:00 עד 22:00. וואטסאפ פתוח, מענה אישי. לא פוקחים – לא נעלמים.
+            </p>
+          </div>
+
+          <div class="bg-charcoal-900 p-8 sm:p-10 group">
+            <div class="text-7xl font-black text-neon/20 group-hover:text-neon/40 transition-colors leading-none mb-5">02</div>
+            <h3 class="text-2xl font-bold text-white tracking-tight mb-3" data-i18n="why.2.title">מחיר שקוף</h3>
+            <p class="text-neutral-400 leading-relaxed" data-i18n="why.2.desc">
+              מחיר הוגן, ידוע מראש. שולחים תמונה – מקבלים הצעה. בלי תמחור על מקום, בלי הפתעות.
+            </p>
+          </div>
+
+          <div class="bg-charcoal-900 p-8 sm:p-10 group">
+            <div class="text-7xl font-black text-neon/20 group-hover:text-neon/40 transition-colors leading-none mb-5">03</div>
+            <h3 class="text-2xl font-bold text-white tracking-tight mb-3" data-i18n="why.3.title">עוזבים נקי</h3>
+            <p class="text-neutral-400 leading-relaxed" data-i18n="why.3.desc">
+              מגיעים עם כל הציוד, אוספים אחרי עצמנו. הבית נשאר כמו שמצאנו אותו – רק שעובד.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════
+         TESTIMONIALS
+    ═══════════════════════════════════════════════════════ -->
+    <section id="testimonials" class="py-24 sm:py-32 bg-charcoal-950 relative" aria-labelledby="testimonials-heading">
+      <div class="max-w-7xl mx-auto px-5 sm:px-8">
+
+        <div class="max-w-3xl mb-14">
+          <p class="text-neon text-xs font-bold tracking-[0.25em] uppercase mb-4" data-i18n="rev.label">לקוחות</p>
+          <h2 id="testimonials-heading" class="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tighter leading-[1.05]">
+            <span data-i18n="rev.title1">מה אומרים</span><br/>
+            <span class="text-neutral-500" data-i18n="rev.title2">בתל אביב.</span>
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+          <!-- T1 -->
+          <blockquote class="glass rounded-3xl p-8 sm:p-10 relative">
+            <svg class="w-10 h-10 text-neon/40 mb-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+            </svg>
+            <p class="text-2xl sm:text-3xl text-white font-bold leading-snug tracking-tight mb-8" data-i18n="rev.t1.quote">
+              אנשים מקצועיים, אמינים ונחמדים. עבודה מסודרת ויחס אישי – ממליץ בחום.
+            </p>
+            <footer class="flex items-center gap-3">
+              <div class="w-11 h-11 rounded-full bg-gradient-to-br from-neon to-neon-soft flex items-center justify-center text-white font-black flex-shrink-0" aria-hidden="true">מ</div>
+              <div>
+                <div class="text-white font-bold text-sm">מנחם כנהט</div>
+                <div class="text-neutral-500 text-xs" data-i18n="rev.t1.location">נווה אביבים, תל אביב</div>
+              </div>
+            </footer>
+          </blockquote>
+
+          <!-- T2 -->
+          <blockquote class="glass rounded-3xl p-8 sm:p-10 relative">
+            <svg class="w-10 h-10 text-neon/40 mb-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+            </svg>
+            <p class="text-2xl sm:text-3xl text-white font-bold leading-snug tracking-tight mb-8" data-i18n="rev.t2.quote">
+              תגובה מהירה ושירות מקצועי. כיף לעבוד עם בעל מקצוע אמין.
+            </p>
+            <footer class="flex items-center gap-3">
+              <div class="w-11 h-11 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white font-black flex-shrink-0" aria-hidden="true">ש</div>
+              <div>
+                <div class="text-white font-bold text-sm">שפרה רוזנפלד</div>
+                <div class="text-neutral-500 text-xs" data-i18n="rev.t2.location">אבן גבירול, תל אביב</div>
+              </div>
+            </footer>
+          </blockquote>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════
+         FAQ
+    ═══════════════════════════════════════════════════════ -->
+    <section id="faq" class="py-24 sm:py-32 bg-charcoal-900 border-y border-charcoal-600/40" aria-labelledby="faq-heading">
+      <div class="max-w-3xl mx-auto px-5 sm:px-8">
+
+        <div class="text-center mb-14">
+          <p class="text-neon text-xs font-bold tracking-[0.25em] uppercase mb-4" data-i18n="faq.label">FAQ</p>
+          <h2 id="faq-heading" class="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tighter" data-i18n="faq.title">שאלות נפוצות</h2>
+        </div>
+
+        <div class="space-y-3" role="list">
+
+          <details class="glass rounded-2xl group hover:border-neon/30 transition-colors" role="listitem">
+            <summary class="flex items-center justify-between p-6 gap-4 text-white font-bold text-lg focus:outline-none focus:ring-2 focus:ring-neon focus:ring-inset rounded-2xl">
+              <span data-i18n="faq.q1">אילו ימים ושעות אתם פעילים?</span>
+              <svg class="faq-icon w-5 h-5 text-neon flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+              </svg>
+            </summary>
+            <div class="px-6 pb-6">
+              <p class="text-neutral-400 leading-relaxed" data-i18n="faq.a1">
+                <strong class="text-neon">7 ימים בשבוע, 08:00–22:00.</strong> כולל ערבי שישי וסופי שבוע. שלח הודעה בוואטסאפ ונתאם תור גמיש לפי לוח הזמנים שלך.
+              </p>
+            </div>
+          </details>
+
+          <details class="glass rounded-2xl group hover:border-neon/30 transition-colors" role="listitem">
+            <summary class="flex items-center justify-between p-6 gap-4 text-white font-bold text-lg focus:outline-none focus:ring-2 focus:ring-neon focus:ring-inset rounded-2xl">
+              <span data-i18n="faq.q2">מה כולל המחיר?</span>
+              <svg class="faq-icon w-5 h-5 text-neon flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+              </svg>
+            </summary>
+            <div class="px-6 pb-6">
+              <p class="text-neutral-400 leading-relaxed" data-i18n="faq.a2">
+                <strong class="text-neon">כל עבודה מתומחרת לגופה.</strong> שלחו פרטים בוואטסאפ ונחזור אליכם בהקדם.
+              </p>
+            </div>
+          </details>
+
+          <details class="glass rounded-2xl group hover:border-neon/30 transition-colors" role="listitem">
+            <summary class="flex items-center justify-between p-6 gap-4 text-white font-bold text-lg focus:outline-none focus:ring-2 focus:ring-neon focus:ring-inset rounded-2xl">
+              <span data-i18n="faq.q3">האם יש אחריות על העבודה?</span>
+              <svg class="faq-icon w-5 h-5 text-neon flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+              </svg>
+            </summary>
+            <div class="px-6 pb-6">
+              <p class="text-neutral-400 leading-relaxed" data-i18n="faq.a3">
+                <strong class="text-neon">אנחנו עומדים מאחורי כל עבודה.</strong> במקרה של בעיה – פונים אלינו ונטפל בה.
+              </p>
+            </div>
+          </details>
+
+          <details class="glass rounded-2xl group hover:border-neon/30 transition-colors" role="listitem">
+            <summary class="flex items-center justify-between p-6 gap-4 text-white font-bold text-lg focus:outline-none focus:ring-2 focus:ring-neon focus:ring-inset rounded-2xl">
+              <span data-i18n="faq.q4">אילו אזורים אתם מכסים?</span>
+              <svg class="faq-icon w-5 h-5 text-neon flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+              </svg>
+            </summary>
+            <div class="px-6 pb-6">
+              <p class="text-neutral-400 leading-relaxed" data-i18n="faq.a4">
+                <strong class="text-neon">תל אביב יפו במלואה</strong> – מצפון ישן ועד יפו העתיקה, פלורנטין, רוטשילד, רמת אביב, נווה צדק, אבן גבירול ועוד. אין תוספת נסיעה לשכונות מרכזיות.
+              </p>
+            </div>
+          </details>
+
+          <details class="glass rounded-2xl group hover:border-neon/30 transition-colors" role="listitem">
+            <summary class="flex items-center justify-between p-6 gap-4 text-white font-bold text-lg focus:outline-none focus:ring-2 focus:ring-neon focus:ring-inset rounded-2xl">
+              <span data-i18n="faq.q5">איך מתחילים?</span>
+              <svg class="faq-icon w-5 h-5 text-neon flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+              </svg>
+            </summary>
+            <div class="px-6 pb-6">
+              <p class="text-neutral-400 leading-relaxed" data-i18n="faq.a5">
+                <strong class="text-neon">3 צעדים פשוטים:</strong> 1) שלח תמונה / תיאור בוואטסאפ. 2) קבל הצעת מחיר מיידית. 3) קובעים תור והכל סגור.
+              </p>
+            </div>
+          </details>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════
+         CONTACT
+    ═══════════════════════════════════════════════════════ -->
+    <section id="contact" class="py-24 sm:py-32 bg-charcoal-950 relative overflow-hidden" aria-labelledby="contact-heading">
+
+      <div class="blob bg-neon w-96 h-96 -top-40 -left-20 opacity-10" aria-hidden="true"></div>
+      <div class="blob bg-amber-500 w-80 h-80 bottom-10 -right-20 opacity-10" style="animation-delay:-2s" aria-hidden="true"></div>
+
+      <div class="relative max-w-7xl mx-auto px-5 sm:px-8">
+
+        <div class="max-w-3xl mb-14">
+          <p class="text-neon text-xs font-bold tracking-[0.25em] uppercase mb-4" data-i18n="contact.label">צור קשר</p>
+          <h2 id="contact-heading" class="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tighter leading-[1.05]">
+            <span data-i18n="contact.title1">בואו נדבר.</span><br/>
+            <span class="text-neutral-500" data-i18n="contact.title2">אנחנו כאן.</span>
+          </h2>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-5">
+
+          <!-- ─── Contact Form ─────────────────────── -->
+          <div class="glass-strong rounded-3xl p-7 sm:p-9">
+            <h3 class="text-2xl font-bold text-white tracking-tight mb-1" data-i18n="form.title">שלחו לנו הודעה</h3>
+            <p class="text-neutral-500 text-sm mb-7" data-i18n="form.subtitle">נחזור אליכם בהקדם.</p>
+
+            <form
+              action="https://formsubmit.co/handyfix4u@gmail.com"
+              method="POST"
+              class="space-y-3"
+              id="contact-form"
+            >
+              <!-- FormSubmit config -->
+              <input type="hidden" name="_subject" value="פנייה חדשה - HandyMan TLV" />
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_autoresponse" value="תודה שפנית אלינו! קיבלנו את הודעתך ונחזור בהקדם. - HandyMan TLV" />
+              <!-- Honeypot for spam protection -->
+              <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+
+              <div>
+                <label for="form-name" class="sr-only" data-i18n="form.name">שם</label>
+                <input
+                  type="text" id="form-name" name="name" required autocomplete="name"
+                  class="w-full bg-charcoal-700/60 border border-charcoal-500 rounded-xl px-4 py-3.5 text-white placeholder-neutral-500 text-sm focus:outline-none focus:border-neon focus:bg-charcoal-700 transition-colors"
+                  placeholder="שם *"
+                  data-i18n-attr="placeholder:form.name.ph"
+                />
+              </div>
+
+              <div>
+                <label for="form-email" class="sr-only" data-i18n="form.email">אימייל</label>
+                <input
+                  type="email" id="form-email" name="email" required autocomplete="email" dir="ltr"
+                  class="w-full bg-charcoal-700/60 border border-charcoal-500 rounded-xl px-4 py-3.5 text-white placeholder-neutral-500 text-sm focus:outline-none focus:border-neon focus:bg-charcoal-700 transition-colors text-start"
+                  placeholder="אימייל *"
+                  data-i18n-attr="placeholder:form.email.ph"
+                />
+              </div>
+
+              <div>
+                <label for="form-phone" class="sr-only" data-i18n="form.phone">טלפון</label>
+                <input
+                  type="tel" id="form-phone" name="phone" autocomplete="tel" dir="ltr"
+                  class="w-full bg-charcoal-700/60 border border-charcoal-500 rounded-xl px-4 py-3.5 text-white placeholder-neutral-500 text-sm focus:outline-none focus:border-neon focus:bg-charcoal-700 transition-colors text-start"
+                  placeholder="טלפון"
+                  data-i18n-attr="placeholder:form.phone.ph"
+                />
+              </div>
+
+              <div>
+                <label for="form-subject" class="sr-only" data-i18n="form.subject">נושא</label>
+                <input
+                  type="text" id="form-subject" name="subject" required
+                  class="w-full bg-charcoal-700/60 border border-charcoal-500 rounded-xl px-4 py-3.5 text-white placeholder-neutral-500 text-sm focus:outline-none focus:border-neon focus:bg-charcoal-700 transition-colors"
+                  placeholder="נושא *"
+                  data-i18n-attr="placeholder:form.subject.ph"
+                />
+              </div>
+
+              <div>
+                <label for="form-message" class="sr-only" data-i18n="form.message">הודעה</label>
+                <textarea
+                  id="form-message" name="message" required rows="5"
+                  class="w-full bg-charcoal-700/60 border border-charcoal-500 rounded-xl px-4 py-3.5 text-white placeholder-neutral-500 text-sm focus:outline-none focus:border-neon focus:bg-charcoal-700 transition-colors resize-none"
+                  placeholder="ההודעה שלך *"
+                  data-i18n-attr="placeholder:form.message.ph"
+                ></textarea>
+              </div>
+
+              <button
+                type="submit"
+                id="form-submit"
+                class="btn-glow w-full flex items-center justify-center gap-2 rounded-xl px-6 py-4 text-white font-bold text-base focus:outline-none focus:ring-2 focus:ring-neon focus:ring-offset-2 focus:ring-offset-charcoal-950"
+              >
+                <span data-i18n="form.send">שליחה</span>
+                <svg class="w-4 h-4 nav-arrow" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                </svg>
+              </button>
+
+              <p class="text-[11px] text-neutral-600 text-center mt-2" data-i18n="form.privacy">
+                הפרטים שלך שמורים אצלנו ולא יועברו לאף גורם שלישי.
+              </p>
+            </form>
+          </div>
+
+          <!-- ─── Info + Map ──────────────────────── -->
+          <div class="space-y-5">
+
+            <!-- Info card -->
+            <div class="glass-strong rounded-3xl p-7 sm:p-9">
+              <h3 class="text-2xl font-bold text-white tracking-tight mb-7" data-i18n="contact.info.title">פרטי התקשרות</h3>
+
+              <div class="space-y-5">
+                <!-- Address -->
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 rounded-xl bg-neon-dim border border-neon/30 flex items-center justify-center flex-shrink-0">
+                    <svg class="w-5 h-5 text-neon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                    </svg>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <div class="text-[10px] font-bold tracking-widest text-neutral-500 uppercase mb-0.5" data-i18n="contact.address.label">כתובת</div>
+                    <a
+                      href="https://maps.google.com/?q=Ibn+Gabirol+120+Tel+Aviv"
+                      target="_blank" rel="noopener noreferrer"
+                      class="text-white hover:text-neon transition-colors text-sm font-medium"
+                      data-i18n="contact.address.value"
+                    >אבן גבירול 120, תל אביב יפו</a>
+                  </div>
+                </div>
+
+                <!-- Phone -->
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 rounded-xl bg-neon-dim border border-neon/30 flex items-center justify-center flex-shrink-0">
+                    <svg class="w-5 h-5 text-neon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 6.75z" />
+                    </svg>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <div class="text-[10px] font-bold tracking-widest text-neutral-500 uppercase mb-0.5" data-i18n="contact.phone.label">טלפון</div>
+                    <a href="tel:+972587600505" class="text-white hover:text-neon transition-colors text-sm font-medium" dir="ltr">058-760-0505</a>
+                  </div>
+                </div>
+
+                <!-- Email -->
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 rounded-xl bg-neon-dim border border-neon/30 flex items-center justify-center flex-shrink-0">
+                    <svg class="w-5 h-5 text-neon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                    </svg>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <div class="text-[10px] font-bold tracking-widest text-neutral-500 uppercase mb-0.5" data-i18n="contact.email.label">אימייל</div>
+                    <a href="mailto:handyfix4u@gmail.com" class="text-white hover:text-neon transition-colors text-sm font-medium break-all" dir="ltr">handyfix4u@gmail.com</a>
+                  </div>
+                </div>
+
+                <!-- Hours -->
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 rounded-xl bg-neon-dim border border-neon/30 flex items-center justify-center flex-shrink-0">
+                    <svg class="w-5 h-5 text-neon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <div class="text-[10px] font-bold tracking-widest text-neutral-500 uppercase mb-0.5" data-i18n="contact.hours.label">שעות פעילות</div>
+                    <div class="text-white text-sm font-medium" data-i18n="contact.hours.value">ראשון–שבת · 08:00–22:00</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Social -->
+              <div class="mt-7 pt-7 border-t border-charcoal-600/40 flex items-center gap-3">
+                <a href="https://www.facebook.com/HnadymanTLV" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="w-10 h-10 rounded-full glass flex items-center justify-center text-neutral-400 hover:text-neon hover:border-neon/40 transition-colors">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                  </svg>
+                </a>
+                <a href="https://twitter.com/handyfix4u" target="_blank" rel="noopener noreferrer" aria-label="X / Twitter" class="w-10 h-10 rounded-full glass flex items-center justify-center text-neutral-400 hover:text-neon hover:border-neon/40 transition-colors">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                  </svg>
+                </a>
+                <span class="text-neutral-500 text-xs ms-2" data-i18n="contact.social">תנו לנו לייק בפייסבוק</span>
+              </div>
+            </div>
+
+            <!-- Map -->
+            <div class="rounded-3xl overflow-hidden border border-charcoal-600/40 relative" style="background: #0F0F0F;">
+              <!-- Pin badge -->
+              <div class="absolute top-3 start-3 z-10 bg-charcoal-950/90 rounded-full px-3 py-1.5 flex items-center gap-1.5 border border-charcoal-500 pointer-events-none" style="backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);">
+                <span class="relative flex h-2 w-2" aria-hidden="true">
+                  <span class="absolute inline-flex h-full w-full rounded-full bg-neon opacity-60 animate-ping"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-neon"></span>
+                </span>
+                <span class="text-white text-[11px] font-bold tracking-wide" data-i18n="contact.map.pin">HandyMan TLV</span>
+              </div>
+
+              <!-- "Open in Maps" button -->
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=Ibn+Gabirol+120+Tel+Aviv"
+                target="_blank" rel="noopener noreferrer"
+                class="absolute top-3 end-3 z-10 bg-charcoal-950/90 rounded-full px-3 py-1.5 flex items-center gap-1.5 border border-charcoal-500 hover:border-neon/60 hover:text-neon transition-colors text-white text-[11px] font-bold tracking-wide"
+                style="backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);"
+                data-i18n="contact.map.open"
+              >
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                </svg>
+                <span>פתח ב-Maps</span>
+              </a>
+
+              <iframe
+                title="HandyMan TLV - מיקום"
+                src="https://www.openstreetmap.org/export/embed.html?bbox=34.7787%2C32.0821%2C34.7847%2C32.0881&layer=mapnik&marker=32.0851%2C34.7817"
+                width="100%" height="340" loading="lazy"
+                style="border:0; filter: invert(0.92) hue-rotate(180deg) brightness(0.95) contrast(0.88);"
+              ></iframe>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════
+         FINAL CTA
+    ═══════════════════════════════════════════════════════ -->
+    <section class="py-24 sm:py-32 bg-charcoal-950 relative overflow-hidden" aria-labelledby="cta-heading">
+
+      <div class="blob bg-neon w-[600px] h-[600px] -top-40 left-1/2 -translate-x-1/2 opacity-20" aria-hidden="true"></div>
+
+      <div class="relative max-w-4xl mx-auto px-5 sm:px-8 text-center">
+
+        <h2 id="cta-heading" class="text-5xl sm:text-7xl md:text-8xl font-black text-white tracking-tightest leading-[0.95] mb-8">
+          <span data-i18n="cta.title1">תקלה בבית?</span><br/>
+          <span class="text-neon" style="text-shadow: 0 4px 60px rgba(255,95,31,0.5)" data-i18n="cta.title2">שלח תמונה.</span>
+        </h2>
+
+        <p class="text-xl text-neutral-400 leading-relaxed mb-10 max-w-xl mx-auto" data-i18n="cta.subtitle">
+          תוך דקות תקבל הצעת מחיר. ללא התחייבות. בלי לחץ.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-3.5 justify-center">
+          <a
+            href="https://wa.me/972587600505?text=%D7%94%D7%99%2C%20%D7%A9%D7%95%D7%9C%D7%97%20%D7%AA%D7%9E%D7%95%D7%A0%D7%94%20%D7%9C%D7%94%D7%A6%D7%A2%D7%AA%20%D7%9E%D7%97%D7%99%D7%A8"
+            target="_blank" rel="noopener noreferrer"
+            class="btn-glow inline-flex items-center justify-center gap-2.5 rounded-full px-8 py-4.5 text-white font-bold text-lg w-full sm:w-auto"
+          >
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            <span data-i18n="cta.button">שלח תמונה בוואטסאפ</span>
+          </a>
+          <a
+            href="tel:+972587600505"
+            class="btn-ghost inline-flex items-center justify-center gap-2.5 rounded-full px-8 py-4.5 text-white font-bold text-lg w-full sm:w-auto"
+          >
+            058-760-0505
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ════════════════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════════════════ -->
+  <footer class="bg-charcoal-900 border-t border-charcoal-600/40 py-12" role="contentinfo">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8">
+
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 mb-10">
+
+        <div class="flex items-center gap-3">
+          <span class="relative w-10 h-10 rounded-xl bg-neon flex items-center justify-center flex-shrink-0">
+            <span class="absolute inset-0 rounded-xl bg-neon blur-md opacity-50"></span>
+            <svg class="relative w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63" />
+            </svg>
+          </span>
+          <div>
+            <div class="font-black text-white text-lg tracking-tight">HandyMan TLV</div>
+            <p class="text-neutral-500 text-xs" data-i18n="footer.tagline">מתקנים את תל אביב. בסטייל.</p>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 sm:gap-8 text-sm">
+          <a href="tel:+972587600505" class="flex items-center gap-2 text-neutral-300 hover:text-neon transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 6.75z" />
+            </svg>
+            058-760-0505
+          </a>
+          <a href="mailto:handyfix4u@gmail.com" class="flex items-center gap-2 text-neutral-300 hover:text-neon transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+            </svg>
+            handyfix4u@gmail.com
+          </a>
+          <span class="flex items-center gap-2 text-neutral-300">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span data-i18n="footer.hours">08:00–22:00 · 7/7</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-charcoal-600/40">
+        <p class="text-neutral-600 text-xs" data-i18n="footer.copy">© 2026 HandyMan TLV · כל הזכויות שמורות</p>
+
+        <div class="flex items-center gap-3">
+          <a href="https://www.facebook.com/HnadymanTLV" target="_blank" rel="noopener noreferrer" aria-label="פייסבוק" class="w-9 h-9 rounded-full glass flex items-center justify-center text-neutral-400 hover:text-neon hover:border-neon/40 transition-colors">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+          </a>
+          <a href="https://twitter.com/handyfix4u" target="_blank" rel="noopener noreferrer" aria-label="X / טוויטר" class="w-9 h-9 rounded-full glass flex items-center justify-center text-neutral-400 hover:text-neon hover:border-neon/40 transition-colors">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:right-4 focus:z-50 focus:bg-neon focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:font-bold">
+    דלג לתוכן הראשי
+  </a>
+
+  <script>
+    /* ─── i18n Translations ───────────────────────────── */
+    const I18N = {
+      he: {
+        'nav.services': 'שירותים', 'nav.pricing': 'תמחור', 'nav.reviews': 'לקוחות', 'nav.faq': 'שאלות', 'nav.contact': 'צור קשר', 'nav.book': 'קבע תור',
+        'contact.label': 'צור קשר', 'contact.title1': 'בואו נדבר.', 'contact.title2': 'אנחנו כאן.',
+        'contact.info.title': 'פרטי התקשרות',
+        'contact.address.label': 'כתובת', 'contact.address.value': 'אבן גבירול 120, תל אביב יפו',
+        'contact.phone.label': 'טלפון', 'contact.email.label': 'אימייל',
+        'contact.hours.label': 'שעות פעילות', 'contact.hours.value': 'ראשון–שבת · 08:00–22:00',
+        'contact.social': 'תנו לנו לייק בפייסבוק', 'contact.map.pin': 'HandyMan TLV', 'contact.map.open': 'פתח ב-Maps',
+        'form.title': 'שלחו לנו הודעה', 'form.subtitle': 'נחזור אליכם בהקדם.',
+        'form.name': 'שם', 'form.email': 'אימייל', 'form.phone': 'טלפון', 'form.subject': 'נושא', 'form.message': 'הודעה',
+        'form.name.ph': 'שם *', 'form.email.ph': 'אימייל *', 'form.phone.ph': 'טלפון', 'form.subject.ph': 'נושא *', 'form.message.ph': 'ההודעה שלך *',
+        'form.send': 'שליחה', 'form.privacy': 'הפרטים שלך שמורים אצלנו ולא יועברו לאף גורם שלישי.',
+        'hero.badge': 'פעיל עכשיו · 7 ימים בשבוע',
+        'hero.fixing': 'מתקנים את', 'hero.tlv': 'תל אביב', 'hero.dot': '.', 'hero.style': 'בסטייל.',
+        'hero.subtitle': 'הנדימן מקצועי. שירות פרימיום.<br/><span class="text-neutral-500">אפס כאב ראש.</span>',
+        'hero.cta.wa': 'התחל בוואטסאפ', 'hero.scroll': 'גלול',
+        'fab.message': 'שלח הודעה',
+        'services.label': 'השירותים', 'services.title1': 'כל מה שהבית צריך.', 'services.title2': 'בשיחה אחת.',
+        'svc.furniture.title': 'רהיטים ונגרות', 'svc.furniture.desc': 'ספות, שולחנות, כסאות, רהיטי עתיקה. הרכבה ותיקון של כל פריט – מ-IKEA ועד נגרות עדינה.',
+        'svc.doors.title': 'דלתות ומנעולים', 'svc.doors.desc': 'ידיות, צירים, זכוכיות.',
+        'svc.electric.title': 'חשמל קל', 'svc.electric.desc': 'שקעים, מתגים, תאורה.',
+        'svc.tv.title': 'תליית טלוויזיה ומדפים', 'svc.tv.desc': 'תליה מהירה, ישרה ומדויקת.',
+        'svc.walls.title': 'גבס, צבע ותריסים', 'svc.walls.desc': 'סדקים, חורים, תיקוני צבע, החלפת תריסים.',
+        'svc.electronics.title': 'אלקטרוניקה', 'svc.electronics.desc': 'סטריאו, תיקוני TV.',
+        'svc.antique.title': 'שיפוץ רהיטים', 'svc.antique.desc': 'תיקון וחידוש לרהיטים ישנים.',
+        'why.label': 'למה אנחנו', 'why.title1': 'שלוש סיבות.', 'why.title2': 'אפס פשרות.',
+        'why.1.title': 'תגובה מיידית', 'why.1.desc': 'שירות 7 ימים בשבוע, 08:00 עד 22:00. וואטסאפ פתוח, מענה אישי. לא פוקחים – לא נעלמים.',
+        'why.2.title': 'מחיר שקוף', 'why.2.desc': 'מחיר הוגן, ידוע מראש. שולחים תמונה – מקבלים הצעה. בלי תמחור על מקום, בלי הפתעות.',
+        'why.3.title': 'עוזבים נקי', 'why.3.desc': 'מגיעים עם כל הציוד, אוספים אחרי עצמנו. הבית נשאר כמו שמצאנו אותו – רק שעובד.',
+        'rev.label': 'לקוחות', 'rev.title1': 'מה אומרים', 'rev.title2': 'בתל אביב.',
+        'rev.t1.quote': 'אנשים מקצועיים, אמינים ונחמדים. עבודה מסודרת ויחס אישי – ממליץ בחום.', 'rev.t1.location': 'נווה אביבים, תל אביב',
+        'rev.t2.quote': 'תגובה מהירה ושירות מקצועי. כיף לעבוד עם בעל מקצוע אמין.', 'rev.t2.location': 'אבן גבירול, תל אביב',
+        'pricing.label': 'תמחור', 'pricing.title1': 'הוגן. שקוף.', 'pricing.title2': 'בלי הפתעות.', 'pricing.choose': 'בחר חבילה',
+        'pricing.disclaimer': '* מחירים מצוינים. תמחור סופי תלוי בסוג העבודה והחומרים. הצעה מדויקת תינתן בוואטסאפ.',
+        't1.label': 'תיקון מהיר', 't1.unit': '/ ביקור', 't1.desc': 'לתיקונים נקודתיים: ברז, ציר דלת, שקע, החלפת ידית.',
+        't1.f1': 'עד 30 דקות עבודה', 't1.f2': 'הגעה בכל שכונה בת״א', 't1.f3': 'הצעת מחיר בוואטסאפ',
+        't2.badge': 'פופולרי', 't2.label': 'חצי יום', 't2.unit': '/ עד 4 שעות', 't2.desc': 'לכמה משימות ביחד: הרכבת רהיטים, תליית TV, תיקוני קיר.',
+        't2.f1': 'עד 4 שעות עבודה', 't2.f2': 'חומרים בסיסיים כלולים', 't2.f3': 'אריזה ופינוי פסולת', 't2.f4': 'אחריות 30 יום',
+        't3.label': 'יום שלם', 't3.unit': '/ 8 שעות', 't3.desc': 'לכניסה לדירה חדשה: הכל מוכן לסוף היום.',
+        't3.f1': 'יום עבודה מלא', 't3.f2': 'הרכבה + התקנות + תיקונים', 't3.f3': 'סקירת בית + רשימת תיקונים', 't3.f4': 'אחריות 60 יום',
+        'faq.label': 'FAQ', 'faq.title': 'שאלות נפוצות',
+        'faq.q1': 'אילו ימים ושעות אתם פעילים?', 'faq.a1': '<strong class="text-neon">7 ימים בשבוע, 08:00–22:00.</strong> כולל ערבי שישי וסופי שבוע. שלח הודעה בוואטסאפ ונתאם תור גמיש לפי לוח הזמנים שלך.',
+        'faq.q2': 'מה כולל המחיר?', 'faq.a2': '<strong class="text-neon">כל עבודה מתומחרת לגופה.</strong> שלחו פרטים בוואטסאפ ונחזור אליכם בהקדם.',
+        'faq.q3': 'האם יש אחריות על העבודה?', 'faq.a3': '<strong class="text-neon">אנחנו עומדים מאחורי כל עבודה.</strong> במקרה של בעיה – פונים אלינו ונטפל בה.',
+        'faq.q4': 'אילו אזורים אתם מכסים?', 'faq.a4': '<strong class="text-neon">תל אביב יפו במלואה</strong> – מצפון ישן ועד יפו העתיקה, פלורנטין, רוטשילד, רמת אביב, נווה צדק, אבן גבירול ועוד. אין תוספת נסיעה לשכונות מרכזיות.',
+        'faq.q5': 'איך מתחילים?', 'faq.a5': '<strong class="text-neon">3 צעדים פשוטים:</strong> 1) שלח תמונה / תיאור בוואטסאפ. 2) קבל הצעת מחיר מיידית. 3) קובעים תור והכל סגור.',
+        'cta.title1': 'תקלה בבית?', 'cta.title2': 'שלח תמונה.',
+        'cta.subtitle': 'תוך דקות תקבל הצעת מחיר. ללא התחייבות. בלי לחץ.', 'cta.button': 'שלח תמונה בוואטסאפ',
+        'footer.tagline': 'מתקנים את תל אביב. בסטייל.', 'footer.hours': '08:00–22:00 · 7/7',
+        'footer.copy': '© 2026 HandyMan TLV · כל הזכויות שמורות',
+      },
+      en: {
+        'nav.services': 'Services', 'nav.pricing': 'Pricing', 'nav.reviews': 'Reviews', 'nav.faq': 'FAQ', 'nav.contact': 'Contact', 'nav.book': 'Book now',
+        'contact.label': 'CONTACT', 'contact.title1': 'Let\'s talk.', 'contact.title2': 'We\'re here.',
+        'contact.info.title': 'Contact details',
+        'contact.address.label': 'Address', 'contact.address.value': '120 Ibn Gabirol St, Tel Aviv-Yafo',
+        'contact.phone.label': 'Phone', 'contact.email.label': 'Email',
+        'contact.hours.label': 'Hours', 'contact.hours.value': 'Sunday–Saturday · 08:00–22:00',
+        'contact.social': 'Follow us on Facebook', 'contact.map.pin': 'HandyMan TLV', 'contact.map.open': 'Open in Maps',
+        'form.title': 'Send us a message', 'form.subtitle': 'We\'ll get back to you shortly.',
+        'form.name': 'Name', 'form.email': 'Email', 'form.phone': 'Phone', 'form.subject': 'Subject', 'form.message': 'Message',
+        'form.name.ph': 'Name *', 'form.email.ph': 'Email *', 'form.phone.ph': 'Phone', 'form.subject.ph': 'Subject *', 'form.message.ph': 'Your message *',
+        'form.send': 'Send', 'form.privacy': 'Your details stay with us and are never shared with third parties.',
+        'hero.badge': 'Active now · 7 days a week',
+        'hero.fixing': 'Fixing', 'hero.tlv': 'Tel Aviv', 'hero.dot': '.', 'hero.style': 'In style.',
+        'hero.subtitle': 'Professional handyman. Premium service.<br/><span class="text-neutral-500">Zero hassle.</span>',
+        'hero.cta.wa': 'Start on WhatsApp', 'hero.scroll': 'scroll',
+        'fab.message': 'Message us',
+        'services.label': 'SERVICES', 'services.title1': 'Everything your home needs.', 'services.title2': 'In one call.',
+        'svc.furniture.title': 'Furniture & Carpentry', 'svc.furniture.desc': 'Sofas, tables, chairs, antiques. Assembly and repair of every piece — from IKEA to fine carpentry.',
+        'svc.doors.title': 'Doors & Locks', 'svc.doors.desc': 'Handles, hinges, glass.',
+        'svc.electric.title': 'Light Electrical', 'svc.electric.desc': 'Outlets, switches, lighting.',
+        'svc.tv.title': 'TV & Shelf Mounting', 'svc.tv.desc': 'Fast, straight, precise mounting.',
+        'svc.walls.title': 'Walls, Paint & Blinds', 'svc.walls.desc': 'Cracks, holes, paint touch-ups, blind replacement.',
+        'svc.electronics.title': 'Electronics', 'svc.electronics.desc': 'Stereo, TV repair.',
+        'svc.antique.title': 'Furniture Refurbishment', 'svc.antique.desc': 'Repair and refresh of old furniture.',
+        'why.label': 'WHY US', 'why.title1': 'Three reasons.', 'why.title2': 'Zero compromises.',
+        'why.1.title': 'Instant response', 'why.1.desc': 'Service 7 days a week, 08:00 to 22:00. WhatsApp open, personal reply. We answer — and we show up.',
+        'why.2.title': 'Transparent price', 'why.2.desc': 'Fair price, known upfront. Send a photo, get a quote. No on-site pricing, no surprises.',
+        'why.3.title': 'We leave it clean', 'why.3.desc': 'We arrive with all the gear and clean up after ourselves. Your home is left as we found it — only working.',
+        'rev.label': 'CLIENTS', 'rev.title1': 'What people say', 'rev.title2': 'in Tel Aviv.',
+        'rev.t1.quote': 'Professional, reliable, friendly. Clean work and personal attention — highly recommended.', 'rev.t1.location': 'Neve Avivim, Tel Aviv',
+        'rev.t2.quote': 'Fast response and professional service. A pleasure working with a reliable pro.', 'rev.t2.location': 'Ibn Gabirol, Tel Aviv',
+        'pricing.label': 'PRICING', 'pricing.title1': 'Fair. Transparent.', 'pricing.title2': 'No surprises.', 'pricing.choose': 'Choose plan',
+        'pricing.disclaimer': '* Indicative pricing. Final price depends on the work type and materials. Exact quote on WhatsApp.',
+        't1.label': 'Quick fix', 't1.unit': '/ visit', 't1.desc': 'For point fixes: faucet, hinge, outlet, handle replacement.',
+        't1.f1': 'Up to 30 min of work', 't1.f2': 'Service to every TLV neighborhood', 't1.f3': 'Quote on WhatsApp',
+        't2.badge': 'POPULAR', 't2.label': 'Half day', 't2.unit': '/ up to 4 hrs', 't2.desc': 'Multiple tasks at once: furniture assembly, TV mount, wall repairs.',
+        't2.f1': 'Up to 4 hours of work', 't2.f2': 'Basic materials included', 't2.f3': 'Cleanup & waste removal', 't2.f4': '30-day warranty',
+        't3.label': 'Full day', 't3.unit': '/ 8 hrs', 't3.desc': 'Moving into a new place: everything ready by end of day.',
+        't3.f1': 'Full work day', 't3.f2': 'Assembly + installation + repairs', 't3.f3': 'Home walk-through + repair list', 't3.f4': '60-day warranty',
+        'faq.label': 'FAQ', 'faq.title': 'Frequently asked',
+        'faq.q1': 'What are your hours?', 'faq.a1': '<strong class="text-neon">7 days a week, 08:00–22:00.</strong> Including Friday evenings and weekends. Message on WhatsApp and we will book a flexible time.',
+        'faq.q2': 'What does the price include?', 'faq.a2': '<strong class="text-neon">Every job is priced individually.</strong> Send details on WhatsApp and we will get back to you shortly.',
+        'faq.q3': 'Is there a warranty?', 'faq.a3': '<strong class="text-neon">We stand behind every job.</strong> If something comes up — get in touch and we will take care of it.',
+        'faq.q4': 'Which areas do you cover?', 'faq.a4': '<strong class="text-neon">All of Tel Aviv-Yafo</strong> — from Old North to Old Jaffa, Florentin, Rothschild, Ramat Aviv, Neve Tzedek, Ibn Gabirol and more. No travel surcharge for central neighborhoods.',
+        'faq.q5': 'How do we start?', 'faq.a5': '<strong class="text-neon">3 simple steps:</strong> 1) Send a photo on WhatsApp. 2) Get an instant quote. 3) Book a time and you are set.',
+        'cta.title1': 'Something broken?', 'cta.title2': 'Send a photo.',
+        'cta.subtitle': 'Get a quote in minutes. No obligation. No pressure.', 'cta.button': 'Send photo on WhatsApp',
+        'footer.tagline': 'Fixing Tel Aviv. In style.', 'footer.hours': '08:00–22:00 · 7/7',
+        'footer.copy': '© 2026 HandyMan TLV · All rights reserved',
+      },
+      fr: {
+        'nav.services': 'Services', 'nav.pricing': 'Tarifs', 'nav.reviews': 'Avis', 'nav.faq': 'FAQ', 'nav.contact': 'Contact', 'nav.book': 'Réserver',
+        'contact.label': 'CONTACT', 'contact.title1': 'Parlons-en.', 'contact.title2': 'On est là.',
+        'contact.info.title': 'Coordonnées',
+        'contact.address.label': 'Adresse', 'contact.address.value': '120 rue Ibn Gabirol, Tel Aviv-Yafo',
+        'contact.phone.label': 'Téléphone', 'contact.email.label': 'Email',
+        'contact.hours.label': 'Horaires', 'contact.hours.value': 'Dimanche–Samedi · 8h–22h',
+        'contact.social': 'Suivez-nous sur Facebook', 'contact.map.pin': 'HandyMan TLV', 'contact.map.open': 'Ouvrir Maps',
+        'form.title': 'Envoyez-nous un message', 'form.subtitle': 'On vous répond rapidement.',
+        'form.name': 'Nom', 'form.email': 'Email', 'form.phone': 'Téléphone', 'form.subject': 'Sujet', 'form.message': 'Message',
+        'form.name.ph': 'Nom *', 'form.email.ph': 'Email *', 'form.phone.ph': 'Téléphone', 'form.subject.ph': 'Sujet *', 'form.message.ph': 'Votre message *',
+        'form.send': 'Envoyer', 'form.privacy': 'Vos données restent chez nous, jamais transmises à des tiers.',
+        'hero.badge': 'Actif maintenant · 7j/7',
+        'hero.fixing': 'On répare', 'hero.tlv': 'Tel Aviv', 'hero.dot': '.', 'hero.style': 'Avec style.',
+        'hero.subtitle': 'Bricoleur professionnel. Service premium.<br/><span class="text-neutral-500">Zéro tracas.</span>',
+        'hero.cta.wa': 'Démarrer sur WhatsApp', 'hero.scroll': 'défiler',
+        'fab.message': 'Écrivez-nous',
+        'services.label': 'SERVICES', 'services.title1': 'Tout ce dont la maison a besoin.', 'services.title2': "En un seul appel.",
+        'svc.furniture.title': 'Meubles & Menuiserie', 'svc.furniture.desc': "Canapés, tables, chaises, antiquités. Montage et réparation — d'IKEA à la menuiserie fine.",
+        'svc.doors.title': 'Portes & Serrures', 'svc.doors.desc': 'Poignées, charnières, vitres.',
+        'svc.electric.title': 'Petite électricité', 'svc.electric.desc': 'Prises, interrupteurs, éclairage.',
+        'svc.tv.title': 'Fixation TV & Étagères', 'svc.tv.desc': 'Fixation rapide, droite et précise.',
+        'svc.walls.title': 'Plâtre, Peinture & Stores', 'svc.walls.desc': 'Fissures, trous, retouches, remplacement de stores.',
+        'svc.electronics.title': 'Électronique', 'svc.electronics.desc': 'Stéréo, réparation TV.',
+        'svc.antique.title': 'Rénovation de meubles', 'svc.antique.desc': 'Réparation et rafraîchissement de meubles anciens.',
+        'why.label': 'POURQUOI NOUS', 'why.title1': 'Trois raisons.', 'why.title2': 'Zéro compromis.',
+        'why.1.title': 'Réponse immédiate', 'why.1.desc': "Service 7j/7, de 8h à 22h. WhatsApp ouvert, réponse personnelle. On répond — et on vient.",
+        'why.2.title': 'Prix transparent', 'why.2.desc': "Prix juste, connu à l'avance. Envoyez une photo, recevez un devis. Pas de surprise sur place.",
+        'why.3.title': 'On laisse propre', 'why.3.desc': 'On arrive équipés, on nettoie. La maison reste comme on l\'a trouvée — mais qui marche.',
+        'rev.label': 'CLIENTS', 'rev.title1': 'Ce qu\'on en dit', 'rev.title2': 'à Tel Aviv.',
+        'rev.t1.quote': 'Professionnels, fiables, sympathiques. Travail soigné et attention personnelle — je recommande.', 'rev.t1.location': 'Neve Avivim, Tel Aviv',
+        'rev.t2.quote': 'Réponse rapide et service pro. Un plaisir de travailler avec un artisan fiable.', 'rev.t2.location': 'Ibn Gabirol, Tel Aviv',
+        'pricing.label': 'TARIFS', 'pricing.title1': 'Juste. Transparent.', 'pricing.title2': 'Sans surprises.', 'pricing.choose': 'Choisir',
+        'pricing.disclaimer': '* Prix indicatifs. Le tarif final dépend du travail et des matériaux. Devis exact sur WhatsApp.',
+        't1.label': 'Réparation rapide', 't1.unit': '/ visite', 't1.desc': 'Pour de petites réparations : robinet, charnière, prise, poignée.',
+        't1.f1': "Jusqu'à 30 min de travail", 't1.f2': 'Service dans tout TLV', 't1.f3': 'Devis sur WhatsApp',
+        't2.badge': 'POPULAIRE', 't2.label': 'Demi-journée', 't2.unit': "/ jusqu'à 4 h", 't2.desc': 'Plusieurs tâches : montage de meubles, fixation TV, réparations murales.',
+        't2.f1': "Jusqu'à 4 h de travail", 't2.f2': 'Matériaux de base inclus', 't2.f3': 'Nettoyage et évacuation', 't2.f4': 'Garantie 30 jours',
+        't3.label': 'Journée complète', 't3.unit': '/ 8 h', 't3.desc': "Pour un emménagement : tout prêt en fin de journée.",
+        't3.f1': 'Journée complète de travail', 't3.f2': 'Montage + installation + réparations', 't3.f3': "Inspection + liste à faire", 't3.f4': 'Garantie 60 jours',
+        'faq.label': 'FAQ', 'faq.title': 'Questions fréquentes',
+        'faq.q1': 'Quels sont vos horaires ?', 'faq.a1': "<strong class=\"text-neon\">7j/7, de 8h à 22h.</strong> Soirées et week-ends compris. Écrivez sur WhatsApp pour un rendez-vous flexible.",
+        'faq.q2': 'Que comprend le prix ?', 'faq.a2': '<strong class="text-neon">Chaque travail est tarifé individuellement.</strong> Envoyez les détails sur WhatsApp et nous reviendrons vers vous rapidement.',
+        'faq.q3': 'Y a-t-il une garantie ?', 'faq.a3': '<strong class="text-neon">Nous garantissons chaque travail.</strong> En cas de souci — contactez-nous et nous nous en occupons.',
+        'faq.q4': 'Quelles zones couvrez-vous ?', 'faq.a4': "<strong class=\"text-neon\">Tout Tel Aviv-Yafo</strong> — du Vieux Nord à la Vieille Jaffa, Florentin, Rothschild, Ramat Aviv, Neve Tzedek, Ibn Gabirol et plus. Pas de frais de déplacement dans les quartiers centraux.",
+        'faq.q5': 'Comment commencer ?', 'faq.a5': "<strong class=\"text-neon\">3 étapes simples :</strong> 1) Envoyez une photo sur WhatsApp. 2) Recevez un devis. 3) Prenez RDV.",
+        'cta.title1': 'Un souci à la maison ?', 'cta.title2': 'Envoyez une photo.',
+        'cta.subtitle': 'Devis en quelques minutes. Sans engagement. Sans pression.', 'cta.button': 'Envoyer photo sur WhatsApp',
+        'footer.tagline': 'On répare Tel Aviv. Avec style.', 'footer.hours': '8h–22h · 7j/7',
+        'footer.copy': '© 2026 HandyMan TLV · Tous droits réservés',
+      },
+      ru: {
+        'nav.services': 'Услуги', 'nav.pricing': 'Цены', 'nav.reviews': 'Отзывы', 'nav.faq': 'FAQ', 'nav.contact': 'Контакты', 'nav.book': 'Записаться',
+        'contact.label': 'КОНТАКТЫ', 'contact.title1': 'Давайте поговорим.', 'contact.title2': 'Мы здесь.',
+        'contact.info.title': 'Контактные данные',
+        'contact.address.label': 'Адрес', 'contact.address.value': 'Ибн Гвироль 120, Тель-Авив-Яффо',
+        'contact.phone.label': 'Телефон', 'contact.email.label': 'Email',
+        'contact.hours.label': 'Часы работы', 'contact.hours.value': 'Воскресенье–Суббота · 08:00–22:00',
+        'contact.social': 'Подпишитесь в Facebook', 'contact.map.pin': 'HandyMan TLV', 'contact.map.open': 'Открыть в Maps',
+        'form.title': 'Напишите нам', 'form.subtitle': 'Свяжемся с вами в ближайшее время.',
+        'form.name': 'Имя', 'form.email': 'Email', 'form.phone': 'Телефон', 'form.subject': 'Тема', 'form.message': 'Сообщение',
+        'form.name.ph': 'Имя *', 'form.email.ph': 'Email *', 'form.phone.ph': 'Телефон', 'form.subject.ph': 'Тема *', 'form.message.ph': 'Ваше сообщение *',
+        'form.send': 'Отправить', 'form.privacy': 'Ваши данные остаются у нас и не передаются третьим лицам.',
+        'hero.badge': 'Сейчас работаем · 7 дней в неделю',
+        'hero.fixing': 'Чиним', 'hero.tlv': 'Тель-Авив', 'hero.dot': '.', 'hero.style': 'Со стилем.',
+        'hero.subtitle': 'Профессиональный мастер. Премиум-сервис.<br/><span class="text-neutral-500">Никаких хлопот.</span>',
+        'hero.cta.wa': 'Начать в WhatsApp', 'hero.scroll': 'листать',
+        'fab.message': 'Написать',
+        'services.label': 'УСЛУГИ', 'services.title1': 'Всё, что нужно дому.', 'services.title2': 'Одним звонком.',
+        'svc.furniture.title': 'Мебель и столярка', 'svc.furniture.desc': 'Диваны, столы, стулья, антиквариат. Сборка и ремонт — от IKEA до тонкой столярки.',
+        'svc.doors.title': 'Двери и замки', 'svc.doors.desc': 'Ручки, петли, стёкла.',
+        'svc.electric.title': 'Лёгкая электрика', 'svc.electric.desc': 'Розетки, выключатели, освещение.',
+        'svc.tv.title': 'Монтаж ТВ и полок', 'svc.tv.desc': 'Монтаж быстро, ровно, точно.',
+        'svc.walls.title': 'Стены, краска, жалюзи', 'svc.walls.desc': 'Трещины, дыры, подкраска, замена жалюзи.',
+        'svc.electronics.title': 'Электроника', 'svc.electronics.desc': 'Стерео, ремонт ТВ.',
+        'svc.antique.title': 'Обновление мебели', 'svc.antique.desc': 'Ремонт и обновление старой мебели.',
+        'why.label': 'ПОЧЕМУ МЫ', 'why.title1': 'Три причины.', 'why.title2': 'Без компромиссов.',
+        'why.1.title': 'Мгновенный ответ', 'why.1.desc': 'Работаем 7 дней в неделю, с 08:00 до 22:00. WhatsApp всегда открыт, личный ответ. Отвечаем — и приезжаем.',
+        'why.2.title': 'Прозрачная цена', 'why.2.desc': 'Честная цена, известная заранее. Пришли фото — получи смету. Без сюрпризов на месте.',
+        'why.3.title': 'Уходим чисто', 'why.3.desc': 'Приезжаем со всем инструментом, убираем за собой. Дом остаётся таким, каким был — только работает.',
+        'rev.label': 'КЛИЕНТЫ', 'rev.title1': 'Что говорят', 'rev.title2': 'в Тель-Авиве.',
+        'rev.t1.quote': 'Профессиональные, надёжные, приятные люди. Аккуратная работа и личный подход — рекомендую.', 'rev.t1.location': 'Неве Авивим, Тель-Авив',
+        'rev.t2.quote': 'Быстрый ответ и профессиональный сервис. Приятно работать с надёжным мастером.', 'rev.t2.location': 'Ибн Гвироль, Тель-Авив',
+        'pricing.label': 'ЦЕНЫ', 'pricing.title1': 'Честно. Прозрачно.', 'pricing.title2': 'Без сюрпризов.', 'pricing.choose': 'Выбрать',
+        'pricing.disclaimer': '* Указанные цены. Окончательная цена зависит от работы и материалов. Точная смета в WhatsApp.',
+        't1.label': 'Быстрый ремонт', 't1.unit': '/ визит', 't1.desc': 'Точечный ремонт: кран, петля, розетка, замена ручки.',
+        't1.f1': 'До 30 минут работы', 't1.f2': 'Выезд в любой район ТА', 't1.f3': 'Смета в WhatsApp',
+        't2.badge': 'ПОПУЛЯРНЫЙ', 't2.label': 'Полдня', 't2.unit': '/ до 4 часов', 't2.desc': 'Несколько задач: сборка мебели, монтаж ТВ, ремонт стен.',
+        't2.f1': 'До 4 часов работы', 't2.f2': 'Базовые материалы включены', 't2.f3': 'Уборка и вывоз мусора', 't2.f4': 'Гарантия 30 дней',
+        't3.label': 'Полный день', 't3.unit': '/ 8 часов', 't3.desc': 'Заезд в новую квартиру: всё готово к вечеру.',
+        't3.f1': 'Полный рабочий день', 't3.f2': 'Сборка + установка + ремонт', 't3.f3': 'Обход дома + список ремонта', 't3.f4': 'Гарантия 60 дней',
+        'faq.label': 'FAQ', 'faq.title': 'Частые вопросы',
+        'faq.q1': 'Какие у вас часы работы?', 'faq.a1': '<strong class="text-neon">7 дней в неделю, 08:00–22:00.</strong> Включая вечера пятницы и выходные. Пишите в WhatsApp — назначим удобное время.',
+        'faq.q2': 'Что входит в цену?', 'faq.a2': '<strong class="text-neon">Каждая работа оценивается индивидуально.</strong> Пришлите детали в WhatsApp — мы свяжемся с вами в ближайшее время.',
+        'faq.q3': 'Есть ли гарантия?', 'faq.a3': '<strong class="text-neon">Мы отвечаем за каждую работу.</strong> Если что-то не так — свяжитесь с нами, и мы решим.',
+        'faq.q4': 'Какие районы вы покрываете?', 'faq.a4': '<strong class="text-neon">Весь Тель-Авив-Яффо</strong> — от Цафон Яшан до Старой Яффы, Флорентин, Ротшильд, Рамат-Авив, Неве Цедек, Ибн Гвироль и далее. Без доплаты за центральные районы.',
+        'faq.q5': 'Как начать?', 'faq.a5': '<strong class="text-neon">3 простых шага:</strong> 1) Пришли фото в WhatsApp. 2) Получи смету мгновенно. 3) Назначь время — и готово.',
+        'cta.title1': 'Что-то сломалось?', 'cta.title2': 'Пришлите фото.',
+        'cta.subtitle': 'Смета за минуты. Без обязательств. Без давления.', 'cta.button': 'Отправить фото в WhatsApp',
+        'footer.tagline': 'Чиним Тель-Авив. Со стилем.', 'footer.hours': '08:00–22:00 · 7/7',
+        'footer.copy': '© 2026 HandyMan TLV · Все права защищены',
+      },
+      es: {
+        'nav.services': 'Servicios', 'nav.pricing': 'Precios', 'nav.reviews': 'Reseñas', 'nav.faq': 'FAQ', 'nav.contact': 'Contacto', 'nav.book': 'Reservar',
+        'contact.label': 'CONTACTO', 'contact.title1': 'Hablemos.', 'contact.title2': 'Aquí estamos.',
+        'contact.info.title': 'Datos de contacto',
+        'contact.address.label': 'Dirección', 'contact.address.value': 'Ibn Gabirol 120, Tel Aviv-Yafo',
+        'contact.phone.label': 'Teléfono', 'contact.email.label': 'Email',
+        'contact.hours.label': 'Horario', 'contact.hours.value': 'Domingo–Sábado · 08:00–22:00',
+        'contact.social': 'Síguenos en Facebook', 'contact.map.pin': 'HandyMan TLV', 'contact.map.open': 'Abrir en Maps',
+        'form.title': 'Envíanos un mensaje', 'form.subtitle': 'Te respondemos pronto.',
+        'form.name': 'Nombre', 'form.email': 'Email', 'form.phone': 'Teléfono', 'form.subject': 'Asunto', 'form.message': 'Mensaje',
+        'form.name.ph': 'Nombre *', 'form.email.ph': 'Email *', 'form.phone.ph': 'Teléfono', 'form.subject.ph': 'Asunto *', 'form.message.ph': 'Tu mensaje *',
+        'form.send': 'Enviar', 'form.privacy': 'Tus datos permanecen con nosotros y no se comparten con terceros.',
+        'hero.badge': 'Activo ahora · 7 días a la semana',
+        'hero.fixing': 'Arreglando', 'hero.tlv': 'Tel Aviv', 'hero.dot': '.', 'hero.style': 'Con estilo.',
+        'hero.subtitle': 'Manitas profesional. Servicio premium.<br/><span class="text-neutral-500">Cero molestias.</span>',
+        'hero.cta.wa': 'Empezar por WhatsApp', 'hero.scroll': 'desplazar',
+        'fab.message': 'Escríbenos',
+        'services.label': 'SERVICIOS', 'services.title1': 'Todo lo que tu casa necesita.', 'services.title2': 'En una llamada.',
+        'svc.furniture.title': 'Muebles y Carpintería', 'svc.furniture.desc': 'Sofás, mesas, sillas, antigüedades. Montaje y reparación — de IKEA a carpintería fina.',
+        'svc.doors.title': 'Puertas y Cerraduras', 'svc.doors.desc': 'Tiradores, bisagras, vidrios.',
+        'svc.electric.title': 'Electricidad ligera', 'svc.electric.desc': 'Enchufes, interruptores, iluminación.',
+        'svc.tv.title': 'Montaje de TV y estantes', 'svc.tv.desc': 'Montaje rápido, recto y preciso.',
+        'svc.walls.title': 'Paredes, Pintura y Persianas', 'svc.walls.desc': 'Grietas, agujeros, retoques, cambio de persianas.',
+        'svc.electronics.title': 'Electrónica', 'svc.electronics.desc': 'Estéreo, reparación de TV.',
+        'svc.antique.title': 'Restauración de muebles', 'svc.antique.desc': 'Reparación y renovación de muebles antiguos.',
+        'why.label': 'POR QUÉ NOSOTROS', 'why.title1': 'Tres razones.', 'why.title2': 'Cero concesiones.',
+        'why.1.title': 'Respuesta inmediata', 'why.1.desc': 'Servicio 7 días, de 8:00 a 22:00. WhatsApp abierto, respuesta personal. Respondemos — y llegamos.',
+        'why.2.title': 'Precio transparente', 'why.2.desc': 'Precio justo, conocido por adelantado. Envía una foto, recibe presupuesto. Sin sorpresas.',
+        'why.3.title': 'Dejamos todo limpio', 'why.3.desc': 'Llegamos con todo el equipo y limpiamos al irnos. La casa queda como la encontramos — pero funcionando.',
+        'rev.label': 'CLIENTES', 'rev.title1': 'Qué dicen', 'rev.title2': 'en Tel Aviv.',
+        'rev.t1.quote': 'Profesionales, fiables y agradables. Trabajo limpio y atención personal — muy recomendado.', 'rev.t1.location': 'Neve Avivim, Tel Aviv',
+        'rev.t2.quote': 'Respuesta rápida y servicio profesional. Un placer trabajar con un profesional fiable.', 'rev.t2.location': 'Ibn Gabirol, Tel Aviv',
+        'pricing.label': 'PRECIOS', 'pricing.title1': 'Justo. Transparente.', 'pricing.title2': 'Sin sorpresas.', 'pricing.choose': 'Elegir',
+        'pricing.disclaimer': '* Precios indicativos. El precio final depende del trabajo y los materiales. Presupuesto exacto por WhatsApp.',
+        't1.label': 'Reparación rápida', 't1.unit': '/ visita', 't1.desc': 'Para arreglos puntuales: grifo, bisagra, enchufe, tirador.',
+        't1.f1': 'Hasta 30 min de trabajo', 't1.f2': 'Servicio en todo Tel Aviv', 't1.f3': 'Presupuesto por WhatsApp',
+        't2.badge': 'POPULAR', 't2.label': 'Medio día', 't2.unit': '/ hasta 4 hrs', 't2.desc': 'Varias tareas a la vez: montaje, TV, paredes.',
+        't2.f1': 'Hasta 4 horas de trabajo', 't2.f2': 'Materiales básicos incluidos', 't2.f3': 'Limpieza y retirada', 't2.f4': 'Garantía 30 días',
+        't3.label': 'Día completo', 't3.unit': '/ 8 hrs', 't3.desc': 'Mudanza nueva: todo listo al final del día.',
+        't3.f1': 'Jornada completa', 't3.f2': 'Montaje + instalación + reparaciones', 't3.f3': 'Inspección + lista de reparaciones', 't3.f4': 'Garantía 60 días',
+        'faq.label': 'FAQ', 'faq.title': 'Preguntas frecuentes',
+        'faq.q1': '¿Cuáles son sus horarios?', 'faq.a1': '<strong class="text-neon">7 días a la semana, 08:00–22:00.</strong> Viernes por la tarde y fines de semana. Escribe por WhatsApp y agendamos una hora flexible.',
+        'faq.q2': '¿Qué incluye el precio?', 'faq.a2': '<strong class="text-neon">Cada trabajo se valora individualmente.</strong> Envíanos detalles por WhatsApp y te respondemos pronto.',
+        'faq.q3': '¿Hay garantía?', 'faq.a3': '<strong class="text-neon">Respaldamos cada trabajo.</strong> Si surge algo — contáctanos y lo solucionamos.',
+        'faq.q4': '¿Qué zonas cubren?', 'faq.a4': '<strong class="text-neon">Todo Tel Aviv-Yafo</strong> — del Norte Antiguo a la Jaffa Vieja, Florentin, Rothschild, Ramat Aviv, Neve Tzedek, Ibn Gabirol y más. Sin recargo en zonas centrales.',
+        'faq.q5': '¿Cómo empezamos?', 'faq.a5': '<strong class="text-neon">3 pasos simples:</strong> 1) Envía una foto por WhatsApp. 2) Recibe presupuesto. 3) Reserva hora.',
+        'cta.title1': '¿Algo roto en casa?', 'cta.title2': 'Envía una foto.',
+        'cta.subtitle': 'Recibe presupuesto en minutos. Sin compromiso. Sin presión.', 'cta.button': 'Enviar foto por WhatsApp',
+        'footer.tagline': 'Arreglando Tel Aviv. Con estilo.', 'footer.hours': '08:00–22:00 · 7/7',
+        'footer.copy': '© 2026 HandyMan TLV · Todos los derechos reservados',
+      },
+    };
+
+    const LANG_DIR = { he: 'rtl', en: 'ltr', fr: 'ltr', ru: 'ltr', es: 'ltr' };
+    const STORAGE_KEY = 'handymantlv-lang';
+
+    function setLang(lang) {
+      const dict = I18N[lang];
+      if (!dict) return;
+      const dir = LANG_DIR[lang];
+
+      document.documentElement.lang = lang;
+      document.documentElement.dir = dir;
+
+      // Update text content
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.dataset.i18n;
+        if (dict[key] !== undefined) el.innerHTML = dict[key];
+      });
+
+      // Update attribute (e.g., placeholder)
+      document.querySelectorAll('[data-i18n-attr]').forEach(el => {
+        const [attr, key] = el.dataset.i18nAttr.split(':');
+        if (dict[key] !== undefined) el.setAttribute(attr, dict[key]);
+      });
+
+      // Update language switcher current label
+      const cur = document.querySelector('[data-lang-current]');
+      if (cur) cur.textContent = lang.toUpperCase();
+
+      // Mark active option
+      document.querySelectorAll('[data-lang-btn]').forEach(btn => {
+        const isActive = btn.dataset.langBtn === lang;
+        btn.classList.toggle('text-neon', isActive);
+        btn.classList.toggle('bg-white/5', isActive);
+      });
+
+      // Flip nav arrow direction
+      document.querySelectorAll('.nav-arrow').forEach(arrow => {
+        arrow.style.transform = dir === 'ltr' ? 'scaleX(-1)' : '';
+      });
+
+      // Adjust marquee/menu position class for direction
+      const menu = document.getElementById('lang-menu');
+      if (menu) {
+        menu.classList.remove('start-0');
+        menu.style.cssText = dir === 'rtl' ? 'right: 0;' : 'left: 0;';
+      }
+
+      // Update HTML title
+      const titles = {
+        he: 'HandyMan TLV · מתקנים את תל אביב. בסטייל.',
+        en: 'HandyMan TLV · Fixing Tel Aviv. In style.',
+        fr: 'HandyMan TLV · On répare Tel Aviv. Avec style.',
+        ru: 'HandyMan TLV · Чиним Тель-Авив. Со стилем.',
+        es: 'HandyMan TLV · Arreglando Tel Aviv. Con estilo.',
+      };
+      document.title = titles[lang] || titles.he;
+
+      try { localStorage.setItem(STORAGE_KEY, lang); } catch(e) {}
+    }
+
+    /* ─── Language switcher dropdown ──────────────────── */
+    const langBtn = document.getElementById('lang-btn');
+    const langMenu = document.getElementById('lang-menu');
+
+    if (langBtn && langMenu) {
+      langBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        const open = !langMenu.classList.contains('hidden');
+        langMenu.classList.toggle('hidden', open);
+        langBtn.setAttribute('aria-expanded', String(!open));
+      });
+
+      document.querySelectorAll('[data-lang-btn]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          setLang(btn.dataset.langBtn);
+          langMenu.classList.add('hidden');
+          langBtn.setAttribute('aria-expanded', 'false');
+        });
+      });
+
+      document.addEventListener('click', e => {
+        if (!langMenu.contains(e.target) && !langBtn.contains(e.target)) {
+          langMenu.classList.add('hidden');
+          langBtn.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') {
+          langMenu.classList.add('hidden');
+          langBtn.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
+    // Init language: URL param > localStorage > default 'he'
+    const urlLang = new URLSearchParams(location.search).get('lang');
+    let savedLang = null;
+    try { savedLang = localStorage.getItem(STORAGE_KEY); } catch(e) {}
+    setLang(urlLang || savedLang || 'he');
+
+    /* ─── Mobile Menu ─────────────────────────────────── */
+    const mobileToggle = document.getElementById('mobile-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileClose = document.getElementById('mobile-close');
+    const mobileBackdrop = document.getElementById('mobile-backdrop');
+
+    function openMobileMenu() {
+      if (!mobileMenu) return;
+      mobileMenu.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      mobileToggle?.setAttribute('aria-expanded', 'true');
+    }
+    function closeMobileMenu() {
+      if (!mobileMenu) return;
+      mobileMenu.classList.add('hidden');
+      document.body.style.overflow = '';
+      mobileToggle?.setAttribute('aria-expanded', 'false');
+    }
+
+    mobileToggle?.addEventListener('click', openMobileMenu);
+    mobileClose?.addEventListener('click', closeMobileMenu);
+    mobileBackdrop?.addEventListener('click', closeMobileMenu);
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', closeMobileMenu);
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && mobileMenu && !mobileMenu.classList.contains('hidden')) {
+        closeMobileMenu();
+      }
+    });
+
+    /* ─── Bento mouse-follow glow ─────────────────────── */
+    document.querySelectorAll('.bento').forEach(el => {
+      el.addEventListener('mousemove', e => {
+        const r = el.getBoundingClientRect();
+        el.style.setProperty('--mouse-x', `${e.clientX - r.left}px`);
+        el.style.setProperty('--mouse-y', `${e.clientY - r.top}px`);
+      });
+    });
+
+    /* ─── Smooth scroll ───────────────────────────────── */
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', e => {
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
