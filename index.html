@@ -4,12 +4,135 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="HandyMan TLV – שירות הנדימן פרימיום בתל אביב. מתקנים את תל אביב, בסטייל. שירות 7 ימים בשבוע 08:00–22:00. וואטסאפ: 058-760-0505" />
+  <meta name="keywords" content="הנדימן, הנדימן תל אביב, תיקונים ביתיים, הרכבת רהיטים, תיקוני חשמל, תליית טלוויזיה, נגרות, תיקון רהיטים, handyman tel aviv" />
+  <meta name="author" content="HandyMan TLV" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#FF5F1F" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="format-detection" content="telephone=yes" />
+  <link rel="canonical" href="https://www.handymantlv.com/" />
   <title>HandyMan TLV · מתקנים את תל אביב. בסטייל.</title>
+
+  <!-- Theme bootstrap (prevents flash on load) -->
+  <script>
+    (function() {
+      try {
+        const saved = localStorage.getItem('handymantlv-theme');
+        const sysLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+        if (saved === 'light' || (!saved && sysLight)) {
+          document.documentElement.classList.add('light');
+        }
+      } catch(e) {}
+    })();
+  </script>
+
+  <!-- ─── Open Graph (Facebook, WhatsApp, LinkedIn) ────── -->
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="he_IL" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <meta property="og:locale:alternate" content="fr_FR" />
+  <meta property="og:locale:alternate" content="ru_RU" />
+  <meta property="og:locale:alternate" content="es_ES" />
+  <meta property="og:url" content="https://www.handymantlv.com/" />
+  <meta property="og:site_name" content="HandyMan TLV" />
+  <meta property="og:title" content="HandyMan TLV · מתקנים את תל אביב. בסטייל." />
+  <meta property="og:description" content="הנדימן מקצועי בתל אביב יפו. שירות פרימיום 7/7 · 08:00–22:00 · הרכבה, נגרות, חשמל ועוד. וואטסאפ: 058-760-0505" />
+  <meta property="og:image" content="https://www.handymantlv.com/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="HandyMan TLV — שירות הנדימן בתל אביב" />
+
+  <!-- ─── Twitter / X Card ─────────────────────────────── -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@handyfix4u" />
+  <meta name="twitter:creator" content="@handyfix4u" />
+  <meta name="twitter:title" content="HandyMan TLV · מתקנים את תל אביב. בסטייל." />
+  <meta name="twitter:description" content="הנדימן מקצועי בתל אביב יפו. שירות פרימיום 7/7 · 08:00–22:00." />
+  <meta name="twitter:image" content="https://www.handymantlv.com/og-image.jpg" />
+
+  <!-- ─── Favicon (inline SVG, no extra file needed) ───── -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23FF5F1F'/%3E%3Cpath d='M30 41L43 28M24 35L34 25' stroke='white' stroke-width='4.5' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='22' cy='42' r='4' fill='white'/%3E%3C/svg%3E" />
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23FF5F1F'/%3E%3Cpath d='M30 41L43 28M24 35L34 25' stroke='white' stroke-width='4.5' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='22' cy='42' r='4' fill='white'/%3E%3C/svg%3E" />
+
+  <!-- ─── Schema.org · LocalBusiness ───────────────────── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HomeAndConstructionBusiness",
+    "@id": "https://www.handymantlv.com/#business",
+    "name": "HandyMan TLV",
+    "alternateName": "הנדימן תל אביב",
+    "description": "הנדימן מקצועי בתל אביב יפו – כל תיקוני הבית מהר, מקצועי ובמחיר הוגן.",
+    "url": "https://www.handymantlv.com/",
+    "telephone": "+972-58-760-0505",
+    "email": "handyfix4u@gmail.com",
+    "image": "https://www.handymantlv.com/og-image.jpg",
+    "logo": "https://www.handymantlv.com/og-image.jpg",
+    "priceRange": "₪₪",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Ibn Gabirol 120",
+      "addressLocality": "Tel Aviv-Yafo",
+      "addressRegion": "Tel Aviv",
+      "addressCountry": "IL"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 32.0851,
+      "longitude": 34.7817
+    },
+    "openingHoursSpecification": [{
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+      "opens": "08:00",
+      "closes": "22:00"
+    }],
+    "areaServed": [
+      { "@type": "City", "name": "Tel Aviv-Yafo" },
+      { "@type": "Place", "name": "Florentin" },
+      { "@type": "Place", "name": "Rothschild" },
+      { "@type": "Place", "name": "Ramat Aviv" },
+      { "@type": "Place", "name": "Neve Tzedek" },
+      { "@type": "Place", "name": "Old North" }
+    ],
+    "sameAs": [
+      "https://www.facebook.com/HnadymanTLV",
+      "https://twitter.com/handyfix4u"
+    ],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "שירותי הנדימן",
+      "itemListElement": [
+        { "@type": "OfferCatalog", "name": "רהיטים ונגרות" },
+        { "@type": "OfferCatalog", "name": "דלתות ומנעולים" },
+        { "@type": "OfferCatalog", "name": "תיקוני חשמל קלים" },
+        { "@type": "OfferCatalog", "name": "תליית טלוויזיה ומדפים" },
+        { "@type": "OfferCatalog", "name": "גבס, צבע ותריסים" },
+        { "@type": "OfferCatalog", "name": "שיפוץ רהיטים" }
+      ]
+    }
+  }
+  </script>
+
+  <!-- ─── Schema.org · WebSite ─────────────────────────── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "url": "https://www.handymantlv.com/",
+    "name": "HandyMan TLV",
+    "inLanguage": ["he-IL","en-US","fr-FR","ru-RU","es-ES"]
+  }
+  </script>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Assistant:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Leaflet (no WebGL required) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin="" defer></script>
 
   <script>
     tailwind.config = {
@@ -236,6 +359,218 @@
       animation: glow-pulse 2.6s ease-in-out infinite;
     }
 
+    /* ─── Leaflet map styling ─────────────────────────── */
+    #leaflet-map {
+      width: 100%;
+      height: 340px;
+      background: #0F0F0F;
+      z-index: 0;
+    }
+    .leaflet-container {
+      background: #0F0F0F !important;
+      font-family: 'Heebo', sans-serif !important;
+    }
+    .leaflet-control-zoom a {
+      background: rgba(8,8,10,0.85) !important;
+      color: #fff !important;
+      border: 1px solid rgba(255,255,255,0.08) !important;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .leaflet-control-zoom a:hover {
+      background: rgba(255,95,31,0.2) !important;
+      border-color: rgba(255,95,31,0.5) !important;
+    }
+    .leaflet-control-attribution {
+      background: rgba(8,8,10,0.7) !important;
+      color: #888 !important;
+      font-size: 10px !important;
+    }
+    .leaflet-control-attribution a {
+      color: #aaa !important;
+    }
+    .neon-marker {
+      position: relative;
+      width: 40px;
+      height: 40px;
+    }
+    .neon-marker::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: rgba(255,95,31,0.25);
+      animation: marker-pulse 2.4s ease-in-out infinite;
+    }
+    .neon-marker::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 14px;
+      height: 14px;
+      transform: translate(-50%,-50%);
+      border-radius: 50%;
+      background: #FF5F1F;
+      border: 3px solid #fff;
+      box-shadow: 0 0 16px rgba(255,95,31,0.8), 0 4px 12px rgba(0,0,0,0.5);
+    }
+    @keyframes marker-pulse {
+      0%   { transform: scale(0.8); opacity: 0.7; }
+      70%  { transform: scale(1.6); opacity: 0;   }
+      100% { transform: scale(0.8); opacity: 0;   }
+    }
+
+    /* ─── Light Mode Overrides ────────────────────────── */
+    html.light body { background: #FAFAFA; color: #18181B; }
+    html.light ::-webkit-scrollbar-track { background: #F4F4F5; }
+
+    /* Backgrounds */
+    html.light .bg-charcoal-950 { background-color: #FAFAFA !important; }
+    html.light .bg-charcoal-900 { background-color: #F4F4F5 !important; }
+    html.light .bg-charcoal-800 { background-color: #FFFFFF !important; }
+    html.light .bg-charcoal-700 { background-color: #F4F4F5 !important; }
+    html.light .bg-charcoal-700\/60 { background-color: rgba(244,244,245,0.7) !important; }
+    html.light .bg-charcoal-600 { background-color: #E4E4E7 !important; }
+    html.light .bg-charcoal-600\/40 { background-color: rgba(228,228,231,0.5) !important; }
+
+    /* Text */
+    html.light .text-white { color: #18181B !important; }
+    html.light .text-neutral-100 { color: #27272A !important; }
+    html.light .text-neutral-200 { color: #3F3F46 !important; }
+    html.light .text-neutral-300 { color: #52525B !important; }
+    html.light .text-neutral-400 { color: #71717A !important; }
+    html.light .text-neutral-500 { color: #A1A1AA !important; }
+    html.light .text-neutral-600 { color: #C7C7CD !important; }
+
+    /* Borders */
+    html.light .border-charcoal-400 { border-color: #D4D4D8 !important; }
+    html.light .border-charcoal-500 { border-color: #E4E4E7 !important; }
+    html.light .border-charcoal-600 { border-color: #E4E4E7 !important; }
+    html.light .border-charcoal-600\/40 { border-color: rgba(228,228,231,0.7) !important; }
+
+    /* Nav glass */
+    html.light .nav-glass {
+      background: rgba(255,255,255,0.85) !important;
+      border-bottom-color: rgba(0,0,0,0.06) !important;
+    }
+
+    /* Top bar */
+    html.light #top-bar {
+      background: linear-gradient(90deg, rgba(255,95,31,0.1), rgba(255,255,255,0.95) 60%, rgba(255,255,255,0.95)) !important;
+      border-bottom-color: rgba(0,0,0,0.08) !important;
+    }
+    html.light #top-bar .text-emerald-300 { color: #059669 !important; }
+
+    /* Glass effects */
+    html.light .glass {
+      background: rgba(255,255,255,0.7) !important;
+      border-color: rgba(0,0,0,0.06) !important;
+    }
+    html.light .glass-strong {
+      background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.7)) !important;
+      border-color: rgba(0,0,0,0.08) !important;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.04) !important;
+    }
+
+    /* Bento card */
+    html.light .bento { border-color: rgba(0,0,0,0.06) !important; }
+    html.light .bento::after {
+      background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,95,31,0.1), transparent 40%);
+    }
+
+    /* Btn ghost */
+    html.light .btn-ghost {
+      background: rgba(0,0,0,0.04) !important;
+      border-color: rgba(0,0,0,0.08) !important;
+      color: #18181B !important;
+    }
+    html.light .btn-ghost:hover {
+      background: rgba(0,0,0,0.08) !important;
+      border-color: rgba(255,95,31,0.6) !important;
+    }
+
+    /* Hero — keep dark video readable, content section transitions to light */
+    html.light .hero-overlay {
+      background:
+        radial-gradient(120% 80% at 50% 100%, rgba(255,95,31,0.15) 0%, transparent 55%),
+        linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 35%, rgba(250,250,250,0.97) 100%) !important;
+    }
+    html.light .hero-grid {
+      background-image:
+        linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px) !important;
+    }
+    /* Hero text stays white over the dark video overlay */
+    html.light section[aria-label="כותרת ראשית"] .text-white { color: #fff !important; }
+    html.light section[aria-label="כותרת ראשית"] .text-neutral-100 { color: rgba(255,255,255,0.95) !important; }
+    html.light section[aria-label="כותרת ראשית"] .text-neutral-200 { color: rgba(255,255,255,0.92) !important; }
+    html.light section[aria-label="כותרת ראשית"] .text-neutral-300 { color: rgba(255,255,255,0.88) !important; }
+    html.light section[aria-label="כותרת ראשית"] .text-neutral-400 { color: rgba(255,255,255,0.78) !important; }
+    html.light section[aria-label="כותרת ראשית"] .text-neutral-500 { color: rgba(255,255,255,0.62) !important; }
+    html.light section[aria-label="כותרת ראשית"] .text-neutral-600 { color: rgba(255,255,255,0.5) !important; }
+    html.light section[aria-label="כותרת ראשית"] h1 span:not(.highlight):not(.text-neon) { color: #fff !important; }
+    html.light section[aria-label="כותרת ראשית"] p,
+    html.light section[aria-label="כותרת ראשית"] p > span { color: rgba(255,255,255,0.9) !important; }
+    html.light section[aria-label="כותרת ראשית"] p > span.text-neutral-500 { color: rgba(255,255,255,0.6) !important; }
+    html.light section[aria-label="כותרת ראשית"] .glass { background: rgba(255,255,255,0.1) !important; border-color: rgba(255,255,255,0.2) !important; }
+    html.light section[aria-label="כותרת ראשית"] .glass span { color: rgba(255,255,255,0.9) !important; }
+    html.light section[aria-label="כותרת ראשית"] .btn-ghost {
+      background: rgba(255,255,255,0.08) !important;
+      border-color: rgba(255,255,255,0.15) !important;
+      color: #fff !important;
+    }
+    html.light section[aria-label="כותרת ראשית"] .btn-ghost:hover {
+      background: rgba(255,255,255,0.15) !important;
+      border-color: rgba(255,95,31,0.6) !important;
+    }
+
+    /* Marquee — make text dark on light bg */
+    html.light .marquee-track > div { color: #71717A !important; }
+
+    /* Tool icons floating in hero stay dim */
+    html.light .text-white\/15 { color: rgba(255,255,255,0.2) !important; }
+    html.light .text-white\/12 { color: rgba(255,255,255,0.18) !important; }
+
+    /* Form inputs */
+    html.light input[type="text"],
+    html.light input[type="email"],
+    html.light input[type="tel"],
+    html.light textarea {
+      background: rgba(0,0,0,0.03) !important;
+      border-color: #E4E4E7 !important;
+      color: #18181B !important;
+    }
+    html.light input::placeholder,
+    html.light textarea::placeholder { color: #A1A1AA !important; }
+    html.light input:focus, html.light textarea:focus {
+      background: #fff !important;
+      border-color: #FF5F1F !important;
+    }
+
+    /* Leaflet map */
+    html.light #leaflet-map { background: #F4F4F5; }
+    html.light .leaflet-container { background: #F4F4F5 !important; }
+    html.light .leaflet-control-zoom a {
+      background: rgba(255,255,255,0.95) !important;
+      color: #18181B !important;
+      border-color: rgba(0,0,0,0.08) !important;
+    }
+    html.light .leaflet-control-zoom a:hover {
+      background: rgba(255,95,31,0.15) !important;
+    }
+    html.light .leaflet-control-attribution {
+      background: rgba(255,255,255,0.85) !important;
+      color: #71717A !important;
+    }
+    html.light .leaflet-control-attribution a { color: #52525B !important; }
+
+    /* Map pin badge in light mode */
+    html.light #leaflet-map ~ * .bg-charcoal-950\/90,
+    html.light .map-badge { background: rgba(255,255,255,0.92) !important; color: #18181B !important; border-color: rgba(0,0,0,0.08) !important; }
+
+    /* Theme toggle icon transition */
+    .theme-icon { transition: transform 0.3s ease, opacity 0.2s ease; }
+
     /* Reduced motion */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
@@ -249,6 +584,44 @@
 </head>
 
 <body class="bg-charcoal-950 text-neutral-100 antialiased overflow-x-hidden font-heebo">
+
+  <!-- ════════════════════════════════════════════════════
+       STICKY TOP AVAILABILITY BAR (dismissible)
+  ═══════════════════════════════════════════════════════ -->
+  <div
+    id="top-bar"
+    role="banner"
+    class="fixed top-0 inset-x-0 z-[55] bg-charcoal-950 border-b border-charcoal-600/60"
+    style="background: linear-gradient(90deg, rgba(255,95,31,0.12), rgba(8,8,10,0.98) 60%, rgba(8,8,10,0.98));"
+  >
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 h-9 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-2 min-w-0 flex-1 text-xs">
+        <span class="relative flex h-2 w-2 flex-shrink-0" aria-hidden="true">
+          <span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+        </span>
+        <span class="text-emerald-300 font-bold truncate" data-i18n="topbar.online">זמין עכשיו</span>
+        <span class="text-neutral-500 hidden sm:inline">·</span>
+        <span class="text-neutral-300 hidden sm:inline truncate" data-i18n="topbar.text">מענה תוך דקות בוואטסאפ</span>
+        <a
+          href="https://wa.me/972587600505"
+          target="_blank" rel="noopener noreferrer"
+          class="text-neon hover:text-white font-bold ms-1 truncate"
+          data-i18n="topbar.cta"
+        >שלח הודעה →</a>
+      </div>
+      <button
+        type="button"
+        id="top-bar-close"
+        aria-label="סגור הודעה"
+        class="text-neutral-500 hover:text-white transition-colors flex-shrink-0 -m-2 p-2"
+      >
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  </div>
 
   <!-- ════════════════════════════════════════════════════
        FLOATING WHATSAPP CTA
@@ -270,7 +643,7 @@
   <!-- ════════════════════════════════════════════════════
        NAVBAR
   ═══════════════════════════════════════════════════════ -->
-  <header class="fixed top-0 inset-x-0 z-40 nav-glass">
+  <header id="site-header" class="fixed top-9 inset-x-0 z-40 nav-glass transition-[top] duration-300">
     <nav class="max-w-7xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between" aria-label="ניווט ראשי">
       <a href="#" class="flex items-center gap-2.5 group">
         <span class="relative w-8 h-8 rounded-lg bg-neon flex items-center justify-center flex-shrink-0 group-hover:rotate-12 transition-transform">
@@ -293,6 +666,21 @@
       </ul>
 
       <div class="flex items-center gap-2">
+
+        <!-- Theme Toggle -->
+        <button
+          type="button"
+          id="theme-toggle"
+          aria-label="Toggle theme"
+          class="hidden sm:flex items-center justify-center w-9 h-9 rounded-full border border-charcoal-500 hover:border-neon/40 transition-colors focus:outline-none focus:ring-2 focus:ring-neon"
+        >
+          <svg id="theme-icon-moon" class="theme-icon w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+          </svg>
+          <svg id="theme-icon-sun" class="theme-icon w-4 h-4 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+          </svg>
+        </button>
 
         <!-- Language Switcher -->
         <div class="relative" data-lang-switcher>
@@ -402,16 +790,31 @@
           </div>
         </div>
 
-        <button
-          type="button"
-          id="mobile-close"
-          aria-label="סגור תפריט"
-          class="flex items-center justify-center w-10 h-10 rounded-full border border-charcoal-500 hover:border-neon/40 transition-colors focus:outline-none focus:ring-2 focus:ring-neon"
-        >
-          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
+        <div class="flex items-center gap-2">
+          <button
+            type="button"
+            id="theme-toggle-mobile"
+            aria-label="Toggle theme"
+            class="flex items-center justify-center w-10 h-10 rounded-full border border-charcoal-500 hover:border-neon/40 transition-colors focus:outline-none focus:ring-2 focus:ring-neon"
+          >
+            <svg class="theme-icon-mobile-moon w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+            </svg>
+            <svg class="theme-icon-mobile-sun w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            id="mobile-close"
+            aria-label="סגור תפריט"
+            class="flex items-center justify-center w-10 h-10 rounded-full border border-charcoal-500 hover:border-neon/40 transition-colors focus:outline-none focus:ring-2 focus:ring-neon"
+          >
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
       </div>
 
       <!-- Nav links -->
@@ -920,12 +1323,37 @@
     <section id="testimonials" class="py-24 sm:py-32 bg-charcoal-950 relative" aria-labelledby="testimonials-heading">
       <div class="max-w-7xl mx-auto px-5 sm:px-8">
 
-        <div class="max-w-3xl mb-14">
-          <p class="text-neon text-xs font-bold tracking-[0.25em] uppercase mb-4" data-i18n="rev.label">לקוחות</p>
-          <h2 id="testimonials-heading" class="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tighter leading-[1.05]">
-            <span data-i18n="rev.title1">מה אומרים</span><br/>
-            <span class="text-neutral-500" data-i18n="rev.title2">בתל אביב.</span>
-          </h2>
+        <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-14">
+          <div class="max-w-3xl">
+            <div class="flex items-center gap-3 mb-4">
+              <p class="text-neon text-xs font-bold tracking-[0.25em] uppercase" data-i18n="rev.label">לקוחות</p>
+              <!-- Verified badge with Google logo -->
+              <span class="inline-flex items-center gap-1.5 glass rounded-full px-2.5 py-1 text-[10px] font-bold text-neutral-300">
+                <svg class="w-3 h-3" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                  <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                  <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                  <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                </svg>
+                <span data-i18n="rev.verified">ביקורות מאומתות</span>
+              </span>
+            </div>
+            <h2 id="testimonials-heading" class="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tighter leading-[1.05]">
+              <span data-i18n="rev.title1">מה אומרים</span><br/>
+              <span class="text-neutral-500" data-i18n="rev.title2">בתל אביב.</span>
+            </h2>
+          </div>
+
+          <a
+            href="https://www.google.com/maps/search/?api=1&query=Ibn+Gabirol+120+Tel+Aviv"
+            target="_blank" rel="noopener noreferrer"
+            class="btn-ghost inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-white font-bold text-sm focus:outline-none focus:ring-2 focus:ring-neon"
+          >
+            <span data-i18n="rev.viewAll">צפה בכל הביקורות</span>
+            <svg class="w-3.5 h-3.5 nav-arrow" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+            </svg>
+          </a>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -1057,6 +1485,127 @@
     </section>
 
     <!-- ════════════════════════════════════════════════════
+         FACEBOOK PAGE FEED
+    ═══════════════════════════════════════════════════════ -->
+    <section id="facebook" class="py-24 sm:py-32 bg-charcoal-900 border-y border-charcoal-600/40 relative overflow-hidden" aria-labelledby="fb-heading">
+
+      <div class="blob bg-blue-500 w-96 h-96 -top-40 right-0 opacity-10" aria-hidden="true"></div>
+
+      <div class="relative max-w-7xl mx-auto px-5 sm:px-8">
+
+        <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
+          <div class="max-w-2xl">
+            <div class="flex items-center gap-3 mb-4">
+              <p class="text-neon text-xs font-bold tracking-[0.25em] uppercase" data-i18n="fb.label">פייסבוק</p>
+              <span class="inline-flex items-center gap-1.5 glass rounded-full px-2.5 py-1 text-[10px] font-bold text-neutral-300">
+                <svg class="w-3 h-3 text-[#1877F2]" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+                <span data-i18n="fb.live">בזמן אמת</span>
+              </span>
+            </div>
+            <h2 id="fb-heading" class="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tighter leading-[1.05]">
+              <span data-i18n="fb.title1">מה קורה</span><br/>
+              <span class="text-neutral-500" data-i18n="fb.title2">בפייסבוק.</span>
+            </h2>
+          </div>
+
+          <a
+            href="https://www.facebook.com/HnadymanTLV"
+            target="_blank" rel="noopener noreferrer"
+            class="btn-ghost inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-white font-bold text-sm focus:outline-none focus:ring-2 focus:ring-neon"
+          >
+            <svg class="w-4 h-4 text-[#1877F2]" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+            <span data-i18n="fb.visit">בקרו בדף שלנו</span>
+          </a>
+        </div>
+
+        <!-- Facebook Page Plugin (official Meta embed, no API key, no watermark) -->
+        <div class="grid lg:grid-cols-3 gap-5">
+
+          <!-- Left: FB feed -->
+          <div class="lg:col-span-2 glass-strong rounded-3xl p-3 sm:p-5 overflow-hidden">
+            <div class="rounded-2xl overflow-hidden bg-white" style="min-height: 480px;">
+              <iframe
+                title="HandyMan TLV - Facebook"
+                src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FHnadymanTLV&tabs=timeline&width=500&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true"
+                width="100%" height="500"
+                style="border:none;overflow:hidden;width:100%"
+                scrolling="no" frameborder="0"
+                allowfullscreen="true"
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+              ></iframe>
+            </div>
+          </div>
+
+          <!-- Right: stats / call to action -->
+          <div class="space-y-5">
+
+            <div class="glass-strong rounded-3xl p-7">
+              <div class="w-12 h-12 rounded-2xl bg-[#1877F2]/15 border border-[#1877F2]/30 flex items-center justify-center mb-5">
+                <svg class="w-6 h-6 text-[#1877F2]" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+              </div>
+              <h3 class="text-xl font-bold text-white tracking-tight mb-2" data-i18n="fb.cta.title">תנו לייק. תהיו בעניינים.</h3>
+              <p class="text-neutral-400 text-sm leading-relaxed mb-6" data-i18n="fb.cta.desc">
+                עדכונים על עבודות חדשות, טיפים שימושיים וקופונים בלעדיים.
+              </p>
+              <a
+                href="https://www.facebook.com/HnadymanTLV"
+                target="_blank" rel="noopener noreferrer"
+                class="block text-center bg-[#1877F2] hover:bg-[#1565d8] rounded-full py-3 text-white font-bold text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-[#1877F2]"
+                data-i18n="fb.cta.button"
+              >עקבו אחרינו בפייסבוק</a>
+            </div>
+
+            <div class="glass rounded-3xl p-7">
+              <p class="text-xs font-bold tracking-widest text-neutral-500 uppercase mb-2" data-i18n="fb.share.label">שיתוף</p>
+              <p class="text-white text-sm leading-relaxed mb-4" data-i18n="fb.share.text">
+                מרוצים מהשירות? שתפו את החברים שלכם בתל אביב.
+              </p>
+              <div class="flex items-center gap-2">
+                <a
+                  href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.handymantlv.com"
+                  target="_blank" rel="noopener noreferrer"
+                  aria-label="שתף בפייסבוק"
+                  class="w-10 h-10 rounded-full glass flex items-center justify-center text-neutral-400 hover:text-[#1877F2] hover:border-[#1877F2]/40 transition-colors"
+                >
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                  </svg>
+                </a>
+                <a
+                  href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fwww.handymantlv.com&text=HandyMan%20TLV"
+                  target="_blank" rel="noopener noreferrer"
+                  aria-label="שתף ב-X"
+                  class="w-10 h-10 rounded-full glass flex items-center justify-center text-neutral-400 hover:text-white hover:border-neon/40 transition-colors"
+                >
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                  </svg>
+                </a>
+                <a
+                  href="https://wa.me/?text=https%3A%2F%2Fwww.handymantlv.com"
+                  target="_blank" rel="noopener noreferrer"
+                  aria-label="שתף בוואטסאפ"
+                  class="w-10 h-10 rounded-full glass flex items-center justify-center text-neutral-400 hover:text-[#25D366] hover:border-[#25D366]/40 transition-colors"
+                >
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════
          CONTACT
     ═══════════════════════════════════════════════════════ -->
     <section id="contact" class="py-24 sm:py-32 bg-charcoal-950 relative overflow-hidden" aria-labelledby="contact-heading">
@@ -1078,8 +1627,34 @@
 
           <!-- ─── Contact Form ─────────────────────── -->
           <div class="glass-strong rounded-3xl p-7 sm:p-9">
+
+            <!-- Booking shortcut bar -->
+            <div class="flex items-center gap-3 mb-7 p-4 rounded-2xl border border-neon/30 bg-neon-dim">
+              <div class="w-10 h-10 rounded-xl bg-neon/20 flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-neon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+                </svg>
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="text-white font-bold text-sm" data-i18n="book.title">קבעו תור ישירות</div>
+                <div class="text-neutral-400 text-xs" data-i18n="book.subtitle">בחרו זמן שמתאים לכם</div>
+              </div>
+              <button
+                type="button"
+                data-cal-link="handymantlv/30min"
+                data-cal-namespace="30min"
+                data-cal-config='{"layout":"month_view","theme":"dark"}'
+                class="btn-glow flex items-center gap-1.5 rounded-full px-4 py-2.5 text-white font-bold text-xs focus:outline-none focus:ring-2 focus:ring-white"
+              >
+                <span data-i18n="book.button">בחר זמן</span>
+                <svg class="w-3 h-3 nav-arrow" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                </svg>
+              </button>
+            </div>
+
             <h3 class="text-2xl font-bold text-white tracking-tight mb-1" data-i18n="form.title">שלחו לנו הודעה</h3>
-            <p class="text-neutral-500 text-sm mb-7" data-i18n="form.subtitle">נחזור אליכם בהקדם.</p>
+            <p class="text-neutral-500 text-sm mb-7" data-i18n="form.subtitle">או מלאו את הטופס ונחזור אליכם.</p>
 
             <form
               action="https://formsubmit.co/handyfix4u@gmail.com"
@@ -1270,12 +1845,7 @@
                 <span>פתח ב-Maps</span>
               </a>
 
-              <iframe
-                title="HandyMan TLV - מיקום"
-                src="https://www.openstreetmap.org/export/embed.html?bbox=34.7787%2C32.0821%2C34.7847%2C32.0881&layer=mapnik&marker=32.0851%2C34.7817"
-                width="100%" height="340" loading="lazy"
-                style="border:0; filter: invert(0.92) hue-rotate(180deg) brightness(0.95) contrast(0.88);"
-              ></iframe>
+              <div id="leaflet-map" role="img" aria-label="מיקום HandyMan TLV - אבן גבירול 120 תל אביב"></div>
             </div>
 
           </div>
@@ -1406,6 +1976,13 @@
         'form.name': 'שם', 'form.email': 'אימייל', 'form.phone': 'טלפון', 'form.subject': 'נושא', 'form.message': 'הודעה',
         'form.name.ph': 'שם *', 'form.email.ph': 'אימייל *', 'form.phone.ph': 'טלפון', 'form.subject.ph': 'נושא *', 'form.message.ph': 'ההודעה שלך *',
         'form.send': 'שליחה', 'form.privacy': 'הפרטים שלך שמורים אצלנו ולא יועברו לאף גורם שלישי.',
+        'topbar.online': 'זמין עכשיו', 'topbar.text': 'מענה תוך דקות בוואטסאפ', 'topbar.cta': 'שלח הודעה →',
+        'book.title': 'קבעו תור ישירות', 'book.subtitle': 'בחרו זמן שמתאים לכם', 'book.button': 'בחר זמן',
+        'rev.verified': 'ביקורות מאומתות', 'rev.viewAll': 'צפה בכל הביקורות',
+        'fb.label': 'פייסבוק', 'fb.live': 'בזמן אמת', 'fb.title1': 'מה קורה', 'fb.title2': 'בפייסבוק.',
+        'fb.visit': 'בקרו בדף שלנו',
+        'fb.cta.title': 'תנו לייק. תהיו בעניינים.', 'fb.cta.desc': 'עדכונים על עבודות חדשות, טיפים שימושיים וקופונים בלעדיים.', 'fb.cta.button': 'עקבו אחרינו בפייסבוק',
+        'fb.share.label': 'שיתוף', 'fb.share.text': 'מרוצים מהשירות? שתפו את החברים שלכם בתל אביב.',
         'hero.badge': 'פעיל עכשיו · 7 ימים בשבוע',
         'hero.fixing': 'מתקנים את', 'hero.tlv': 'תל אביב', 'hero.dot': '.', 'hero.style': 'בסטייל.',
         'hero.subtitle': 'הנדימן מקצועי. שירות פרימיום.<br/><span class="text-neutral-500">אפס כאב ראש.</span>',
@@ -1457,6 +2034,13 @@
         'form.name': 'Name', 'form.email': 'Email', 'form.phone': 'Phone', 'form.subject': 'Subject', 'form.message': 'Message',
         'form.name.ph': 'Name *', 'form.email.ph': 'Email *', 'form.phone.ph': 'Phone', 'form.subject.ph': 'Subject *', 'form.message.ph': 'Your message *',
         'form.send': 'Send', 'form.privacy': 'Your details stay with us and are never shared with third parties.',
+        'topbar.online': 'Available now', 'topbar.text': 'Reply within minutes on WhatsApp', 'topbar.cta': 'Message us →',
+        'book.title': 'Book a slot directly', 'book.subtitle': 'Pick a time that works for you', 'book.button': 'Pick a time',
+        'rev.verified': 'Verified reviews', 'rev.viewAll': 'See all reviews',
+        'fb.label': 'FACEBOOK', 'fb.live': 'Live', 'fb.title1': 'What\'s happening', 'fb.title2': 'on Facebook.',
+        'fb.visit': 'Visit our page',
+        'fb.cta.title': 'Like us. Stay in the loop.', 'fb.cta.desc': 'Updates on new jobs, useful tips, and exclusive coupons.', 'fb.cta.button': 'Follow us on Facebook',
+        'fb.share.label': 'SHARE', 'fb.share.text': 'Happy with our service? Share with your friends in Tel Aviv.',
         'hero.badge': 'Active now · 7 days a week',
         'hero.fixing': 'Fixing', 'hero.tlv': 'Tel Aviv', 'hero.dot': '.', 'hero.style': 'In style.',
         'hero.subtitle': 'Professional handyman. Premium service.<br/><span class="text-neutral-500">Zero hassle.</span>',
@@ -1508,6 +2092,13 @@
         'form.name': 'Nom', 'form.email': 'Email', 'form.phone': 'Téléphone', 'form.subject': 'Sujet', 'form.message': 'Message',
         'form.name.ph': 'Nom *', 'form.email.ph': 'Email *', 'form.phone.ph': 'Téléphone', 'form.subject.ph': 'Sujet *', 'form.message.ph': 'Votre message *',
         'form.send': 'Envoyer', 'form.privacy': 'Vos données restent chez nous, jamais transmises à des tiers.',
+        'topbar.online': 'Disponible', 'topbar.text': 'Réponse en quelques minutes sur WhatsApp', 'topbar.cta': 'Écrivez-nous →',
+        'book.title': 'Prenez RDV directement', 'book.subtitle': 'Choisissez un créneau qui vous convient', 'book.button': 'Choisir',
+        'rev.verified': 'Avis vérifiés', 'rev.viewAll': 'Voir tous les avis',
+        'fb.label': 'FACEBOOK', 'fb.live': 'En direct', 'fb.title1': 'Sur', 'fb.title2': 'Facebook.',
+        'fb.visit': 'Voir notre page',
+        'fb.cta.title': 'Aimez. Restez informés.', 'fb.cta.desc': 'Actualités sur les nouveaux chantiers, astuces utiles et bons plans exclusifs.', 'fb.cta.button': 'Suivre sur Facebook',
+        'fb.share.label': 'PARTAGER', 'fb.share.text': 'Satisfait du service ? Partagez avec vos amis à Tel Aviv.',
         'hero.badge': 'Actif maintenant · 7j/7',
         'hero.fixing': 'On répare', 'hero.tlv': 'Tel Aviv', 'hero.dot': '.', 'hero.style': 'Avec style.',
         'hero.subtitle': 'Bricoleur professionnel. Service premium.<br/><span class="text-neutral-500">Zéro tracas.</span>',
@@ -1559,6 +2150,13 @@
         'form.name': 'Имя', 'form.email': 'Email', 'form.phone': 'Телефон', 'form.subject': 'Тема', 'form.message': 'Сообщение',
         'form.name.ph': 'Имя *', 'form.email.ph': 'Email *', 'form.phone.ph': 'Телефон', 'form.subject.ph': 'Тема *', 'form.message.ph': 'Ваше сообщение *',
         'form.send': 'Отправить', 'form.privacy': 'Ваши данные остаются у нас и не передаются третьим лицам.',
+        'topbar.online': 'Сейчас на связи', 'topbar.text': 'Ответ за минуты в WhatsApp', 'topbar.cta': 'Написать →',
+        'book.title': 'Записаться сразу', 'book.subtitle': 'Выберите удобное время', 'book.button': 'Выбрать',
+        'rev.verified': 'Проверенные отзывы', 'rev.viewAll': 'Все отзывы',
+        'fb.label': 'FACEBOOK', 'fb.live': 'В прямом эфире', 'fb.title1': 'Что происходит', 'fb.title2': 'в Facebook.',
+        'fb.visit': 'Наша страница',
+        'fb.cta.title': 'Лайкните. Будьте в курсе.', 'fb.cta.desc': 'Новости о работах, полезные советы и эксклюзивные купоны.', 'fb.cta.button': 'Подписаться в Facebook',
+        'fb.share.label': 'ПОДЕЛИТЬСЯ', 'fb.share.text': 'Понравился сервис? Поделитесь с друзьями в Тель-Авиве.',
         'hero.badge': 'Сейчас работаем · 7 дней в неделю',
         'hero.fixing': 'Чиним', 'hero.tlv': 'Тель-Авив', 'hero.dot': '.', 'hero.style': 'Со стилем.',
         'hero.subtitle': 'Профессиональный мастер. Премиум-сервис.<br/><span class="text-neutral-500">Никаких хлопот.</span>',
@@ -1610,6 +2208,13 @@
         'form.name': 'Nombre', 'form.email': 'Email', 'form.phone': 'Teléfono', 'form.subject': 'Asunto', 'form.message': 'Mensaje',
         'form.name.ph': 'Nombre *', 'form.email.ph': 'Email *', 'form.phone.ph': 'Teléfono', 'form.subject.ph': 'Asunto *', 'form.message.ph': 'Tu mensaje *',
         'form.send': 'Enviar', 'form.privacy': 'Tus datos permanecen con nosotros y no se comparten con terceros.',
+        'topbar.online': 'Disponible', 'topbar.text': 'Respuesta en minutos por WhatsApp', 'topbar.cta': 'Escríbenos →',
+        'book.title': 'Reserva directa', 'book.subtitle': 'Elige un horario que te convenga', 'book.button': 'Elegir',
+        'rev.verified': 'Reseñas verificadas', 'rev.viewAll': 'Ver todas las reseñas',
+        'fb.label': 'FACEBOOK', 'fb.live': 'En vivo', 'fb.title1': 'Qué pasa', 'fb.title2': 'en Facebook.',
+        'fb.visit': 'Visita nuestra página',
+        'fb.cta.title': 'Danos like. Mantente al día.', 'fb.cta.desc': 'Novedades, consejos útiles y cupones exclusivos.', 'fb.cta.button': 'Síguenos en Facebook',
+        'fb.share.label': 'COMPARTIR', 'fb.share.text': '¿Contento con el servicio? Compártelo con tus amigos en Tel Aviv.',
         'hero.badge': 'Activo ahora · 7 días a la semana',
         'hero.fixing': 'Arreglando', 'hero.tlv': 'Tel Aviv', 'hero.dot': '.', 'hero.style': 'Con estilo.',
         'hero.subtitle': 'Manitas profesional. Servicio premium.<br/><span class="text-neutral-500">Cero molestias.</span>',
@@ -1751,6 +2356,103 @@
     try { savedLang = localStorage.getItem(STORAGE_KEY); } catch(e) {}
     setLang(urlLang || savedLang || 'he');
 
+    /* ─── Theme Toggle (Light / Dark) ─────────────────── */
+    const THEME_KEY = 'handymantlv-theme';
+
+    function setTheme(theme) {
+      const html = document.documentElement;
+      if (theme === 'light') html.classList.add('light');
+      else html.classList.remove('light');
+
+      // Toggle desktop icons
+      const moon = document.getElementById('theme-icon-moon');
+      const sun  = document.getElementById('theme-icon-sun');
+      if (moon && sun) {
+        moon.classList.toggle('hidden', theme === 'light');
+        sun.classList.toggle('hidden',  theme !== 'light');
+      }
+
+      // Toggle mobile icons
+      document.querySelectorAll('.theme-icon-mobile-moon').forEach(el => el.classList.toggle('hidden', theme === 'light'));
+      document.querySelectorAll('.theme-icon-mobile-sun').forEach(el => el.classList.toggle('hidden',  theme !== 'light'));
+
+      // Swap Leaflet tiles to match theme
+      if (window.__mapTileLayer) {
+        const url = theme === 'light'
+          ? 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png'
+          : 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
+        window.__mapTileLayer.setUrl(url);
+      }
+
+      try { localStorage.setItem(THEME_KEY, theme); } catch(e) {}
+    }
+
+    function toggleTheme() {
+      const isLight = document.documentElement.classList.contains('light');
+      setTheme(isLight ? 'dark' : 'light');
+    }
+
+    document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme);
+    document.getElementById('theme-toggle-mobile')?.addEventListener('click', toggleTheme);
+
+    // Sync icons with the class state set by the inline bootstrap script
+    setTheme(document.documentElement.classList.contains('light') ? 'light' : 'dark');
+
+    // Listen for system theme changes (only if user hasn't picked one)
+    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', e => {
+      try { if (localStorage.getItem(THEME_KEY)) return; } catch(_) {}
+      setTheme(e.matches ? 'light' : 'dark');
+    });
+
+    /* ─── Top Bar (dismissible) ───────────────────────── */
+    const topBar = document.getElementById('top-bar');
+    const topBarClose = document.getElementById('top-bar-close');
+    const siteHeader = document.getElementById('site-header');
+
+    if (topBar && sessionStorage.getItem('topbar-closed') === '1') {
+      topBar.style.display = 'none';
+      if (siteHeader) siteHeader.style.top = '0';
+    }
+
+    topBarClose?.addEventListener('click', () => {
+      if (topBar) topBar.style.display = 'none';
+      if (siteHeader) siteHeader.style.top = '0';
+      try { sessionStorage.setItem('topbar-closed', '1'); } catch(e) {}
+    });
+
+    /* ─── Cal.com Embed ───────────────────────────────── */
+    (function (C, A, L) {
+      let p = function (a, ar) { a.q.push(ar); };
+      let d = C.document;
+      C.Cal = C.Cal || function () {
+        let cal = C.Cal; let ar = arguments;
+        if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; }
+        if (ar[0] === L) {
+          const api = function () { p(api, arguments); };
+          const namespace = ar[1];
+          api.q = api.q || [];
+          if (typeof namespace === "string") {
+            cal.ns[namespace] = cal.ns[namespace] || api;
+            p(cal.ns[namespace], ar);
+            p(cal, ["initNamespace", namespace]);
+          } else { p(cal, ar); }
+          return;
+        }
+        p(cal, ar);
+      };
+    })(window, "https://app.cal.com/embed/embed.js", "init");
+
+    Cal("init", "30min", { origin: "https://cal.com" });
+    Cal.ns["30min"]("ui", {
+      cssVarsPerTheme: {
+        light: { "cal-brand": "#FF5F1F" },
+        dark:  { "cal-brand": "#FF5F1F" }
+      },
+      hideEventTypeDetails: false,
+      layout: "month_view",
+      theme: "dark"
+    });
+
     /* ─── Mobile Menu ─────────────────────────────────── */
     const mobileToggle = document.getElementById('mobile-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
@@ -1781,6 +2483,56 @@
         closeMobileMenu();
       }
     });
+
+    /* ─── Leaflet Map (no WebGL required) ─────────────── */
+    function initMap() {
+      const el = document.getElementById('leaflet-map');
+      if (!el || typeof L === 'undefined' || el.dataset.inited) return;
+      el.dataset.inited = '1';
+
+      const COORDS = [32.0851, 34.7817]; // Ibn Gabirol 120, Tel Aviv
+
+      const map = L.map('leaflet-map', {
+        center: COORDS,
+        zoom: 16,
+        scrollWheelZoom: false,
+        zoomControl: true,
+        attributionControl: true,
+      });
+
+      // CartoDB tiles — auto-match current theme (light/dark)
+      const isLight = document.documentElement.classList.contains('light');
+      const tileUrl = isLight
+        ? 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png'
+        : 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
+
+      window.__mapTileLayer = L.tileLayer(tileUrl, {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 19,
+      }).addTo(map);
+
+      const neonIcon = L.divIcon({
+        html: '<div class="neon-marker"></div>',
+        className: 'neon-marker-wrap',
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
+      });
+
+      L.marker(COORDS, { icon: neonIcon, title: 'HandyMan TLV' })
+        .addTo(map)
+        .bindPopup('<strong style="color:#FF5F1F">HandyMan TLV</strong><br/>אבן גבירול 120, תל אביב');
+
+      // Re-enable scroll zoom on click for better UX
+      map.on('click', () => map.scrollWheelZoom.enable());
+      map.on('mouseout', () => map.scrollWheelZoom.disable());
+    }
+
+    if (typeof L !== 'undefined') {
+      initMap();
+    } else {
+      window.addEventListener('load', initMap);
+    }
 
     /* ─── Bento mouse-follow glow ─────────────────────── */
     document.querySelectorAll('.bento').forEach(el => {
