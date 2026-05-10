@@ -527,23 +527,24 @@
       color: #18181B;
     }
 
-    /* ─── Skyline Container (responsive aspect ratio) ─── */
+    /* ─── Skyline Container (sits at bottom, never covers CTAs) ─── */
     .tlv-skyline-wrap {
       position: absolute;
       bottom: 0;
       inset-inline: 0;
-      /* Height grows proportionally with viewport width up to a ceiling */
-      height: clamp(7rem, calc(100vw / 8.5), 18rem);
-      overflow: hidden;
+      /* Compact height — shorter on narrow, modest on wide. Never covers hero buttons. */
+      height: clamp(5.5rem, calc(100vw / 14), 10rem);
+      overflow: visible; /* let antenna lights peek above without clipping */
       pointer-events: none;
-      mask-image: linear-gradient(to top, black 60%, transparent 100%);
-      -webkit-mask-image: linear-gradient(to top, black 60%, transparent 100%);
+      mask-image: linear-gradient(to top, black 70%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to top, black 70%, transparent 100%);
     }
     .skyline-svg {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
+      overflow: visible;
     }
 
     /* Spotlight that follows the cursor */
@@ -620,51 +621,66 @@
       fill: rgba(220,60,5,1) !important;
     }
 
-    /* ─── Skyline Animations ──────────────────────────── */
+    /* ─── Skyline Animations (dramatic + visible) ─────── */
     @keyframes skyline-blink {
-      0%, 48% { opacity: 1; }
-      50%, 96% { opacity: 0.12; }
-      100% { opacity: 1; }
+      0%, 40%   { opacity: 1; transform: scale(1); }
+      50%, 90%  { opacity: 0;   transform: scale(0.6); }
+      100%      { opacity: 1; transform: scale(1); }
     }
     @keyframes skyline-blink-slow {
-      0%, 70% { opacity: 1; }
-      75%, 95% { opacity: 0.15; }
-      100% { opacity: 1; }
+      0%, 65%   { opacity: 1; transform: scale(1); }
+      75%, 92%  { opacity: 0.05; transform: scale(0.5); }
+      100%      { opacity: 1; transform: scale(1); }
     }
     @keyframes skyline-window-a {
-      0%, 100% { opacity: 0.3; }
-      25%, 75% { opacity: 1; }
+      0%, 100%  { opacity: 0.15; }
+      30%, 60%  { opacity: 1; }
     }
     @keyframes skyline-window-b {
-      0%, 30%, 100% { opacity: 0.2; }
-      55%, 75% { opacity: 0.95; }
+      0%, 25%, 100% { opacity: 0.1; }
+      45%, 75%  { opacity: 1; }
     }
     @keyframes skyline-window-c {
-      0%, 60%, 100% { opacity: 0.35; }
-      18%, 28% { opacity: 1; }
+      0%, 65%, 100% { opacity: 0.2; }
+      15%, 35%  { opacity: 1; }
     }
     @keyframes skyline-window-d {
-      0%, 100% { opacity: 0.4; }
-      40%, 50% { opacity: 1; }
-      85% { opacity: 0.2; }
+      0%, 100%  { opacity: 0.25; }
+      35%, 55%  { opacity: 1; }
+      80%       { opacity: 0.05; }
     }
     @keyframes skyline-radio-pulse {
-      0%, 100% { r: 1.5; opacity: 1; }
-      50%      { r: 3;   opacity: 0.4; }
+      0%, 100%  { r: 1.8; opacity: 1; }
+      50%       { r: 4.5; opacity: 0.3; }
     }
     @keyframes skyline-spire-glow {
-      0%, 100% { stroke-opacity: 0.6; }
-      50%      { stroke-opacity: 1; }
+      0%, 100%  { stroke-opacity: 0.5; }
+      50%       { stroke-opacity: 1; }
     }
 
-    .skyline-light    { animation: skyline-blink     2.2s ease-in-out infinite; transform-origin: center; }
-    .skyline-light-2  { animation: skyline-blink-slow 3.5s ease-in-out infinite -1.2s; transform-origin: center; }
-    .skyline-radio    { animation: skyline-radio-pulse 2s ease-in-out infinite; transform-origin: center; }
+    .skyline-light    {
+      animation: skyline-blink 1.6s ease-in-out infinite;
+      transform-origin: center;
+      transform-box: fill-box;
+      filter: drop-shadow(0 0 4px rgba(255,95,31,0.85));
+    }
+    .skyline-light-2  {
+      animation: skyline-blink-slow 2.4s ease-in-out infinite -0.7s;
+      transform-origin: center;
+      transform-box: fill-box;
+      filter: drop-shadow(0 0 4px rgba(255,95,31,0.85));
+    }
+    .skyline-radio    {
+      animation: skyline-radio-pulse 1.8s ease-in-out infinite;
+      transform-origin: center;
+      transform-box: fill-box;
+      filter: drop-shadow(0 0 4px rgba(255,95,31,0.7));
+    }
     .skyline-spire    { animation: skyline-spire-glow 2.5s ease-in-out infinite; }
-    .skyline-window-a { animation: skyline-window-a 4.5s ease-in-out infinite; }
-    .skyline-window-b { animation: skyline-window-b 5.8s ease-in-out infinite -1.7s; }
-    .skyline-window-c { animation: skyline-window-c 6.2s ease-in-out infinite -3s; }
-    .skyline-window-d { animation: skyline-window-d 5.2s ease-in-out infinite -2.4s; }
+    .skyline-window-a { animation: skyline-window-a 3.2s ease-in-out infinite; filter: drop-shadow(0 0 2px rgba(255,200,140,0.9)); }
+    .skyline-window-b { animation: skyline-window-b 4s   ease-in-out infinite -1.1s; filter: drop-shadow(0 0 2px rgba(255,200,140,0.9)); }
+    .skyline-window-c { animation: skyline-window-c 4.4s ease-in-out infinite -2.3s; filter: drop-shadow(0 0 2px rgba(255,200,140,0.9)); }
+    .skyline-window-d { animation: skyline-window-d 3.6s ease-in-out infinite -1.8s; filter: drop-shadow(0 0 2px rgba(255,200,140,0.9)); }
 
     @media (prefers-reduced-motion: reduce) {
       .skyline-light, .skyline-light-2, .skyline-radio, .skyline-spire,
@@ -1378,7 +1394,7 @@
 
       <!-- ─── Tel Aviv Skyline Silhouette (interactive) ─── -->
       <div class="tlv-skyline-wrap" id="tlv-skyline-wrap" aria-hidden="true">
-      <svg class="skyline-svg" viewBox="0 0 1440 180" preserveAspectRatio="xMidYMax slice">
+      <svg class="skyline-svg" viewBox="0 -8 1440 188" preserveAspectRatio="xMidYMax meet">
         <defs>
           <linearGradient id="skylineGrad" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stop-color="rgba(255,255,255,0.08)"/>
@@ -1903,26 +1919,26 @@
 
         <!-- Window dots (twinkling lights) -->
         <g fill="rgba(255,200,140,1)">
-          <rect x="555" y="90"  width="2" height="2" class="skyline-window-a"/>
-          <rect x="565" y="120" width="2" height="2" class="skyline-window-b"/>
-          <rect x="575" y="140" width="2" height="2" class="skyline-window-c"/>
-          <rect x="965" y="80"  width="2" height="2" class="skyline-window-d"/>
-          <rect x="975" y="110" width="2" height="2" class="skyline-window-a"/>
-          <rect x="985" y="135" width="2" height="2" class="skyline-window-b"/>
-          <rect x="1075" y="95"  width="2" height="2" class="skyline-window-c"/>
-          <rect x="1095" y="130" width="2" height="2" class="skyline-window-d"/>
+          <rect x="555" y="90"  width="3" height="3" class="skyline-window-a"/>
+          <rect x="565" y="120" width="3" height="3" class="skyline-window-b"/>
+          <rect x="575" y="140" width="3" height="3" class="skyline-window-c"/>
+          <rect x="965" y="80"  width="3" height="3" class="skyline-window-d"/>
+          <rect x="975" y="110" width="3" height="3" class="skyline-window-a"/>
+          <rect x="985" y="135" width="3" height="3" class="skyline-window-b"/>
+          <rect x="1075" y="95"  width="3" height="3" class="skyline-window-c"/>
+          <rect x="1095" y="130" width="3" height="3" class="skyline-window-d"/>
 
           <!-- Extra windows for more life -->
-          <rect x="445" y="110" width="2" height="2" class="skyline-window-b"/>
-          <rect x="460" y="140" width="2" height="2" class="skyline-window-d"/>
-          <rect x="625" y="125" width="2" height="2" class="skyline-window-a"/>
-          <rect x="675" y="100" width="2" height="2" class="skyline-window-c"/>
-          <rect x="715" y="140" width="2" height="2" class="skyline-window-b"/>
-          <rect x="1020" y="110" width="2" height="2" class="skyline-window-c"/>
-          <rect x="1145" y="120" width="2" height="2" class="skyline-window-d"/>
-          <rect x="1190" y="115" width="2" height="2" class="skyline-window-a"/>
-          <rect x="1300" y="155" width="2" height="2" class="skyline-window-b"/>
-          <rect x="1370" y="160" width="2" height="2" class="skyline-window-d"/>
+          <rect x="445" y="110" width="3" height="3" class="skyline-window-b"/>
+          <rect x="460" y="140" width="3" height="3" class="skyline-window-d"/>
+          <rect x="625" y="125" width="3" height="3" class="skyline-window-a"/>
+          <rect x="675" y="100" width="3" height="3" class="skyline-window-c"/>
+          <rect x="715" y="140" width="3" height="3" class="skyline-window-b"/>
+          <rect x="1020" y="110" width="3" height="3" class="skyline-window-c"/>
+          <rect x="1145" y="120" width="3" height="3" class="skyline-window-d"/>
+          <rect x="1190" y="115" width="3" height="3" class="skyline-window-a"/>
+          <rect x="1300" y="155" width="3" height="3" class="skyline-window-b"/>
+          <rect x="1370" y="160" width="3" height="3" class="skyline-window-d"/>
         </g>
       </svg>
       <div class="skyline-spotlight" aria-hidden="true"></div>
