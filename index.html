@@ -11,6 +11,14 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="format-detection" content="telephone=yes" />
   <link rel="canonical" href="https://www.handymantlv.com/" />
+
+  <!-- ─── Hreflang (multilingual SEO) ─────────────────── -->
+  <link rel="alternate" hreflang="he"        href="https://www.handymantlv.com/?lang=he" />
+  <link rel="alternate" hreflang="en"        href="https://www.handymantlv.com/?lang=en" />
+  <link rel="alternate" hreflang="fr"        href="https://www.handymantlv.com/?lang=fr" />
+  <link rel="alternate" hreflang="ru"        href="https://www.handymantlv.com/?lang=ru" />
+  <link rel="alternate" hreflang="es"        href="https://www.handymantlv.com/?lang=es" />
+  <link rel="alternate" hreflang="x-default" href="https://www.handymantlv.com/" />
   <title>HandyMan TLV · מתקנים את תל אביב. בסטייל.</title>
 
   <!-- Theme bootstrap — saved choice > time-of-day > system pref. Prevents flash. -->
@@ -144,6 +152,96 @@
     "url": "https://www.handymantlv.com/",
     "name": "HandyMan TLV",
     "inLanguage": ["he-IL","en-US","fr-FR","ru-RU","es-ES"]
+  }
+  </script>
+
+  <!-- ─── Schema.org · FAQPage (Google rich-results) ───── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "אילו ימים ושעות אתם פעילים?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "אנחנו פעילים 7 ימים בשבוע, 08:00 עד 22:00, כולל ערבי שישי וסופי שבוע."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "מה כולל המחיר?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "כל עבודה מתומחרת לגופה. שלחו תיאור או תמונה בוואטסאפ ותקבלו הצעת מחיר ללא התחייבות."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "האם יש אחריות על העבודה?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "אנחנו עומדים מאחורי כל עבודה. במקרה של בעיה — פונים אלינו ונטפל בה."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "אילו אזורים אתם מכסים?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "תל אביב יפו במלואה — מצפון ישן ועד יפו העתיקה, פלורנטין, רוטשילד, רמת אביב, נווה צדק, אבן גבירול ועוד. אין תוספת נסיעה לשכונות מרכזיות."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "איך מתחילים?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "3 צעדים פשוטים: שולחים תיאור או תמונה בוואטסאפ, מקבלים הצעת מחיר מיידית, וקובעים תור."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- ─── Schema.org · BreadcrumbList ──────────────────── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home",     "item": "https://www.handymantlv.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://www.handymantlv.com/#services" },
+      { "@type": "ListItem", "position": 3, "name": "Reviews",  "item": "https://www.handymantlv.com/#testimonials" },
+      { "@type": "ListItem", "position": 4, "name": "Contact",  "item": "https://www.handymantlv.com/#contact" }
+    ]
+  }
+  </script>
+
+  <!-- ─── Schema.org · Services (specific offerings) ───── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "Handyman Service",
+    "provider": { "@id": "https://www.handymantlv.com/#business" },
+    "areaServed": { "@type": "City", "name": "Tel Aviv-Yafo" },
+    "availableLanguage": ["Hebrew","English","French","Russian","Spanish"],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Handyman services in Tel Aviv-Yafo",
+      "itemListElement": [
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Furniture Repair & Assembly", "alternateName": "תיקון והרכבת רהיטים" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Doors & Locks",               "alternateName": "דלתות ומנעולים" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Light Electrical",            "alternateName": "תיקוני חשמל קלים" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "TV & Shelf Mounting",         "alternateName": "תליית טלוויזיה ומדפים" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Walls, Plaster & Paint",      "alternateName": "גבס, סדקים וצבע" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Light Plumbing",              "alternateName": "אינסטלציה קלה" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Blinds Repair & Replacement", "alternateName": "תיקון והחלפת תריסים" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Furniture Refurbishment",     "alternateName": "שיפוץ רהיטים" } }
+      ]
+    }
   }
   </script>
 
@@ -3066,6 +3164,63 @@
   <!-- ════════════════════════════════════════════════════
        FOOTER
   ═══════════════════════════════════════════════════════ -->
+  <!-- ════════════════════════════════════════════════════
+       SEO CONTENT BLOCK — rich, crawlable, real text
+  ═══════════════════════════════════════════════════════ -->
+  <section class="py-16 sm:py-20 bg-charcoal-900 border-t border-charcoal-600/40" aria-label="About HandyMan TLV">
+    <div class="max-w-4xl mx-auto px-5 sm:px-8">
+
+      <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight mb-6">הנדימן מקצועי בתל אביב יפו</h2>
+
+      <div class="text-neutral-400 text-sm sm:text-base leading-relaxed space-y-4">
+        <p>
+          <strong class="text-white">HandyMan TLV</strong> הוא שירות הנדימן מקצועי הפועל בכל רחבי תל אביב יפו ומציע פתרונות מהירים ואיכותיים לכל תיקון בבית או במשרד. אנחנו מתמחים בהרכבת רהיטים, נגרות ושיפוץ רהיטים, החלפת מנעולים ותיקוני דלתות, תיקוני חשמל קלים, תליית טלוויזיות ומדפים, תיקוני קיר, צבע ושפכטל, אינסטלציה קלה והחלפת תריסים.
+        </p>
+        <p>
+          הצוות שלנו מגיע לכל שכונה בתל אביב — מפלורנטין ונווה צדק בדרום, דרך לב העיר, רוטשילד והכרם, ועד הצפון הישן והחדש, רמת אביב, אבן גבירול, ונווה אביבים. <strong class="text-white">אין תוספת נסיעה</strong> לשכונות מרכזיות. אנחנו פעילים 7 ימים בשבוע, מ-08:00 ועד 22:00, כולל ערבי שישי וסופי שבוע.
+        </p>
+        <p>
+          אנחנו מאמינים בשירות הוגן ושקוף — כל עבודה מתומחרת לגופה לפי סוג, היקף וחומרים. <strong class="text-white">ההצעה ניתנת מראש ללא התחייבות</strong>, ואנחנו עומדים מאחורי כל עבודה. שלחו תיאור או תמונה בוואטסאפ ותקבלו הצעה מהירה.
+        </p>
+      </div>
+
+      <h3 class="text-white font-bold text-lg sm:text-xl mt-10 mb-4">השירותים שלנו</h3>
+      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-sm text-neutral-400 list-inside list-disc marker:text-neon">
+        <li>הרכבת רהיטים — IKEA, ארונות, שולחנות, מיטות, כיסאות</li>
+        <li>נגרות, שיפוץ רהיטים ורהיטי עתיקה</li>
+        <li>החלפת מנעולים, ידיות, צירים ותיקון דלתות</li>
+        <li>תיקוני חשמל — שקעים, מתגים, גופי תאורה ונורות</li>
+        <li>תליית טלוויזיה על קיר גבס או בטון</li>
+        <li>תליית מדפים, מראות, תמונות וזרועות TV</li>
+        <li>תיקוני גבס, סדקים בקיר, חורי IKEA וצביעה</li>
+        <li>אינסטלציה קלה — ברזים, פטמות וחיבורים</li>
+        <li>תיקון והחלפת תריסים חשמליים וידניים</li>
+        <li>התקנת מערכות סטריאו וטיפול במכשירי TV</li>
+      </ul>
+
+      <h3 class="text-white font-bold text-lg sm:text-xl mt-10 mb-4">אזורי שירות בתל אביב יפו והסביבה</h3>
+      <p class="text-sm text-neutral-400 leading-relaxed">
+        צפון ישן · צפון חדש · רמת אביב · נווה אביבים · אפקה · הדר יוסף · נווה שרת · גן העיר · מרכז תל אביב · לב העיר · אבן גבירול · רוטשילד · הכרם · נווה צדק · פלורנטין · יפו העתיקה · יפו ד · קריית שלום · נחלת יצחק · ביצרון · רמת ישראל · גבעתיים · רמת גן · בני ברק · הרצליה · רמת השרון
+      </p>
+
+      <h3 class="text-white font-bold text-lg sm:text-xl mt-10 mb-4">למה לבחור ב-HandyMan TLV</h3>
+      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-sm text-neutral-400 list-inside list-disc marker:text-neon">
+        <li>שירות מהיר — תגובה תוך דקות בוואטסאפ</li>
+        <li>מחיר הוגן וידוע מראש, ללא הפתעות</li>
+        <li>בעלי מקצוע מנוסים עם ציוד מלא</li>
+        <li>פעילים 7 ימים בשבוע, ערבים וסופי שבוע</li>
+        <li>אחריות מלאה על כל עבודה</li>
+        <li>כיסוי בכל תל אביב יפו ללא תוספת נסיעה</li>
+      </ul>
+
+      <p class="text-xs text-neutral-600 mt-10 leading-relaxed">
+        <strong class="text-neutral-500">מילות מפתח רלוונטיות:</strong>
+        הנדימן תל אביב, הנדימן בתל אביב, תיקונים ביתיים תל אביב, שיפוצניק תל אביב, הרכבת רהיטים תל אביב, IKEA הרכבה תל אביב, החלפת מנעול תל אביב, תליית טלוויזיה תל אביב, חשמלאי תל אביב, צבע תל אביב, גבס תל אביב, אינסטלטור תל אביב.
+      </p>
+
+    </div>
+  </section>
+
   <footer class="bg-charcoal-900 border-t border-charcoal-600/40 py-12 relative overflow-hidden" role="contentinfo">
 
     <!-- Mediterranean wave (TLV beach reference) -->
