@@ -1028,15 +1028,21 @@
 
     <!-- Header -->
     <div class="flex items-center gap-3 p-4 border-b border-charcoal-600/40" style="background: linear-gradient(180deg, rgba(255,95,31,0.12), transparent);">
-      <div class="relative w-10 h-10 rounded-full bg-gradient-to-br from-neon to-neon-soft flex items-center justify-center flex-shrink-0">
-        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63" />
-        </svg>
-        <span class="absolute -bottom-0.5 -end-0.5 w-3 h-3 rounded-full bg-emerald-400 border-2 border-charcoal-800" aria-hidden="true"></span>
+      <div class="relative w-11 h-11 rounded-full overflow-hidden flex-shrink-0 ring-2 ring-neon/40 bg-charcoal-700">
+        <img
+          src="https://randomuser.me/api/portraits/men/32.jpg"
+          alt=""
+          class="w-full h-full object-cover"
+          referrerpolicy="no-referrer"
+          loading="lazy"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+        />
+        <span class="hidden absolute inset-0 items-center justify-center bg-gradient-to-br from-neon to-neon-soft text-white font-black text-sm">D</span>
+        <span class="absolute -bottom-0.5 -end-0.5 w-3.5 h-3.5 rounded-full bg-emerald-400 border-2 border-charcoal-800" aria-hidden="true"></span>
       </div>
       <div class="flex-1 min-w-0">
-        <div class="text-white font-bold text-sm" data-i18n="chat.name">העוזר של HandyMan</div>
-        <div class="text-emerald-400 text-[11px] font-medium" data-i18n="chat.status">זמין · מענה תוך שניות</div>
+        <div class="text-white font-bold text-sm" data-i18n="chat.name">דניאל</div>
+        <div class="text-emerald-400 text-[11px] font-medium" data-i18n="chat.status">זמין · עונה עכשיו</div>
       </div>
       <button
         type="button"
@@ -3152,7 +3158,7 @@
         'hero.subtitle': 'הנדימן מקצועי. שירות פרימיום.<br/><span class="text-neutral-500">אפס כאב ראש.</span>',
         'hero.cta.wa': 'התחילו בוואטסאפ', 'hero.scroll': 'גללו',
         'fab.message': 'יש שאלה? שאלו אותי',
-        'chat.name': 'העוזר של HandyMan', 'chat.status': 'זמין · מענה תוך שניות', 'chat.input.ph': 'כתבו הודעה...',
+        'chat.name': 'דניאל · HandyMan TLV', 'chat.status': 'זמין · עונה עכשיו', 'chat.input.ph': 'כתבו הודעה...',
         'chat.handover': 'או המשיכו שיחה אנושית בוואטסאפ',
         'services.label': 'השירותים', 'services.title1': 'כל מה שהבית צריך.', 'services.title2': 'בשיחה אחת.',
         'svc.furniture.title': 'רהיטים ונגרות', 'svc.furniture.desc': 'ספות, שולחנות, כסאות, רהיטי עתיקה. הרכבה ותיקון של כל פריט – מ-IKEA ועד נגרות עדינה.',
@@ -3212,7 +3218,7 @@
         'hero.subtitle': 'Professional handyman. Premium service.<br/><span class="text-neutral-500">Zero hassle.</span>',
         'hero.cta.wa': 'Start on WhatsApp', 'hero.scroll': 'scroll',
         'fab.message': 'Got a question? Ask me',
-        'chat.name': 'HandyMan Assistant', 'chat.status': 'Online · replies in seconds', 'chat.input.ph': 'Type a message...',
+        'chat.name': 'Daniel · HandyMan TLV', 'chat.status': 'Online · replying now', 'chat.input.ph': 'Type a message...',
         'chat.handover': 'Or continue with a human on WhatsApp',
         'services.label': 'SERVICES', 'services.title1': 'Everything your home needs.', 'services.title2': 'In one call.',
         'svc.furniture.title': 'Furniture & Carpentry', 'svc.furniture.desc': 'Sofas, tables, chairs, antiques. Assembly and repair of every piece — from IKEA to fine carpentry.',
@@ -3272,7 +3278,7 @@
         'hero.subtitle': 'Bricoleur professionnel. Service premium.<br/><span class="text-neutral-500">Zéro tracas.</span>',
         'hero.cta.wa': 'Démarrer sur WhatsApp', 'hero.scroll': 'défiler',
         'fab.message': 'Une question ? Demandez',
-        'chat.name': 'Assistant HandyMan', 'chat.status': 'En ligne · répond en secondes', 'chat.input.ph': 'Écrivez un message...',
+        'chat.name': 'Daniel · HandyMan TLV', 'chat.status': 'En ligne · répond maintenant', 'chat.input.ph': 'Écrivez un message...',
         'chat.handover': 'Ou continuez avec un humain sur WhatsApp',
         'services.label': 'SERVICES', 'services.title1': 'Tout ce dont la maison a besoin.', 'services.title2': "En un seul appel.",
         'svc.furniture.title': 'Meubles & Menuiserie', 'svc.furniture.desc': "Canapés, tables, chaises, antiquités. Montage et réparation — d'IKEA à la menuiserie fine.",
@@ -3332,7 +3338,7 @@
         'hero.subtitle': 'Профессиональный мастер. Премиум-сервис.<br/><span class="text-neutral-500">Никаких хлопот.</span>',
         'hero.cta.wa': 'Начать в WhatsApp', 'hero.scroll': 'листать',
         'fab.message': 'Есть вопрос? Спросите',
-        'chat.name': 'Ассистент HandyMan', 'chat.status': 'На связи · ответ за секунды', 'chat.input.ph': 'Напишите сообщение...',
+        'chat.name': 'Даниэль · HandyMan TLV', 'chat.status': 'На связи · отвечает сейчас', 'chat.input.ph': 'Напишите сообщение...',
         'chat.handover': 'Или продолжите с человеком в WhatsApp',
         'services.label': 'УСЛУГИ', 'services.title1': 'Всё, что нужно дому.', 'services.title2': 'Одним звонком.',
         'svc.furniture.title': 'Мебель и столярка', 'svc.furniture.desc': 'Диваны, столы, стулья, антиквариат. Сборка и ремонт — от IKEA до тонкой столярки.',
@@ -3392,7 +3398,7 @@
         'hero.subtitle': 'Manitas profesional. Servicio premium.<br/><span class="text-neutral-500">Cero molestias.</span>',
         'hero.cta.wa': 'Empezar por WhatsApp', 'hero.scroll': 'desplazar',
         'fab.message': '¿Pregunta? Pregúntame',
-        'chat.name': 'Asistente HandyMan', 'chat.status': 'En línea · responde en segundos', 'chat.input.ph': 'Escribe un mensaje...',
+        'chat.name': 'Daniel · HandyMan TLV', 'chat.status': 'En línea · responde ahora', 'chat.input.ph': 'Escribe un mensaje...',
         'chat.handover': 'O sigue con un humano por WhatsApp',
         'services.label': 'SERVICIOS', 'services.title1': 'Todo lo que tu casa necesita.', 'services.title2': 'En una llamada.',
         'svc.furniture.title': 'Muebles y Carpintería', 'svc.furniture.desc': 'Sofás, mesas, sillas, antigüedades. Montaje y reparación — de IKEA a carpintería fina.',
@@ -3681,21 +3687,21 @@ STYLE:
 
     function chatHandoverText() {
       return ({
-        he: 'נראה שהסיפור שלכם דורש בעל מקצוע אנושי. בואו נמשיך בוואטסאפ — תקבלו מענה אישי.',
-        en: 'This sounds like a job for our human pro. Let\'s continue on WhatsApp — you\'ll get a personal reply.',
-        fr: 'On dirait un cas pour notre artisan humain. Continuons sur WhatsApp — réponse personnelle assurée.',
-        ru: 'Похоже, нужен наш мастер. Продолжим в WhatsApp — ответим лично.',
-        es: 'Esto suena para nuestro técnico humano. Sigamos por WhatsApp — respuesta personal.'
+        he: 'בוא נמשיך בוואטסאפ.',
+        en: "Let's continue on WhatsApp.",
+        fr: 'Continuons sur WhatsApp.',
+        ru: 'Продолжим в WhatsApp.',
+        es: 'Sigamos por WhatsApp.'
       })[chatLang()];
     }
 
     function chatWelcomeText() {
       return ({
-        he: 'שלום 👋 אני העוזר של HandyMan TLV. במה אפשר לעזור?',
-        en: "Hi 👋 I'm the HandyMan TLV assistant. How can I help?",
-        fr: "Salut 👋 Je suis l'assistant HandyMan TLV. Comment puis-je aider ?",
-        ru: 'Привет 👋 Я ассистент HandyMan TLV. Чем помочь?',
-        es: 'Hola 👋 Soy el asistente de HandyMan TLV. ¿En qué te ayudo?'
+        he: 'היי, אני דניאל מ-HandyMan TLV. במה אפשר לעזור?',
+        en: "Hi, I'm Daniel from HandyMan TLV. How can I help?",
+        fr: "Salut, je suis Daniel de HandyMan TLV. Comment puis-je aider ?",
+        ru: 'Привет! Я Даниэль из HandyMan TLV. Чем помочь?',
+        es: 'Hola, soy Daniel de HandyMan TLV. ¿En qué te ayudo?'
       })[chatLang()];
     }
 
@@ -3814,12 +3820,10 @@ STYLE:
           // Canned mode — route to WhatsApp after 1 turn
           await new Promise(r => setTimeout(r, 700));
           hideTyping();
-          appendMsg('bot', chatHandoverText());
           showWAHandover();
         }
       } catch (err) {
         hideTyping();
-        appendMsg('bot', chatHandoverText());
         showWAHandover();
       }
     }
