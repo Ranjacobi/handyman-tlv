@@ -4002,6 +4002,35 @@ STYLE:
       })[chatLang()];
     }
 
+    /* Follow-up reply when user confirms / re-asks the same topic */
+    function followUpResponse() {
+      return ({
+        he: 'מעולה. בשביל לתת הצעה מדויקת ולתאם זמן — נמשיך לוואטסאפ?',
+        en: "Perfect. To give you an exact quote and find a slot — let's continue on WhatsApp?",
+        fr: 'Parfait. Pour un devis précis et fixer un créneau — on continue sur WhatsApp ?',
+        ru: 'Отлично. Чтобы дать точную смету и подобрать время — продолжим в WhatsApp?',
+        es: 'Perfecto. Para un presupuesto exacto y agendar hora — ¿seguimos en WhatsApp?',
+      })[chatLang()];
+    }
+
+    /* Detect short confirmation phrases ("yes", "כן", "ok"...) */
+    const CONFIRM_WORDS = {
+      he: ['כן','סבבה','אוקיי','אוקי','בסדר','בטח','אחלה','בוא','בואי','בואו','יאללה','נשמע טוב'],
+      en: ['yes','ok','okay','sure','sounds good','yep','yeah','alright','please'],
+      fr: ['oui','ok','d\'accord','bien sûr','sûr','ouais','allons-y'],
+      ru: ['да','ок','хорошо','давай','согласен','ага','конечно','ладно'],
+      es: ['sí','si','vale','ok','claro','dale','perfecto','de acuerdo'],
+    };
+    function isShortConfirmation(text) {
+      const lang = chatLang();
+      const words = CONFIRM_WORDS[lang] || [];
+      const lower = text.trim().toLowerCase();
+      if (lower.length > 35) return false;
+      return words.some(w => lower.includes(w.toLowerCase()));
+    }
+
+    let lastIntentId = null;
+
     /* ─── Chat State ──────────────────────────────────── */
     let chatHistory = [];
     let chatTurns = 0;
@@ -4160,13 +4189,22 @@ STYLE:
           suggestWA = chatTurns >= CHAT_TURN_LIMIT;
         } else {
           const intent = detectIntent(text);
-          if (intent) {
+          const sameTopicAgain = intent && intent.id === lastIntentId;
+          const confirming = isShortConfirmation(text) && lastIntentId !== null;
+
+          if (sameTopicAgain || confirming) {
+            // User repeated the topic OR confirmed — gently move to WhatsApp
+            reply = followUpResponse();
+            suggestWA = true;
+            // Don't reset lastIntentId — keep context
+          } else if (intent) {
             reply = intent.responses[chatLang()] || intent.responses.en;
             suggestWA = !!intent.wa;
+            lastIntentId = intent.id;
           } else {
             reply = fallbackResponse();
-            // After 3+ unmatched turns, gently suggest WhatsApp
             suggestWA = chatTurns >= 3;
+            lastIntentId = null;
           }
         }
 
@@ -4213,6 +4251,7 @@ STYLE:
       if (sugg) sugg.innerHTML = '';
       chatHistory = [];
       chatTurns = 0;
+      lastIntentId = null;
 
       // Phase 1 — "Daniel is connecting..."
       setChatStatus('connecting');
