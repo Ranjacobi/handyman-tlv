@@ -3749,6 +3749,259 @@ STYLE:
 
     const CHAT_TURN_LIMIT = 8;
 
+    /* ─── Smart Intent Detection (canned mode) ────────── */
+    const INTENTS = [
+      // Greeting
+      { id:'greet', wa:false, keywords:{
+          he:['שלום','היי','הי','בוקר טוב','ערב טוב','מה שלומך'],
+          en:['hi','hello','hey','good morning','good evening','howdy'],
+          fr:['salut','bonjour','bonsoir','coucou'],
+          ru:['привет','здравствуй','доброе утро','добрый вечер'],
+          es:['hola','buenos días','buenas tardes','buenas noches'],
+        }, responses:{
+          he:'היי! נעים מאוד. במה אפשר לעזור היום?',
+          en:'Hi there! Happy to help — what do you need today?',
+          fr:'Salut ! Je suis là pour aider — que vous faut-il ?',
+          ru:'Привет! Готов помочь — что нужно?',
+          es:'¡Hola! Encantado de ayudar — ¿qué necesitas?',
+        }},
+      // Hours
+      { id:'hours', wa:false, keywords:{
+          he:['שעות','פתוח','פתוחים','פעילים','פעיל','מתי','שבת','שישי','ערב','בוקר'],
+          en:['hours','open','available','when','time','today','tonight','weekend'],
+          fr:['horaire','heures','ouvert','disponible','quand'],
+          ru:['часы','открыт','работаете','когда','время'],
+          es:['horario','horas','abierto','disponible','cuándo'],
+        }, responses:{
+          he:'אנחנו פעילים 7 ימים בשבוע, 08:00–22:00 — כולל ערבי שישי וסופי שבוע. מתי הכי נוח לכם?',
+          en:"We're open 7 days a week, 08:00–22:00, including Friday evenings and weekends. When works for you?",
+          fr:"Ouvert 7j/7, 8h–22h, y compris les vendredis soir et week-ends. Quand vous arrange ?",
+          ru:'Работаем 7 дней в неделю, 08:00–22:00, включая пятницу и выходные. Когда удобно?',
+          es:'Abrimos 7 días, 8:00–22:00, viernes por la tarde y fines de semana incluidos. ¿Cuándo te viene bien?',
+        }},
+      // Services overview
+      { id:'services', wa:false, keywords:{
+          he:['שירותים','שירות','מה אתם','מה אתה','עושים','מציעים','מטפל','מטפלים'],
+          en:['services','what do you','offer','what can you','do you do'],
+          fr:['services','que faites','proposer','offrez'],
+          ru:['услуги','что вы','делаете','предлагаете'],
+          es:['servicios','qué hacen','qué ofrecen'],
+        }, responses:{
+          he:'תיקון רהיטים ונגרות, דלתות ומנעולים, חשמל קל, תליית טלוויזיה ומדפים, גבס, צבע ותריסים. במה ספציפית אפשר לעזור?',
+          en:'Furniture repair & assembly, doors & locks, light electrical, TV & shelf mounting, walls, paint and blinds. What specifically do you need?',
+          fr:"Meubles & assemblage, portes & serrures, petite électricité, fixation TV & étagères, plâtre, peinture et stores. Que vous faut-il précisément ?",
+          ru:'Ремонт мебели и сборка, двери и замки, лёгкая электрика, монтаж ТВ и полок, стены, краска и жалюзи. Что конкретно нужно?',
+          es:'Muebles y montaje, puertas y cerraduras, electricidad ligera, montaje de TV y estantes, paredes, pintura y persianas. ¿Qué necesitas en concreto?',
+        }},
+      // Pricing
+      { id:'pricing', wa:true, keywords:{
+          he:['מחיר','כמה','עולה','תשלום','תמחור','יקר','זול','תקציב','מחירים','עולה לי','עלות'],
+          en:['price','cost','how much','expensive','cheap','pay','budget','quote','rate'],
+          fr:['prix','combien','coût','tarif','cher','budget','devis'],
+          ru:['цена','сколько','стоит','стоимость','дорого','смета'],
+          es:['precio','cuánto','cuesta','costo','caro','presupuesto'],
+        }, responses:{
+          he:'כל עבודה מתומחרת לגופה — תלוי בסוג, היקף וחומרים. שלחו תיאור קצר או תמונה ואני אחזור עם הצעת מחיר ללא התחייבות.',
+          en:'Every job is priced individually based on type, scope and materials. Send a short description or photo and I will reply with a no-obligation quote.',
+          fr:'Chaque travail est tarifé selon le type, l\'ampleur et les matériaux. Envoyez une courte description ou une photo, je reviens avec un devis sans engagement.',
+          ru:'Каждая работа оценивается индивидуально — по типу, объёму и материалам. Пришлите короткое описание или фото, и я отвечу со сметой без обязательств.',
+          es:'Cada trabajo se valora individualmente según tipo, alcance y materiales. Envía una descripción breve o foto y te respondo con presupuesto sin compromiso.',
+        }},
+      // Areas
+      { id:'areas', wa:false, keywords:{
+          he:['איפה','אזור','שכונה','תל אביב','יפו','מגיעים','גרים','גרה','אזורי','שירות'],
+          en:['where','area','neighborhood','tel aviv','jaffa','live','come to'],
+          fr:['où','zone','quartier','tel aviv','jaffa','venir'],
+          ru:['где','район','тель-авив','яффа','приедете','живу'],
+          es:['dónde','zona','barrio','tel aviv','jaffa','vienen'],
+        }, responses:{
+          he:'מגיעים לכל תל אביב יפו — מצפון ישן ועד יפו העתיקה, פלורנטין, רוטשילד, רמת אביב, נווה צדק, אבן גבירול ועוד. אין תוספת נסיעה לשכונות מרכזיות.',
+          en:'We cover all of Tel Aviv-Yafo — from Old North to Old Jaffa, Florentin, Rothschild, Ramat Aviv, Neve Tzedek, Ibn Gabirol and more. No travel surcharge for central neighborhoods.',
+          fr:'Nous couvrons tout Tel Aviv-Yafo — du Vieux Nord à Vieille Jaffa, Florentin, Rothschild, Ramat Aviv, Neve Tzedek, Ibn Gabirol et plus. Pas de frais pour les quartiers centraux.',
+          ru:'Работаем по всему Тель-Авиву-Яффо — от Цафон Яшан до Старой Яффы, Флорентин, Ротшильд, Рамат-Авив, Неве Цедек, Ибн Гвироль и далее. Без доплаты за центральные районы.',
+          es:'Cubrimos todo Tel Aviv-Yafo — del Norte Antiguo a la Jaffa Vieja, Florentin, Rothschild, Ramat Aviv, Neve Tzedek, Ibn Gabirol y más. Sin recargo en zonas centrales.',
+        }},
+      // Booking
+      { id:'booking', wa:true, keywords:{
+          he:['לקבוע','קביעת','תור','פגישה','להזמין','מתי אפשר','מחר','היום','השבוע'],
+          en:['book','schedule','appointment','tomorrow','today','this week','when can'],
+          fr:['rendez-vous','réserver','demain','aujourd\'hui','disponibilité'],
+          ru:['записаться','назначить','завтра','сегодня','когда можно'],
+          es:['reservar','cita','mañana','hoy','agendar'],
+        }, responses:{
+          he:'בכיף! בואו נסגור על זמן בוואטסאפ — תהליך של דקה.',
+          en:"Sure! Let's nail down a time on WhatsApp — takes a minute.",
+          fr:'Avec plaisir ! Fixons un créneau sur WhatsApp — une minute.',
+          ru:'С удовольствием! Давайте назначим время в WhatsApp — это минута.',
+          es:'¡Claro! Cerramos hora por WhatsApp — un minuto.',
+        }},
+      // Electrical
+      { id:'electrical', wa:false, keywords:{
+          he:['חשמל','שקע','מתג','נורה','תאורה','חשמלי','חשמלאי','פנס','להחליף נורה'],
+          en:['electric','outlet','switch','light','plug','bulb','wiring'],
+          fr:['électrique','électricité','prise','interrupteur','ampoule'],
+          ru:['электрик','розетк','выключатель','лампочк','свет'],
+          es:['eléctric','enchufe','interruptor','bombilla','luz'],
+        }, responses:{
+          he:'כן — שקעים, מתגים, גופי תאורה ונורות. החלפת נורות בגובה? תליית מנורת תקרה? תספרו ואני אגיד מה צריך.',
+          en:'Yes — outlets, switches, light fixtures and bulbs. Bulbs at height? Hanging a ceiling lamp? Tell me and I will say what we need.',
+          fr:'Oui — prises, interrupteurs, luminaires et ampoules. Ampoules en hauteur ? Plafonnier ? Dites-moi ce qu\'il faut.',
+          ru:'Да — розетки, выключатели, светильники и лампочки. Лампочки на высоте? Потолочный светильник? Расскажите, и я скажу, что понадобится.',
+          es:'Sí — enchufes, interruptores, lámparas y bombillas. ¿Bombillas en altura? ¿Plafón? Cuéntame y te digo qué se necesita.',
+        }},
+      // Furniture / IKEA
+      { id:'furniture', wa:false, keywords:{
+          he:['רהיט','ארון','שולחן','מיטה','כיסא','איקאה','IKEA','הרכבה','להרכיב','קומבוקס'],
+          en:['furniture','closet','cabinet','table','bed','chair','ikea','assemble','flatpack'],
+          fr:['meuble','armoire','table','lit','chaise','ikea','monter','montage'],
+          ru:['мебел','шкаф','стол','кроват','стул','ikea','сборк'],
+          es:['mueble','armario','mesa','cama','silla','ikea','montar','montaje'],
+        }, responses:{
+          he:'הרכבת רהיטים — מומחיות שלנו. IKEA, ארונות, שולחנות, מיטות. כמה פריטים בערך? אסביר כמה זמן זה לוקח.',
+          en:'Furniture assembly is our bread and butter. IKEA, closets, tables, beds. Roughly how many items? I will tell you how long it takes.',
+          fr:'Le montage de meubles est notre spécialité. IKEA, armoires, tables, lits. Combien d\'articles à peu près ? Je vous dis combien de temps ça prend.',
+          ru:'Сборка мебели — наша специальность. IKEA, шкафы, столы, кровати. Сколько предметов примерно? Скажу, сколько займёт времени.',
+          es:'Montaje de muebles — nuestra especialidad. IKEA, armarios, mesas, camas. ¿Cuántas piezas más o menos? Te digo cuánto lleva.',
+        }},
+      // TV mounting
+      { id:'tv', wa:true, keywords:{
+          he:['טלוויזיה','tv','מסך','תליה','לתלות','זרוע','קיר טלוויזיה'],
+          en:['tv','television','mount','screen','wall mount','bracket'],
+          fr:['télé','téléviseur','écran','fixer','support tv'],
+          ru:['телевизор','экран','монтаж тв','кронштейн'],
+          es:['tele','televisión','pantalla','montar tv','soporte'],
+        }, responses:{
+          he:'תליית טלוויזיה — אחד הדברים שאנחנו עושים הכי הרבה. מה גודל המסך? ואיזה סוג קיר (גבס/בטון)?',
+          en:'TV mounting is one of our most common jobs. What screen size? And what wall type (drywall / concrete)?',
+          fr:'La fixation TV est un de nos travaux les plus courants. Quelle taille d\'écran ? Et quel type de mur (placo / béton) ?',
+          ru:'Монтаж ТВ — одно из самых частых обращений. Какой размер экрана? И какая стена (гипс / бетон)?',
+          es:'El montaje de TV es uno de nuestros trabajos más comunes. ¿Qué tamaño de pantalla? ¿Y qué pared (pladur / hormigón)?',
+        }},
+      // Doors & locks
+      { id:'door', wa:false, keywords:{
+          he:['דלת','מנעול','ידית','ציר','חורק','נתקעת','נסגרת','פתוחה'],
+          en:['door','lock','handle','hinge','squeak','stuck','jam'],
+          fr:['porte','serrure','poignée','charnière','grince','coincée'],
+          ru:['двер','замок','ручк','петл','скрипит','застрял'],
+          es:['puerta','cerradura','manija','bisagra','chirría','atascada'],
+        }, responses:{
+          he:'דלתות, מנעולים, ידיות וצירים — אבחון ותיקון. מה הבעיה? חורקת? לא נסגרת? צריך להחליף מנעול?',
+          en:"Doors, locks, handles and hinges — diagnose and fix. What's happening? Squeaking? Not closing? Lock replacement?",
+          fr:'Portes, serrures, poignées et charnières — diagnostic et réparation. Quel est le problème ? Grincements ? Ne ferme pas ? Changement de serrure ?',
+          ru:'Двери, замки, ручки и петли — диагностика и ремонт. Что происходит? Скрипит? Не закрывается? Замена замка?',
+          es:'Puertas, cerraduras, manijas y bisagras — diagnóstico y reparación. ¿Qué pasa? ¿Chirría? ¿No cierra? ¿Cambio de cerradura?',
+        }},
+      // Walls / paint
+      { id:'paint', wa:true, keywords:{
+          he:['צבע','גבס','שפכטל','סדק','חור','קיר','לצבוע','חורים בקיר'],
+          en:['paint','plaster','spackle','crack','hole','wall','drywall','patch'],
+          fr:['peinture','plâtre','enduit','fissure','trou','mur'],
+          ru:['краск','штукатурк','шпаклёвк','трещин','дыр','стен'],
+          es:['pintura','yeso','pladur','grieta','agujero','pared'],
+        }, responses:{
+          he:'תיקוני קיר וצבע — סדקים, חורים מהאיקאה, שפכטל, צביעה ספציפית. שלחו תמונה של האזור ואחזיר הערכה.',
+          en:'Wall and paint repairs — cracks, IKEA holes, spackle, spot painting. Send a photo of the area and I will reply with an estimate.',
+          fr:'Réparations de murs et peinture — fissures, trous IKEA, enduit, retouches. Envoyez une photo de la zone, je reviens avec une estimation.',
+          ru:'Ремонт стен и краски — трещины, дыры от IKEA, шпаклёвка, точечная покраска. Пришлите фото — я отвечу с оценкой.',
+          es:'Reparación de pared y pintura — grietas, agujeros IKEA, yeso, retoques. Envía foto del área y te respondo con una estimación.',
+        }},
+      // Plumbing (light)
+      { id:'plumbing', wa:false, keywords:{
+          he:['ברז','אינסטלציה','דולף','דליפה','כיור','שירותים','דליפת מים','מקלחת'],
+          en:['faucet','tap','plumbing','leak','dripping','sink','toilet','shower'],
+          fr:['robinet','plomberie','fuite','évier','toilette','douche'],
+          ru:['кран','сантехник','протека','раковин','туалет','душ'],
+          es:['grifo','fontaner','fuga','gotea','lavabo','inodoro','ducha'],
+        }, responses:{
+          he:'אינסטלציה קלה — ברזים מטפטפים, החלפת ברז, פטמות וחיבורים. במקרה של דליפה גדולה כדאי שרברב מקצועי.',
+          en:'Light plumbing — dripping faucets, faucet replacement, fittings and connectors. For major leaks a licensed plumber is best.',
+          fr:'Petite plomberie — robinets qui gouttent, remplacement, raccords. Pour une grosse fuite, mieux vaut un plombier agréé.',
+          ru:'Лёгкая сантехника — капающие краны, замена смесителя, фитинги. При сильной протечке лучше лицензированный сантехник.',
+          es:'Fontanería ligera — grifos que gotean, cambio de grifo, conexiones. Para una fuga grande, mejor un fontanero certificado.',
+        }},
+      // Blinds
+      { id:'blinds', wa:false, keywords:{
+          he:['תריס','תריסים','חשמלי','גלול','מתגלגל'],
+          en:['blind','blinds','shutter','roller','venetian'],
+          fr:['store','volet','rideau roulant'],
+          ru:['жалюзи','штор','рулон'],
+          es:['persiana','toldo','cortina enrollable'],
+        }, responses:{
+          he:'תיקון והחלפת תריסים — חשמליים וידניים. מה הבעיה? לא יורדים? תקועים? צריכים החלפה מלאה?',
+          en:'Blinds repair and replacement — electric and manual. What is happening? Stuck? Not going down? Full replacement needed?',
+          fr:'Réparation et remplacement de stores — électriques ou manuels. Quel est le souci ? Bloqué ? Ne descend pas ? Remplacement complet ?',
+          ru:'Ремонт и замена жалюзи — электрические и ручные. Что не так? Застряли? Не опускаются? Нужна полная замена?',
+          es:'Reparación y cambio de persianas — eléctricas y manuales. ¿Qué pasa? ¿Atascada? ¿No baja? ¿Cambio completo?',
+        }},
+      // Warranty
+      { id:'warranty', wa:false, keywords:{
+          he:['אחריות','ערבות','התחייבות','אחראים'],
+          en:['warranty','guarantee','warranty period'],
+          fr:['garantie'],
+          ru:['гарантия','гарантию'],
+          es:['garantía'],
+        }, responses:{
+          he:'אנחנו עומדים מאחורי כל עבודה. במקרה של בעיה — חוזרים ומסדרים בלי שאלות.',
+          en:'We stand behind every job. If anything goes wrong, we come back and fix it — no questions asked.',
+          fr:'Nous garantissons chaque travail. En cas de souci, nous revenons et corrigeons — sans discussion.',
+          ru:'Мы отвечаем за каждую работу. Если что-то не так — приедем и исправим, без вопросов.',
+          es:'Respaldamos cada trabajo. Si algo falla, volvemos y lo solucionamos — sin preguntas.',
+        }},
+      // Thanks
+      { id:'thanks', wa:false, keywords:{
+          he:['תודה','תודה רבה','יופי','מעולה','אחלה'],
+          en:['thanks','thank you','great','awesome','perfect','cool'],
+          fr:['merci','super','parfait','génial'],
+          ru:['спасибо','отлично','супер','класс'],
+          es:['gracias','genial','perfecto','vale'],
+        }, responses:{
+          he:'בכיף! יש עוד משהו שאוכל לעזור איתו?',
+          en:"Anytime! Anything else I can help with?",
+          fr:'Avec plaisir ! Autre chose ?',
+          ru:'Всегда пожалуйста! Что-то ещё?',
+          es:'¡Un placer! ¿Algo más?',
+        }},
+      // Emergency
+      { id:'emergency', wa:true, keywords:{
+          he:['דחוף','חירום','מיידי','עכשיו','מהר','דליפה גדולה'],
+          en:['urgent','emergency','asap','immediate','right now','flooding'],
+          fr:['urgent','urgence','tout de suite'],
+          ru:['срочно','авария','прямо сейчас'],
+          es:['urgente','emergencia','ahora mismo'],
+        }, responses:{
+          he:'מבין שזה דחוף. בואו נעבור לוואטסאפ עכשיו ואני אדאג שמישהו יגיע אליכם בהקדם.',
+          en:'I get it, this is urgent. Let\'s switch to WhatsApp right now and I will make sure someone gets to you ASAP.',
+          fr:'Je comprends, c\'est urgent. Passons sur WhatsApp tout de suite et je m\'assure que quelqu\'un vienne au plus vite.',
+          ru:'Понимаю — срочно. Давайте перейдём в WhatsApp прямо сейчас, и я отправлю мастера как можно скорее.',
+          es:'Entiendo, es urgente. Vamos a WhatsApp ahora y me aseguro de que alguien vaya cuanto antes.',
+        }},
+    ];
+
+    function detectIntent(userText) {
+      const lang = chatLang();
+      const lower = userText.toLowerCase();
+      let best = null, bestScore = 0;
+      for (const intent of INTENTS) {
+        const kws = intent.keywords[lang] || intent.keywords.en || [];
+        let score = 0;
+        for (const kw of kws) {
+          if (lower.includes(kw.toLowerCase())) score += kw.length; // longer = more specific
+        }
+        if (score > bestScore) { bestScore = score; best = intent; }
+      }
+      return best;
+    }
+
+    function fallbackResponse() {
+      return ({
+        he: 'אני לא בטוח שהבנתי במאה אחוז — תוכלו לתאר במשפט מה צריך? (סוג העבודה, איפה)',
+        en: "I'm not 100% sure I caught that — could you describe in a sentence what you need? (type of work, where)",
+        fr: "Je ne suis pas sûr d'avoir saisi — pouvez-vous décrire en une phrase ? (type de travail, où)",
+        ru: 'Не уверен, что понял правильно — опишите в одном предложении, что нужно? (тип работы, где)',
+        es: 'No estoy seguro de haberlo captado — ¿puedes describir en una frase qué necesitas? (tipo, dónde)',
+      })[chatLang()];
+    }
+
     /* ─── Chat State ──────────────────────────────────── */
     let chatHistory = [];
     let chatTurns = 0;
@@ -3893,30 +4146,45 @@ STYLE:
       appendMsg('user', text);
       chatTurns++;
 
-      // Brief "online → typing" delay (Daniel reads the message first)
+      // Brief "online → typing" delay (agent reads the message first)
       await _sleep(400 + Math.random() * 300);
       setChatStatus('typing');
       showTyping();
 
       try {
+        let reply;
+        let suggestWA = false;
+
         if (GEMINI_API_KEY) {
-          const reply = await callGemini(text);
-          await _sleep(400 + Math.random() * 400);
-          hideTyping();
-          setChatStatus('online');
-          appendMsg('bot', reply);
-          if (chatTurns >= CHAT_TURN_LIMIT) showWAHandover();
+          reply = await callGemini(text);
+          suggestWA = chatTurns >= CHAT_TURN_LIMIT;
         } else {
-          // Canned mode — route to WhatsApp after 1 turn (with realistic typing time)
-          await _sleep(900 + Math.random() * 600);
-          hideTyping();
-          setChatStatus('online');
+          const intent = detectIntent(text);
+          if (intent) {
+            reply = intent.responses[chatLang()] || intent.responses.en;
+            suggestWA = !!intent.wa;
+          } else {
+            reply = fallbackResponse();
+            // After 3+ unmatched turns, gently suggest WhatsApp
+            suggestWA = chatTurns >= 3;
+          }
+        }
+
+        // Realistic typing time proportional to reply length (caps for fast feel)
+        const typingMs = Math.min(2200, 700 + reply.length * 14);
+        await _sleep(typingMs);
+        hideTyping();
+        setChatStatus('online');
+        appendMsg('bot', reply);
+
+        if (suggestWA) {
+          await _sleep(500);
           showWAHandover();
         }
       } catch (err) {
         hideTyping();
         setChatStatus('online');
-        showWAHandover();
+        appendMsg('bot', fallbackResponse());
       }
     }
 
