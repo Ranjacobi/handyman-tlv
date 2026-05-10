@@ -1005,10 +1005,18 @@
     class="wa-fab fixed bottom-5 left-5 z-50 group flex items-center gap-2.5 rounded-full px-5 py-3.5 text-white font-bold text-sm transition-transform focus:outline-none focus:ring-2 focus:ring-neon focus:ring-offset-2 focus:ring-offset-charcoal-950"
     style="background: linear-gradient(135deg,#FF5F1F,#FF7A3D); box-shadow: 0 0 0 0 rgba(255,95,31,0.5), 0 8px 32px rgba(255,95,31,0.4);"
   >
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
-    </svg>
-    <span data-i18n="fab.message">יש שאלה? שאלו אותי</span>
+    <span class="relative w-8 h-8 rounded-full overflow-hidden flex-shrink-0 ring-2 ring-white/30 bg-charcoal-700">
+      <img
+        src="https://randomuser.me/api/portraits/men/32.jpg"
+        alt=""
+        class="w-full h-full object-cover"
+        referrerpolicy="no-referrer"
+        loading="lazy"
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+      />
+      <span class="hidden absolute inset-0 items-center justify-center bg-gradient-to-br from-white/30 to-white/10 text-white font-black">D</span>
+    </span>
+    <span data-i18n="fab.message" class="leading-tight">דניאל זמין לשאלות</span>
     <!-- Notification dot -->
     <span class="absolute -top-1 -end-1 flex h-3 w-3" aria-hidden="true">
       <span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping"></span>
@@ -1042,7 +1050,7 @@
       </div>
       <div class="flex-1 min-w-0">
         <div class="text-white font-bold text-sm" data-i18n="chat.name">דניאל</div>
-        <div class="text-emerald-400 text-[11px] font-medium" data-i18n="chat.status">זמין · עונה עכשיו</div>
+        <div id="chat-status-text" class="text-emerald-400 text-[11px] font-medium transition-colors" data-i18n="chat.status">זמין · עונה עכשיו</div>
       </div>
       <button
         type="button"
@@ -3157,8 +3165,8 @@
         'hero.fixing': 'מתקנים את', 'hero.tlv': 'תל אביב', 'hero.dot': '.', 'hero.style': 'בסטייל.',
         'hero.subtitle': 'הנדימן מקצועי. שירות פרימיום.<br/><span class="text-neutral-500">אפס כאב ראש.</span>',
         'hero.cta.wa': 'התחילו בוואטסאפ', 'hero.scroll': 'גללו',
-        'fab.message': 'יש שאלה? שאלו אותי',
-        'chat.name': 'דניאל · HandyMan TLV', 'chat.status': 'זמין · עונה עכשיו', 'chat.input.ph': 'כתבו הודעה...',
+        'fab.message': 'דניאל זמין לשאלות',
+        'chat.name': 'דניאל · HandyMan TLV', 'chat.status': 'זמין · עונה עכשיו', 'chat.connecting': 'מתחבר...', 'chat.typing': 'מקליד...', 'chat.input.ph': 'כתבו הודעה...',
         'chat.handover': 'או המשיכו שיחה אנושית בוואטסאפ',
         'services.label': 'השירותים', 'services.title1': 'כל מה שהבית צריך.', 'services.title2': 'בשיחה אחת.',
         'svc.furniture.title': 'רהיטים ונגרות', 'svc.furniture.desc': 'ספות, שולחנות, כסאות, רהיטי עתיקה. הרכבה ותיקון של כל פריט – מ-IKEA ועד נגרות עדינה.',
@@ -3217,8 +3225,8 @@
         'hero.fixing': 'Fixing', 'hero.tlv': 'Tel Aviv', 'hero.dot': '.', 'hero.style': 'In style.',
         'hero.subtitle': 'Professional handyman. Premium service.<br/><span class="text-neutral-500">Zero hassle.</span>',
         'hero.cta.wa': 'Start on WhatsApp', 'hero.scroll': 'scroll',
-        'fab.message': 'Got a question? Ask me',
-        'chat.name': 'Daniel · HandyMan TLV', 'chat.status': 'Online · replying now', 'chat.input.ph': 'Type a message...',
+        'fab.message': 'Daniel · here to help',
+        'chat.name': 'Daniel · HandyMan TLV', 'chat.status': 'Online · replying now', 'chat.connecting': 'Connecting...', 'chat.typing': 'typing...', 'chat.input.ph': 'Type a message...',
         'chat.handover': 'Or continue with a human on WhatsApp',
         'services.label': 'SERVICES', 'services.title1': 'Everything your home needs.', 'services.title2': 'In one call.',
         'svc.furniture.title': 'Furniture & Carpentry', 'svc.furniture.desc': 'Sofas, tables, chairs, antiques. Assembly and repair of every piece — from IKEA to fine carpentry.',
@@ -3277,8 +3285,8 @@
         'hero.fixing': 'On répare', 'hero.tlv': 'Tel Aviv', 'hero.dot': '.', 'hero.style': 'Avec style.',
         'hero.subtitle': 'Bricoleur professionnel. Service premium.<br/><span class="text-neutral-500">Zéro tracas.</span>',
         'hero.cta.wa': 'Démarrer sur WhatsApp', 'hero.scroll': 'défiler',
-        'fab.message': 'Une question ? Demandez',
-        'chat.name': 'Daniel · HandyMan TLV', 'chat.status': 'En ligne · répond maintenant', 'chat.input.ph': 'Écrivez un message...',
+        'fab.message': 'Daniel · disponible',
+        'chat.name': 'Daniel · HandyMan TLV', 'chat.status': 'En ligne · répond maintenant', 'chat.connecting': 'Connexion...', 'chat.typing': 'écrit...', 'chat.input.ph': 'Écrivez un message...',
         'chat.handover': 'Ou continuez avec un humain sur WhatsApp',
         'services.label': 'SERVICES', 'services.title1': 'Tout ce dont la maison a besoin.', 'services.title2': "En un seul appel.",
         'svc.furniture.title': 'Meubles & Menuiserie', 'svc.furniture.desc': "Canapés, tables, chaises, antiquités. Montage et réparation — d'IKEA à la menuiserie fine.",
@@ -3337,8 +3345,8 @@
         'hero.fixing': 'Чиним', 'hero.tlv': 'Тель-Авив', 'hero.dot': '.', 'hero.style': 'Со стилем.',
         'hero.subtitle': 'Профессиональный мастер. Премиум-сервис.<br/><span class="text-neutral-500">Никаких хлопот.</span>',
         'hero.cta.wa': 'Начать в WhatsApp', 'hero.scroll': 'листать',
-        'fab.message': 'Есть вопрос? Спросите',
-        'chat.name': 'Даниэль · HandyMan TLV', 'chat.status': 'На связи · отвечает сейчас', 'chat.input.ph': 'Напишите сообщение...',
+        'fab.message': 'Даниэль · отвечает',
+        'chat.name': 'Даниэль · HandyMan TLV', 'chat.status': 'На связи · отвечает сейчас', 'chat.connecting': 'Подключается...', 'chat.typing': 'печатает...', 'chat.input.ph': 'Напишите сообщение...',
         'chat.handover': 'Или продолжите с человеком в WhatsApp',
         'services.label': 'УСЛУГИ', 'services.title1': 'Всё, что нужно дому.', 'services.title2': 'Одним звонком.',
         'svc.furniture.title': 'Мебель и столярка', 'svc.furniture.desc': 'Диваны, столы, стулья, антиквариат. Сборка и ремонт — от IKEA до тонкой столярки.',
@@ -3397,8 +3405,8 @@
         'hero.fixing': 'Arreglando', 'hero.tlv': 'Tel Aviv', 'hero.dot': '.', 'hero.style': 'Con estilo.',
         'hero.subtitle': 'Manitas profesional. Servicio premium.<br/><span class="text-neutral-500">Cero molestias.</span>',
         'hero.cta.wa': 'Empezar por WhatsApp', 'hero.scroll': 'desplazar',
-        'fab.message': '¿Pregunta? Pregúntame',
-        'chat.name': 'Daniel · HandyMan TLV', 'chat.status': 'En línea · responde ahora', 'chat.input.ph': 'Escribe un mensaje...',
+        'fab.message': 'Daniel · disponible',
+        'chat.name': 'Daniel · HandyMan TLV', 'chat.status': 'En línea · responde ahora', 'chat.connecting': 'Conectando...', 'chat.typing': 'escribiendo...', 'chat.input.ph': 'Escribe un mensaje...',
         'chat.handover': 'O sigue con un humano por WhatsApp',
         'services.label': 'SERVICIOS', 'services.title1': 'Todo lo que tu casa necesita.', 'services.title2': 'En una llamada.',
         'svc.furniture.title': 'Muebles y Carpintería', 'svc.furniture.desc': 'Sofás, mesas, sillas, antigüedades. Montaje y reparación — de IKEA a carpintería fina.',
@@ -3776,12 +3784,16 @@ STYLE:
     function handleQuickAction(item) {
       appendMsg('user', item.q);
       chatTurns++;
+      setChatStatus('typing');
       showTyping();
+      // Variable delay (700–1300ms) so it feels human, not scripted
+      const delay = 700 + Math.floor(Math.random() * 600);
       setTimeout(() => {
         hideTyping();
+        setChatStatus('online');
         appendMsg('bot', item.a);
         if (chatTurns >= 2) showWAHandover();
-      }, 600);
+      }, delay);
     }
 
     async function callGemini(userMsg) {
@@ -3808,33 +3820,76 @@ STYLE:
     async function handleUserInput(text) {
       appendMsg('user', text);
       chatTurns++;
+
+      // Brief "online → typing" delay (Daniel reads the message first)
+      await _sleep(400 + Math.random() * 300);
+      setChatStatus('typing');
       showTyping();
 
       try {
         if (GEMINI_API_KEY) {
           const reply = await callGemini(text);
+          await _sleep(400 + Math.random() * 400);
           hideTyping();
+          setChatStatus('online');
           appendMsg('bot', reply);
           if (chatTurns >= CHAT_TURN_LIMIT) showWAHandover();
         } else {
-          // Canned mode — route to WhatsApp after 1 turn
-          await new Promise(r => setTimeout(r, 700));
+          // Canned mode — route to WhatsApp after 1 turn (with realistic typing time)
+          await _sleep(900 + Math.random() * 600);
           hideTyping();
+          setChatStatus('online');
           showWAHandover();
         }
       } catch (err) {
         hideTyping();
+        setChatStatus('online');
         showWAHandover();
       }
     }
 
     /* ─── Wire up ─────────────────────────────────────── */
-    function initChatPanel() {
+    const _sleep = ms => new Promise(r => setTimeout(r, ms));
+
+    function setChatStatus(state) {
+      const el = document.getElementById('chat-status-text');
+      if (!el) return;
+      const dict = (window.I18N && window.I18N[chatLang()]) || {};
+      const map = {
+        connecting: { text: dict['chat.connecting'] || 'מתחבר...', cls: 'text-amber-400' },
+        typing:     { text: dict['chat.typing']     || 'מקליד...',  cls: 'text-amber-400' },
+        online:     { text: dict['chat.status']     || 'זמין · עונה עכשיו', cls: 'text-emerald-400' },
+      };
+      const s = map[state] || map.online;
+      el.textContent = s.text;
+      el.classList.remove('text-emerald-400', 'text-amber-400', 'text-neutral-400');
+      el.classList.add(s.cls);
+    }
+
+    async function initChatPanel() {
       const list = document.getElementById('chat-messages');
+      const sugg = document.getElementById('chat-suggestions');
       list.innerHTML = '';
+      if (sugg) sugg.innerHTML = '';
       chatHistory = [];
       chatTurns = 0;
+
+      // Phase 1 — "Daniel is connecting..."
+      setChatStatus('connecting');
+      await _sleep(900);
+
+      // Phase 2 — "Daniel is typing..."
+      setChatStatus('typing');
+      showTyping();
+      await _sleep(1400);
+
+      // Phase 3 — Welcome message appears
+      hideTyping();
+      setChatStatus('online');
       appendMsg('bot', chatWelcomeText());
+
+      // Suggestions appear after a short beat (feels more natural)
+      await _sleep(400);
       renderSuggestions();
     }
 
