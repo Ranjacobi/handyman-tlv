@@ -425,6 +425,139 @@
       100% { transform: scale(0.8); opacity: 0;   }
     }
 
+    /* ─── Chat Bot ────────────────────────────────────── */
+    .chat-msg {
+      animation: chat-in 0.3s cubic-bezier(0.16,1,0.3,1) both;
+      max-width: 85%;
+    }
+    @keyframes chat-in {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .chat-msg-bot {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.06);
+      color: #fff;
+      border-radius: 18px 18px 18px 4px;
+      padding: 10px 14px;
+      font-size: 13.5px;
+      line-height: 1.55;
+      align-self: flex-start;
+    }
+    .chat-msg-user {
+      background: linear-gradient(135deg, #FF5F1F, #FF7A3D);
+      color: #fff;
+      border-radius: 18px 18px 4px 18px;
+      padding: 10px 14px;
+      font-size: 13.5px;
+      line-height: 1.55;
+      align-self: flex-end;
+    }
+    html.light .chat-msg-bot {
+      background: rgba(0,0,0,0.04);
+      border-color: rgba(0,0,0,0.06);
+      color: #18181B;
+    }
+    .chat-typing {
+      display: inline-flex; gap: 4px; padding: 12px 14px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 18px 18px 18px 4px;
+    }
+    .chat-typing span {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(255,255,255,0.5);
+      animation: chat-dot 1.2s infinite ease-in-out;
+    }
+    .chat-typing span:nth-child(2) { animation-delay: 0.15s; }
+    .chat-typing span:nth-child(3) { animation-delay: 0.3s; }
+    @keyframes chat-dot {
+      0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+      30%           { opacity: 1;   transform: translateY(-4px); }
+    }
+    html.light .chat-typing { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.08); }
+    html.light .chat-typing span { background: rgba(0,0,0,0.4); }
+    .chat-suggestion {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: rgba(255,95,31,0.1);
+      border: 1px solid rgba(255,95,31,0.3);
+      color: #FF7A3D;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+    .chat-suggestion:hover {
+      background: rgba(255,95,31,0.2);
+      border-color: rgba(255,95,31,0.6);
+      color: #fff;
+    }
+    /* Light mode for chat panel */
+    html.light #chat-panel { background: #fff; border-color: rgba(0,0,0,0.08); }
+    html.light #chat-messages { background: #fafafa; }
+    html.light #chat-suggestions { background: #fafafa; border-top-color: rgba(0,0,0,0.06); }
+    html.light #chat-form { background: #fff; border-top-color: rgba(0,0,0,0.06); }
+    html.light #chat-input {
+      background: rgba(0,0,0,0.04);
+      border-color: rgba(0,0,0,0.08);
+      color: #18181B;
+    }
+
+    /* ─── Skyline Animations ──────────────────────────── */
+    @keyframes skyline-blink {
+      0%, 48% { opacity: 1; }
+      50%, 96% { opacity: 0.12; }
+      100% { opacity: 1; }
+    }
+    @keyframes skyline-blink-slow {
+      0%, 70% { opacity: 1; }
+      75%, 95% { opacity: 0.15; }
+      100% { opacity: 1; }
+    }
+    @keyframes skyline-window-a {
+      0%, 100% { opacity: 0.3; }
+      25%, 75% { opacity: 1; }
+    }
+    @keyframes skyline-window-b {
+      0%, 30%, 100% { opacity: 0.2; }
+      55%, 75% { opacity: 0.95; }
+    }
+    @keyframes skyline-window-c {
+      0%, 60%, 100% { opacity: 0.35; }
+      18%, 28% { opacity: 1; }
+    }
+    @keyframes skyline-window-d {
+      0%, 100% { opacity: 0.4; }
+      40%, 50% { opacity: 1; }
+      85% { opacity: 0.2; }
+    }
+    @keyframes skyline-radio-pulse {
+      0%, 100% { r: 1.5; opacity: 1; }
+      50%      { r: 3;   opacity: 0.4; }
+    }
+    @keyframes skyline-spire-glow {
+      0%, 100% { stroke-opacity: 0.6; }
+      50%      { stroke-opacity: 1; }
+    }
+
+    .skyline-light    { animation: skyline-blink     2.2s ease-in-out infinite; transform-origin: center; }
+    .skyline-light-2  { animation: skyline-blink-slow 3.5s ease-in-out infinite -1.2s; transform-origin: center; }
+    .skyline-radio    { animation: skyline-radio-pulse 2s ease-in-out infinite; transform-origin: center; }
+    .skyline-spire    { animation: skyline-spire-glow 2.5s ease-in-out infinite; }
+    .skyline-window-a { animation: skyline-window-a 4.5s ease-in-out infinite; }
+    .skyline-window-b { animation: skyline-window-b 5.8s ease-in-out infinite -1.7s; }
+    .skyline-window-c { animation: skyline-window-c 6.2s ease-in-out infinite -3s; }
+    .skyline-window-d { animation: skyline-window-d 5.2s ease-in-out infinite -2.4s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .skyline-light, .skyline-light-2, .skyline-radio, .skyline-spire,
+      .skyline-window-a, .skyline-window-b, .skyline-window-c, .skyline-window-d {
+        animation: none !important;
+      }
+    }
+
     /* ─── Construction Hazard Tape Divider ────────────── */
     .hazard-tape {
       height: 14px;
@@ -732,21 +865,102 @@
   </div>
 
   <!-- ════════════════════════════════════════════════════
-       FLOATING WHATSAPP CTA
+       AI CHAT BOT (single floating button — Gemini + canned)
   ═══════════════════════════════════════════════════════ -->
-  <a
-    href="https://wa.me/972587600505?text=%D7%94%D7%99%2C%20%D7%A6%D7%A8%D7%99%D7%9A%20%D7%94%D7%A0%D7%93%D7%99%D7%9E%D7%9F"
-    target="_blank"
-    rel="noopener noreferrer"
-    aria-label="פתח שיחת וואטסאפ"
-    class="wa-fab fixed bottom-5 left-5 z-50 group flex items-center gap-2.5 rounded-full px-5 py-3.5 text-white font-bold text-sm bg-[#25D366] hover:bg-[#1DA851] transition-colors"
-    style="box-shadow: 0 0 0 0 rgba(37,211,102,0.5), 0 8px 32px rgba(37,211,102,0.4);"
+  <button
+    id="chat-fab"
+    type="button"
+    aria-label="פתח צ'אט"
+    class="wa-fab fixed bottom-5 left-5 z-50 group flex items-center gap-2.5 rounded-full px-5 py-3.5 text-white font-bold text-sm transition-transform focus:outline-none focus:ring-2 focus:ring-neon focus:ring-offset-2 focus:ring-offset-charcoal-950"
+    style="background: linear-gradient(135deg,#FF5F1F,#FF7A3D); box-shadow: 0 0 0 0 rgba(255,95,31,0.5), 0 8px 32px rgba(255,95,31,0.4);"
   >
-    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
     </svg>
-    <span data-i18n="fab.message">שלח הודעה</span>
-  </a>
+    <span data-i18n="fab.message">יש שאלה? שאל אותי</span>
+    <!-- Notification dot -->
+    <span class="absolute -top-1 -end-1 flex h-3 w-3" aria-hidden="true">
+      <span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping"></span>
+      <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-400 border-2 border-charcoal-950"></span>
+    </span>
+  </button>
+
+  <!-- Chat Panel -->
+  <div
+    id="chat-panel"
+    role="dialog"
+    aria-modal="true"
+    aria-label="צ'אט עם HandyMan TLV"
+    class="fixed inset-0 sm:inset-auto sm:bottom-5 sm:left-5 sm:w-[380px] sm:max-w-[calc(100vw-40px)] sm:h-[600px] sm:max-h-[calc(100vh-40px)] z-[60] hidden flex-col bg-charcoal-800 sm:rounded-3xl overflow-hidden border border-charcoal-500"
+    style="box-shadow: 0 20px 60px rgba(0,0,0,0.5);"
+  >
+
+    <!-- Header -->
+    <div class="flex items-center gap-3 p-4 border-b border-charcoal-600/40" style="background: linear-gradient(180deg, rgba(255,95,31,0.12), transparent);">
+      <div class="relative w-10 h-10 rounded-full bg-gradient-to-br from-neon to-neon-soft flex items-center justify-center flex-shrink-0">
+        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63" />
+        </svg>
+        <span class="absolute -bottom-0.5 -end-0.5 w-3 h-3 rounded-full bg-emerald-400 border-2 border-charcoal-800" aria-hidden="true"></span>
+      </div>
+      <div class="flex-1 min-w-0">
+        <div class="text-white font-bold text-sm" data-i18n="chat.name">העוזר של HandyMan</div>
+        <div class="text-emerald-400 text-[11px] font-medium" data-i18n="chat.status">זמין · מענה תוך שניות</div>
+      </div>
+      <button
+        type="button"
+        id="chat-close"
+        aria-label="סגור צ'אט"
+        class="flex items-center justify-center w-9 h-9 rounded-full hover:bg-white/5 transition-colors focus:outline-none focus:ring-2 focus:ring-neon"
+      >
+        <svg class="w-4 h-4 text-neutral-400" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Messages -->
+    <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-3 bg-charcoal-900"></div>
+
+    <!-- Quick actions / Suggestions -->
+    <div id="chat-suggestions" class="px-4 pt-2 pb-3 flex flex-wrap gap-2 border-t border-charcoal-600/40 bg-charcoal-900"></div>
+
+    <!-- Input -->
+    <form id="chat-form" class="flex items-center gap-2 p-3 border-t border-charcoal-600/40 bg-charcoal-800">
+      <input
+        id="chat-input"
+        type="text"
+        autocomplete="off"
+        maxlength="200"
+        class="flex-1 bg-charcoal-700/60 border border-charcoal-500 rounded-full px-4 py-2.5 text-white placeholder-neutral-500 text-sm focus:outline-none focus:border-neon focus:bg-charcoal-700 transition-colors"
+        placeholder="כתוב הודעה..."
+        data-i18n-attr="placeholder:chat.input.ph"
+      />
+      <button
+        type="submit"
+        id="chat-send"
+        aria-label="שלח"
+        class="flex items-center justify-center w-10 h-10 rounded-full bg-neon hover:bg-neon-soft text-white transition-colors flex-shrink-0 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-charcoal-800"
+      >
+        <svg class="w-4 h-4 nav-arrow" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.125A59.769 59.769 0 0121.485 12 59.768 59.768 0 013.27 20.875L5.999 12zm0 0h7.5" />
+        </svg>
+      </button>
+    </form>
+
+    <!-- WhatsApp handover -->
+    <a
+      href="https://wa.me/972587600505"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="flex items-center justify-center gap-2 py-2.5 text-xs font-bold text-emerald-300 hover:text-white bg-emerald-500/10 hover:bg-emerald-500/20 transition-colors border-t border-charcoal-600/40"
+    >
+      <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      <span data-i18n="chat.handover">או המשך שיחה אנושית בוואטסאפ</span>
+    </a>
+  </div>
 
   <!-- ════════════════════════════════════════════════════
        NAVBAR
@@ -1080,24 +1294,96 @@
           <rect x="705" y="105" width="40" height="75"/>
         </g>
 
-        <!-- Azrieli Towers (signature TLV) -->
-        <g stroke="rgba(255,95,31,0.45)" stroke-width="1" fill="url(#skylineGrad)">
-          <!-- Triangle -->
-          <path d="M780,180 L820,30 L860,180 Z"/>
-          <!-- Circle (rounded) -->
-          <path d="M880,180 L880,55 Q880,40 895,32 L915,28 Q930,32 930,52 L930,180 Z"/>
-          <!-- Square -->
-          <rect x="950" y="50" width="48" height="130"/>
+        <!-- ═══ Azrieli Center — 3 towers + shared mall podium ═══ -->
+
+        <!-- Shared Azrieli Mall podium (the low base connecting all 3 towers) -->
+        <g fill="url(#skylineGrad)" stroke="rgba(255,95,31,0.5)" stroke-width="0.7">
+          <path d="M765,180 L765,160 Q765,156 769,156 L971,156 Q975,156 975,160 L975,180 Z"/>
+        </g>
+        <line x1="767" y1="160" x2="973" y2="160" stroke="rgba(255,95,31,0.3)" stroke-width="0.4"/>
+
+        <!-- ── Triangle Tower (169m, ~90% of round) ── -->
+        <g fill="url(#skylineGrad)" stroke="rgba(255,95,31,0.55)" stroke-width="1">
+          <!-- Body: rectangular base + sharp pyramidal top -->
+          <polygon points="775,156 775,42 795,22 815,42 815,156"/>
+        </g>
+        <!-- Triangle window grid -->
+        <g stroke="rgba(255,95,31,0.22)" stroke-width="0.4" fill="none">
+          <line x1="780" y1="156" x2="780" y2="46"/>
+          <line x1="787" y1="156" x2="787" y2="40"/>
+          <line x1="795" y1="156" x2="795" y2="24"/>
+          <line x1="803" y1="156" x2="803" y2="40"/>
+          <line x1="810" y1="156" x2="810" y2="46"/>
+        </g>
+        <!-- Triangle horizontal floor lines -->
+        <g stroke="rgba(255,95,31,0.13)" stroke-width="0.4" fill="none">
+          <line x1="775" y1="60"  x2="815" y2="60"/>
+          <line x1="775" y1="90"  x2="815" y2="90"/>
+          <line x1="775" y1="120" x2="815" y2="120"/>
         </g>
 
-        <!-- Antennas/spires on Azrieli -->
-        <g stroke="rgba(255,95,31,0.6)" stroke-width="1" fill="none" stroke-linecap="round">
-          <line x1="820" y1="30" x2="820" y2="14"/>
-          <line x1="905" y1="28" x2="905" y2="14"/>
-          <line x1="974" y1="50" x2="974" y2="34"/>
-          <circle cx="820" cy="14" r="1.5" fill="rgba(255,95,31,0.8)"/>
-          <circle cx="974" cy="34" r="1.5" fill="rgba(255,95,31,0.8)"/>
+        <!-- ── Round Tower (187m — TALLEST, cylindrical with rounded dome top) ── -->
+        <g fill="url(#skylineGrad)" stroke="rgba(255,95,31,0.6)" stroke-width="1">
+          <path d="M838,156 L838,28 Q838,10 868,8 Q898,10 898,28 L898,156 Z"/>
         </g>
+        <!-- Famous observation deck ring (around floor 49 in real life) -->
+        <g fill="rgba(255,95,31,0.12)" stroke="rgba(255,95,31,0.5)" stroke-width="0.5">
+          <rect x="835" y="38" width="66" height="4"/>
+        </g>
+        <!-- Round vertical window bands -->
+        <g stroke="rgba(255,95,31,0.25)" stroke-width="0.4" fill="none">
+          <line x1="848" y1="156" x2="848" y2="30"/>
+          <line x1="858" y1="156" x2="858" y2="20"/>
+          <line x1="868" y1="156" x2="868" y2="12"/>
+          <line x1="878" y1="156" x2="878" y2="20"/>
+          <line x1="888" y1="156" x2="888" y2="30"/>
+        </g>
+        <!-- Round horizontal floor lines -->
+        <g stroke="rgba(255,95,31,0.13)" stroke-width="0.4" fill="none">
+          <line x1="839" y1="60"  x2="897" y2="60"/>
+          <line x1="839" y1="80"  x2="897" y2="80"/>
+          <line x1="839" y1="100" x2="897" y2="100"/>
+          <line x1="839" y1="120" x2="897" y2="120"/>
+          <line x1="839" y1="140" x2="897" y2="140"/>
+        </g>
+
+        <!-- ── Square Tower (154m — shortest, flat-top with crown) ── -->
+        <g fill="url(#skylineGrad)" stroke="rgba(255,95,31,0.55)" stroke-width="1">
+          <rect x="920" y="50" width="50" height="106"/>
+          <!-- Mechanical penthouse / antenna crown -->
+          <rect x="928" y="42" width="34" height="8"/>
+          <rect x="940" y="36" width="10" height="6"/>
+        </g>
+        <!-- Square window grid -->
+        <g stroke="rgba(255,95,31,0.22)" stroke-width="0.4" fill="none">
+          <line x1="930" y1="156" x2="930" y2="50"/>
+          <line x1="940" y1="156" x2="940" y2="50"/>
+          <line x1="950" y1="156" x2="950" y2="50"/>
+          <line x1="960" y1="156" x2="960" y2="50"/>
+        </g>
+        <g stroke="rgba(255,95,31,0.13)" stroke-width="0.4" fill="none">
+          <line x1="920" y1="75"  x2="970" y2="75"/>
+          <line x1="920" y1="100" x2="970" y2="100"/>
+          <line x1="920" y1="125" x2="970" y2="125"/>
+          <line x1="920" y1="150" x2="970" y2="150"/>
+        </g>
+
+        <!-- Antennas / spires with glow -->
+        <g stroke="rgba(255,95,31,0.7)" stroke-width="1" fill="none" stroke-linecap="round" class="skyline-spire">
+          <line x1="795" y1="22" x2="795" y2="8"/>
+          <line x1="868" y1="8"  x2="868" y2="-1"/>
+          <line x1="945" y1="36" x2="945" y2="20"/>
+        </g>
+        <!-- Aviation warning lights (blinking) -->
+        <circle cx="795" cy="8" r="1.5" fill="rgba(255,95,31,1)" class="skyline-light"/>
+        <circle cx="868" cy="0" r="1.5" fill="rgba(255,95,31,1)" class="skyline-light-2"/>
+        <!-- Extra warning light on Shalom Tower roof -->
+        <circle cx="565" cy="25" r="1.2" fill="rgba(255,95,31,0.9)" class="skyline-light-2"/>
+        <!-- Radar pulse on the square Azrieli antenna -->
+        <circle cx="945" cy="20" r="1.5" fill="rgba(255,95,31,0.9)" class="skyline-radio"/>
+
+        <!-- "AZRIELI" tiny label on the mall podium -->
+        <text x="870" y="170" text-anchor="middle" fill="rgba(255,95,31,0.45)" font-family="monospace" font-size="6" letter-spacing="1">AZRIELI</text>
 
         <!-- More towers -->
         <g fill="url(#skylineGrad)" stroke="rgba(255,255,255,0.12)" stroke-width="0.5">
@@ -1128,16 +1414,28 @@
           <path d="M1232,158 Q1222,151 1217,153 M1232,158 Q1242,151 1247,153 M1232,158 Q1228,146 1226,141 M1232,158 Q1236,146 1238,141"/>
         </g>
 
-        <!-- Window dots (lit up) -->
-        <g fill="rgba(255,200,140,0.5)">
-          <rect x="555" y="90" width="2" height="2"/>
-          <rect x="565" y="120" width="2" height="2"/>
-          <rect x="575" y="140" width="2" height="2"/>
-          <rect x="965" y="80" width="2" height="2"/>
-          <rect x="975" y="110" width="2" height="2"/>
-          <rect x="985" y="135" width="2" height="2"/>
-          <rect x="1075" y="95" width="2" height="2"/>
-          <rect x="1095" y="130" width="2" height="2"/>
+        <!-- Window dots (twinkling lights) -->
+        <g fill="rgba(255,200,140,1)">
+          <rect x="555" y="90"  width="2" height="2" class="skyline-window-a"/>
+          <rect x="565" y="120" width="2" height="2" class="skyline-window-b"/>
+          <rect x="575" y="140" width="2" height="2" class="skyline-window-c"/>
+          <rect x="965" y="80"  width="2" height="2" class="skyline-window-d"/>
+          <rect x="975" y="110" width="2" height="2" class="skyline-window-a"/>
+          <rect x="985" y="135" width="2" height="2" class="skyline-window-b"/>
+          <rect x="1075" y="95"  width="2" height="2" class="skyline-window-c"/>
+          <rect x="1095" y="130" width="2" height="2" class="skyline-window-d"/>
+
+          <!-- Extra windows for more life -->
+          <rect x="445" y="110" width="2" height="2" class="skyline-window-b"/>
+          <rect x="460" y="140" width="2" height="2" class="skyline-window-d"/>
+          <rect x="625" y="125" width="2" height="2" class="skyline-window-a"/>
+          <rect x="675" y="100" width="2" height="2" class="skyline-window-c"/>
+          <rect x="715" y="140" width="2" height="2" class="skyline-window-b"/>
+          <rect x="1020" y="110" width="2" height="2" class="skyline-window-c"/>
+          <rect x="1145" y="120" width="2" height="2" class="skyline-window-d"/>
+          <rect x="1190" y="115" width="2" height="2" class="skyline-window-a"/>
+          <rect x="1300" y="155" width="2" height="2" class="skyline-window-b"/>
+          <rect x="1370" y="160" width="2" height="2" class="skyline-window-d"/>
         </g>
       </svg>
 
@@ -1438,7 +1736,7 @@
             </div>
             <h3 class="relative text-2xl font-bold text-white tracking-tight mb-3" data-i18n="why.1.title">תגובה מיידית</h3>
             <p class="text-neutral-400 leading-relaxed" data-i18n="why.1.desc">
-              שירות 7 ימים בשבוע, 08:00 עד 22:00. וואטסאפ פתוח, מענה אישי. לא פוקחים – לא נעלמים.
+              שירות 7 ימים בשבוע, 08:00 עד 22:00. וואטסאפ פתוח, מענה אישי. עונים מהר ולא נעלמים.
             </p>
           </div>
 
@@ -2203,7 +2501,9 @@
         'hero.fixing': 'מתקנים את', 'hero.tlv': 'תל אביב', 'hero.dot': '.', 'hero.style': 'בסטייל.',
         'hero.subtitle': 'הנדימן מקצועי. שירות פרימיום.<br/><span class="text-neutral-500">אפס כאב ראש.</span>',
         'hero.cta.wa': 'התחל בוואטסאפ', 'hero.scroll': 'גלול',
-        'fab.message': 'שלח הודעה',
+        'fab.message': 'יש שאלה? שאל אותי',
+        'chat.name': 'העוזר של HandyMan', 'chat.status': 'זמין · מענה תוך שניות', 'chat.input.ph': 'כתוב הודעה...',
+        'chat.handover': 'או המשך שיחה אנושית בוואטסאפ',
         'services.label': 'השירותים', 'services.title1': 'כל מה שהבית צריך.', 'services.title2': 'בשיחה אחת.',
         'svc.furniture.title': 'רהיטים ונגרות', 'svc.furniture.desc': 'ספות, שולחנות, כסאות, רהיטי עתיקה. הרכבה ותיקון של כל פריט – מ-IKEA ועד נגרות עדינה.',
         'svc.doors.title': 'דלתות ומנעולים', 'svc.doors.desc': 'ידיות, צירים, זכוכיות.',
@@ -2213,7 +2513,7 @@
         'svc.electronics.title': 'אלקטרוניקה', 'svc.electronics.desc': 'סטריאו, תיקוני TV.',
         'svc.antique.title': 'שיפוץ רהיטים', 'svc.antique.desc': 'תיקון וחידוש לרהיטים ישנים.',
         'why.label': 'למה אנחנו', 'why.title1': 'שלוש סיבות.', 'why.title2': 'אפס פשרות.',
-        'why.1.title': 'תגובה מיידית', 'why.1.desc': 'שירות 7 ימים בשבוע, 08:00 עד 22:00. וואטסאפ פתוח, מענה אישי. לא פוקחים – לא נעלמים.',
+        'why.1.title': 'תגובה מיידית', 'why.1.desc': 'שירות 7 ימים בשבוע, 08:00 עד 22:00. וואטסאפ פתוח, מענה אישי. עונים מהר ולא נעלמים.',
         'why.2.title': 'מחיר שקוף', 'why.2.desc': 'מחיר הוגן, ידוע מראש. שולחים תמונה – מקבלים הצעה. בלי תמחור על מקום, בלי הפתעות.',
         'why.3.title': 'עוזבים נקי', 'why.3.desc': 'מגיעים עם כל הציוד, אוספים אחרי עצמנו. הבית נשאר כמו שמצאנו אותו – רק שעובד.',
         'rev.label': 'לקוחות', 'rev.title1': 'מה אומרים', 'rev.title2': 'בתל אביב.',
@@ -2261,7 +2561,9 @@
         'hero.fixing': 'Fixing', 'hero.tlv': 'Tel Aviv', 'hero.dot': '.', 'hero.style': 'In style.',
         'hero.subtitle': 'Professional handyman. Premium service.<br/><span class="text-neutral-500">Zero hassle.</span>',
         'hero.cta.wa': 'Start on WhatsApp', 'hero.scroll': 'scroll',
-        'fab.message': 'Message us',
+        'fab.message': 'Got a question? Ask me',
+        'chat.name': 'HandyMan Assistant', 'chat.status': 'Online · replies in seconds', 'chat.input.ph': 'Type a message...',
+        'chat.handover': 'Or continue with a human on WhatsApp',
         'services.label': 'SERVICES', 'services.title1': 'Everything your home needs.', 'services.title2': 'In one call.',
         'svc.furniture.title': 'Furniture & Carpentry', 'svc.furniture.desc': 'Sofas, tables, chairs, antiques. Assembly and repair of every piece — from IKEA to fine carpentry.',
         'svc.doors.title': 'Doors & Locks', 'svc.doors.desc': 'Handles, hinges, glass.',
@@ -2319,7 +2621,9 @@
         'hero.fixing': 'On répare', 'hero.tlv': 'Tel Aviv', 'hero.dot': '.', 'hero.style': 'Avec style.',
         'hero.subtitle': 'Bricoleur professionnel. Service premium.<br/><span class="text-neutral-500">Zéro tracas.</span>',
         'hero.cta.wa': 'Démarrer sur WhatsApp', 'hero.scroll': 'défiler',
-        'fab.message': 'Écrivez-nous',
+        'fab.message': 'Une question ? Demandez',
+        'chat.name': 'Assistant HandyMan', 'chat.status': 'En ligne · répond en secondes', 'chat.input.ph': 'Écrivez un message...',
+        'chat.handover': 'Ou continuez avec un humain sur WhatsApp',
         'services.label': 'SERVICES', 'services.title1': 'Tout ce dont la maison a besoin.', 'services.title2': "En un seul appel.",
         'svc.furniture.title': 'Meubles & Menuiserie', 'svc.furniture.desc': "Canapés, tables, chaises, antiquités. Montage et réparation — d'IKEA à la menuiserie fine.",
         'svc.doors.title': 'Portes & Serrures', 'svc.doors.desc': 'Poignées, charnières, vitres.',
@@ -2377,7 +2681,9 @@
         'hero.fixing': 'Чиним', 'hero.tlv': 'Тель-Авив', 'hero.dot': '.', 'hero.style': 'Со стилем.',
         'hero.subtitle': 'Профессиональный мастер. Премиум-сервис.<br/><span class="text-neutral-500">Никаких хлопот.</span>',
         'hero.cta.wa': 'Начать в WhatsApp', 'hero.scroll': 'листать',
-        'fab.message': 'Написать',
+        'fab.message': 'Есть вопрос? Спросите',
+        'chat.name': 'Ассистент HandyMan', 'chat.status': 'На связи · ответ за секунды', 'chat.input.ph': 'Напишите сообщение...',
+        'chat.handover': 'Или продолжите с человеком в WhatsApp',
         'services.label': 'УСЛУГИ', 'services.title1': 'Всё, что нужно дому.', 'services.title2': 'Одним звонком.',
         'svc.furniture.title': 'Мебель и столярка', 'svc.furniture.desc': 'Диваны, столы, стулья, антиквариат. Сборка и ремонт — от IKEA до тонкой столярки.',
         'svc.doors.title': 'Двери и замки', 'svc.doors.desc': 'Ручки, петли, стёкла.',
@@ -2435,7 +2741,9 @@
         'hero.fixing': 'Arreglando', 'hero.tlv': 'Tel Aviv', 'hero.dot': '.', 'hero.style': 'Con estilo.',
         'hero.subtitle': 'Manitas profesional. Servicio premium.<br/><span class="text-neutral-500">Cero molestias.</span>',
         'hero.cta.wa': 'Empezar por WhatsApp', 'hero.scroll': 'desplazar',
-        'fab.message': 'Escríbenos',
+        'fab.message': '¿Pregunta? Pregúntame',
+        'chat.name': 'Asistente HandyMan', 'chat.status': 'En línea · responde en segundos', 'chat.input.ph': 'Escribe un mensaje...',
+        'chat.handover': 'O sigue con un humano por WhatsApp',
         'services.label': 'SERVICIOS', 'services.title1': 'Todo lo que tu casa necesita.', 'services.title2': 'En una llamada.',
         'svc.furniture.title': 'Muebles y Carpintería', 'svc.furniture.desc': 'Sofás, mesas, sillas, antigüedades. Montaje y reparación — de IKEA a carpintería fina.',
         'svc.doors.title': 'Puertas y Cerraduras', 'svc.doors.desc': 'Tiradores, bisagras, vidrios.',
@@ -2632,6 +2940,291 @@
       try { if (localStorage.getItem(THEME_KEY)) return; } catch(_) {}
       setTheme(e.matches ? 'light' : 'dark');
     });
+
+    /* ═══════════════════════════════════════════════════
+       ░ AI CHATBOT
+       ░
+       ░ Optional: paste your free Gemini API key below to enable
+       ░ smart AI responses. Without a key, the bot uses canned
+       ░ Q&A from QUICK_ACTIONS plus auto-handover to WhatsApp.
+       ░
+       ░ 1. Get a free key at https://aistudio.google.com/apikey
+       ░ 2. In Google Cloud Console restrict the key to your domain
+       ░    (HTTP referrer: handymantlv.com/*) — important!
+       ░ 3. Paste below
+       ═══════════════════════════════════════════════════ */
+    const GEMINI_API_KEY = "";
+    const WA_NUMBER = "972587600505";
+
+    const QUICK_ACTIONS = {
+      he: [
+        { q: 'שעות פעילות?',     a: 'אנחנו פעילים כל יום, 08:00 עד 22:00. שלח/י הודעה ונענה תוך דקות.' },
+        { q: 'אילו שירותים יש?', a: 'תיקון רהיטים ונגרות, דלתות ומנעולים, חשמל קל, תליית טלוויזיה, גבס וצבע, ועוד. מה אתם צריכים?' },
+        { q: 'אזורי שירות?',     a: 'כל תל אביב יפו — מצפון ישן ועד יפו העתיקה. אין תוספת נסיעה לשכונות מרכזיות.' },
+        { q: 'מחירים?',          a: 'כל עבודה מתומחרת לגופה. שלח/י תיאור או תמונה ונחזור עם הצעת מחיר ללא התחייבות.' },
+        { q: 'איך מזמינים?',     a: '3 צעדים: 1) שלחו תיאור או תמונה. 2) מקבלים הצעת מחיר. 3) קובעים תור. אפשר להמשיך עכשיו בוואטסאפ.' }
+      ],
+      en: [
+        { q: 'Hours?',          a: "We're open every day 8:00–22:00. Drop a message and we'll reply within minutes." },
+        { q: 'What services?',  a: 'Furniture repair & assembly, doors & locks, light electrical, TV mounting, walls/paint, and more. What do you need?' },
+        { q: 'Service area?',   a: 'All of Tel Aviv-Yafo — from Old North to Old Jaffa. No travel surcharge for central neighborhoods.' },
+        { q: 'Pricing?',        a: 'Every job is priced individually. Send a description or photo and we will reply with a no-obligation quote.' },
+        { q: 'How to book?',    a: '3 steps: 1) Send description/photo. 2) Get a quote. 3) Pick a time. Want to continue on WhatsApp now?' }
+      ],
+      fr: [
+        { q: 'Horaires ?',      a: 'Ouverts tous les jours 8h–22h. Envoyez un message et nous répondons en quelques minutes.' },
+        { q: 'Services ?',      a: "Réparation de meubles, portes & serrures, petite électricité, fixation TV, plâtre & peinture, et plus. Que vous faut-il ?" },
+        { q: 'Zone ?',          a: 'Tout Tel Aviv-Yafo — du Vieux Nord à la Vieille Jaffa. Pas de frais pour les quartiers centraux.' },
+        { q: 'Tarifs ?',        a: 'Chaque travail est tarifé individuellement. Envoyez une description ou photo, nous répondons avec un devis sans engagement.' },
+        { q: 'Comment réserver ?', a: '3 étapes : 1) Envoyez description/photo. 2) Recevez un devis. 3) Choisissez une date. Continuer sur WhatsApp ?' }
+      ],
+      ru: [
+        { q: 'Часы работы?',    a: 'Работаем каждый день 08:00–22:00. Напишите — ответим за минуты.' },
+        { q: 'Какие услуги?',   a: 'Ремонт мебели, двери и замки, лёгкая электрика, монтаж ТВ, стены и краска, и многое другое. Что вам нужно?' },
+        { q: 'Зона работы?',    a: 'Весь Тель-Авив-Яффо — от Цафон Яшан до Старой Яффы. Без доплаты за центральные районы.' },
+        { q: 'Цены?',           a: 'Каждая работа оценивается индивидуально. Пришлите описание или фото — пришлём смету без обязательств.' },
+        { q: 'Как заказать?',   a: '3 шага: 1) Пришлите описание/фото. 2) Получите смету. 3) Выберите время. Продолжить в WhatsApp?' }
+      ],
+      es: [
+        { q: '¿Horario?',       a: 'Abrimos todos los días 8:00–22:00. Envíanos un mensaje y respondemos en minutos.' },
+        { q: '¿Servicios?',     a: 'Reparación de muebles, puertas y cerraduras, electricidad ligera, montaje de TV, pared y pintura, y más. ¿Qué necesitas?' },
+        { q: '¿Zona?',          a: 'Todo Tel Aviv-Yafo — del Norte Antiguo a la Jaffa Vieja. Sin recargo en zonas centrales.' },
+        { q: '¿Precios?',       a: 'Cada trabajo se valora individualmente. Envía descripción o foto y respondemos con presupuesto sin compromiso.' },
+        { q: '¿Cómo reservar?', a: '3 pasos: 1) Envía descripción/foto. 2) Recibe presupuesto. 3) Elige hora. ¿Continuamos por WhatsApp?' }
+      ]
+    };
+
+    const SYSTEM_PROMPT = `You are the friendly AI assistant for "HandyMan TLV", a premium handyman service in Tel Aviv-Yafo, Israel.
+
+BUSINESS FACTS (use only these — do not invent):
+- WhatsApp / phone: +972-58-760-0505
+- Email: handyfix4u@gmail.com
+- Address: Ibn Gabirol 120, Tel Aviv-Yafo
+- Hours: 7 days a week, 08:00–22:00
+- Services: furniture repair & assembly (incl. antique restoration), doors & locks, light electrical (outlets, switches, lighting), TV & shelf mounting, walls / plaster / paint, blinds, stereo and TV electronics
+- Coverage: all of Tel Aviv-Yafo, no travel surcharge
+- Pricing: every job priced individually. Send photo/description on WhatsApp for a no-obligation quote.
+
+STYLE:
+- Warm, concise, 1–3 short sentences max.
+- Match the user's language exactly (Hebrew, English, French, Russian, or Spanish).
+- Don't invent prices, time slots, or other facts.
+- For booking, pricing, or anything that needs the human, suggest continuing on WhatsApp.
+- No markdown, no emoji, no bullet lists.
+- If asked anything outside HandyMan TLV's services, briefly redirect to what we offer.`;
+
+    const CHAT_TURN_LIMIT = 8;
+
+    /* ─── Chat State ──────────────────────────────────── */
+    let chatHistory = [];
+    let chatTurns = 0;
+
+    function chatLang() {
+      const l = (document.documentElement.lang || 'he').slice(0, 2);
+      return ['he','en','fr','ru','es'].includes(l) ? l : 'he';
+    }
+
+    function chatT(key) {
+      const dict = (window.I18N && window.I18N[chatLang()]) || {};
+      return dict[key];
+    }
+
+    function chatHandoverText() {
+      return ({
+        he: 'נראה שהסיפור שלך דורש בעל מקצוע אנושי. בוא/י נמשיך בוואטסאפ — תקבל/י מענה אישי.',
+        en: 'This sounds like a job for our human pro. Let\'s continue on WhatsApp — you\'ll get a personal reply.',
+        fr: 'On dirait un cas pour notre artisan humain. Continuons sur WhatsApp — réponse personnelle assurée.',
+        ru: 'Похоже, нужен наш мастер. Продолжим в WhatsApp — ответим лично.',
+        es: 'Esto suena para nuestro técnico humano. Sigamos por WhatsApp — respuesta personal.'
+      })[chatLang()];
+    }
+
+    function chatWelcomeText() {
+      return ({
+        he: 'שלום 👋 אני העוזר של HandyMan TLV. במה אפשר לעזור?',
+        en: "Hi 👋 I'm the HandyMan TLV assistant. How can I help?",
+        fr: "Salut 👋 Je suis l'assistant HandyMan TLV. Comment puis-je aider ?",
+        ru: 'Привет 👋 Я ассистент HandyMan TLV. Чем помочь?',
+        es: 'Hola 👋 Soy el asistente de HandyMan TLV. ¿En qué te ayudo?'
+      })[chatLang()];
+    }
+
+    /* ─── Chat Render ─────────────────────────────────── */
+    function escapeChat(s) {
+      return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    function appendMsg(role, text) {
+      const list = document.getElementById('chat-messages');
+      const wrap = document.createElement('div');
+      wrap.className = 'flex flex-col chat-msg ' + (role === 'user' ? 'items-end' : 'items-start');
+      const bubble = document.createElement('div');
+      bubble.className = role === 'user' ? 'chat-msg-user' : 'chat-msg-bot';
+      bubble.textContent = text;
+      wrap.appendChild(bubble);
+      list.appendChild(wrap);
+      list.scrollTop = list.scrollHeight;
+    }
+
+    function showTyping() {
+      const list = document.getElementById('chat-messages');
+      const wrap = document.createElement('div');
+      wrap.id = 'chat-typing-indicator';
+      wrap.className = 'flex chat-msg items-start';
+      wrap.innerHTML = '<div class="chat-typing"><span></span><span></span><span></span></div>';
+      list.appendChild(wrap);
+      list.scrollTop = list.scrollHeight;
+    }
+    function hideTyping() {
+      document.getElementById('chat-typing-indicator')?.remove();
+    }
+
+    function renderSuggestions() {
+      const wrap = document.getElementById('chat-suggestions');
+      const list = QUICK_ACTIONS[chatLang()] || QUICK_ACTIONS.he;
+      wrap.innerHTML = '';
+      list.forEach(item => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'chat-suggestion';
+        btn.textContent = item.q;
+        btn.addEventListener('click', () => handleQuickAction(item));
+        wrap.appendChild(btn);
+      });
+    }
+
+    function showWAHandover() {
+      const list = document.getElementById('chat-messages');
+      const wrap = document.createElement('div');
+      wrap.className = 'flex flex-col chat-msg items-start';
+      const txt = document.createElement('div');
+      txt.className = 'chat-msg-bot';
+      txt.textContent = chatHandoverText();
+      wrap.appendChild(txt);
+
+      const cta = document.createElement('a');
+      cta.href = 'https://wa.me/' + WA_NUMBER;
+      cta.target = '_blank';
+      cta.rel = 'noopener noreferrer';
+      cta.className = 'mt-2 inline-flex items-center gap-2 rounded-full px-4 py-2 text-white font-bold text-xs';
+      cta.style.cssText = 'background: linear-gradient(135deg,#25D366,#1DA851); box-shadow: 0 4px 16px rgba(37,211,102,0.3);';
+      const txtNode = ({ he:'המשך בוואטסאפ', en:'Continue on WhatsApp', fr:'Continuer sur WhatsApp', ru:'Перейти в WhatsApp', es:'Seguir en WhatsApp' })[chatLang()];
+      cta.innerHTML = '<svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg><span>' + escapeChat(txtNode) + '</span>';
+
+      wrap.appendChild(cta);
+      list.appendChild(wrap);
+      list.scrollTop = list.scrollHeight;
+    }
+
+    /* ─── Chat Logic ──────────────────────────────────── */
+    function handleQuickAction(item) {
+      appendMsg('user', item.q);
+      chatTurns++;
+      showTyping();
+      setTimeout(() => {
+        hideTyping();
+        appendMsg('bot', item.a);
+        if (chatTurns >= 2) showWAHandover();
+      }, 600);
+    }
+
+    async function callGemini(userMsg) {
+      const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + GEMINI_API_KEY;
+      chatHistory.push({ role: 'user', parts: [{ text: userMsg }] });
+      const body = {
+        systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
+        contents: chatHistory.slice(-10),
+        generationConfig: { temperature: 0.7, maxOutputTokens: 256, topP: 0.95 }
+      };
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      if (!res.ok) throw new Error('Gemini API error: ' + res.status);
+      const data = await res.json();
+      const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+      if (!reply) throw new Error('Empty response');
+      chatHistory.push({ role: 'model', parts: [{ text: reply }] });
+      return reply.trim();
+    }
+
+    async function handleUserInput(text) {
+      appendMsg('user', text);
+      chatTurns++;
+      showTyping();
+
+      try {
+        if (GEMINI_API_KEY) {
+          const reply = await callGemini(text);
+          hideTyping();
+          appendMsg('bot', reply);
+          if (chatTurns >= CHAT_TURN_LIMIT) showWAHandover();
+        } else {
+          // Canned mode — route to WhatsApp after 1 turn
+          await new Promise(r => setTimeout(r, 700));
+          hideTyping();
+          appendMsg('bot', chatHandoverText());
+          showWAHandover();
+        }
+      } catch (err) {
+        hideTyping();
+        appendMsg('bot', chatHandoverText());
+        showWAHandover();
+      }
+    }
+
+    /* ─── Wire up ─────────────────────────────────────── */
+    function initChatPanel() {
+      const list = document.getElementById('chat-messages');
+      list.innerHTML = '';
+      chatHistory = [];
+      chatTurns = 0;
+      appendMsg('bot', chatWelcomeText());
+      renderSuggestions();
+    }
+
+    document.getElementById('chat-fab')?.addEventListener('click', () => {
+      const panel = document.getElementById('chat-panel');
+      const wasHidden = panel.classList.contains('hidden');
+      panel.classList.toggle('hidden');
+      panel.classList.toggle('flex', wasHidden);
+      if (wasHidden) {
+        initChatPanel();
+        if (window.innerWidth < 640) document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+    });
+
+    document.getElementById('chat-close')?.addEventListener('click', () => {
+      const panel = document.getElementById('chat-panel');
+      panel.classList.add('hidden');
+      panel.classList.remove('flex');
+      document.body.style.overflow = '';
+    });
+
+    document.getElementById('chat-form')?.addEventListener('submit', e => {
+      e.preventDefault();
+      const input = document.getElementById('chat-input');
+      const text = input.value.trim();
+      if (!text) return;
+      input.value = '';
+      handleUserInput(text);
+    });
+
+    // Re-render suggestions when language changes
+    const _origSetLang = setLang;
+    setLang = function(lang) {
+      _origSetLang(lang);
+      const panel = document.getElementById('chat-panel');
+      if (panel && !panel.classList.contains('hidden')) {
+        renderSuggestions();
+      }
+    };
+
+    // Expose translations for chat helpers
+    window.I18N = I18N;
 
     /* ─── Top Bar (dismissible) ───────────────────────── */
     const topBar = document.getElementById('top-bar');
