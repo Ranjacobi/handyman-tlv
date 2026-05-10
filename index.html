@@ -4030,6 +4030,65 @@ STYLE:
     }
 
     let lastIntentId = null;
+    let chatLog = [];        // [{ role: 'user'|'bot', text }] — full transcript for WA handover
+    let chatTopics = new Set(); // intent IDs encountered
+
+    /* Build a concise summary of the conversation for WhatsApp prefill */
+    function buildWASummary() {
+      const userMsgs = chatLog.filter(m => m.role === 'user').map(m => m.text);
+      if (userMsgs.length === 0) return '';
+      const lang = chatLang();
+
+      // Cap each message and keep the last 6 to stay URL-safe
+      const trimmed = userMsgs.slice(-6).map(m =>
+        m.length > 220 ? m.slice(0, 220).trim() + '…' : m
+      );
+
+      const TOPIC_LABELS = {
+        door:       { he:'דלתות ומנעולים', en:'doors & locks', fr:'portes & serrures', ru:'двери и замки', es:'puertas y cerraduras' },
+        electrical: { he:'חשמל',           en:'electrical',    fr:'électricité',       ru:'электрика',     es:'electricidad' },
+        furniture:  { he:'הרכבת רהיטים',   en:'furniture',     fr:'meubles',           ru:'мебель',        es:'muebles' },
+        tv:         { he:'תליית טלוויזיה', en:'TV mounting',   fr:'fixation TV',       ru:'монтаж ТВ',     es:'montaje TV' },
+        paint:      { he:'גבס וצבע',       en:'walls & paint', fr:'plâtre & peinture', ru:'стены и краска',es:'paredes y pintura' },
+        plumbing:   { he:'אינסטלציה',      en:'plumbing',      fr:'plomberie',         ru:'сантехника',    es:'fontanería' },
+        blinds:     { he:'תריסים',         en:'blinds',        fr:'stores',            ru:'жалюзи',        es:'persianas' },
+        pricing:    { he:'תמחור',          en:'pricing',       fr:'tarif',             ru:'цены',          es:'precio' },
+        booking:    { he:'קביעת תור',      en:'booking',       fr:'rendez-vous',       ru:'запись',        es:'cita' },
+        hours:      { he:'שעות פעילות',    en:'hours',         fr:'horaires',          ru:'часы работы',   es:'horario' },
+        areas:      { he:'אזורי שירות',    en:'service area',  fr:'zone',              ru:'зона',          es:'zona' },
+        emergency:  { he:'דחוף',           en:'urgent',        fr:'urgent',            ru:'срочно',        es:'urgente' },
+      };
+      const topics = [...chatTopics]
+        .map(id => TOPIC_LABELS[id] && TOPIC_LABELS[id][lang])
+        .filter(Boolean);
+
+      const agent = (typeof CURRENT_AGENT !== 'undefined' && CURRENT_AGENT[lang]) || '';
+
+      const tmpl = ({
+        he: (msgs, tps, ag) =>
+          `שלום, שוחחתי באתר HandyMan TLV${ag ? ' עם ' + ag : ''}.\n` +
+          (tps.length ? `נושאים: ${tps.join(' · ')}\n` : '') +
+          `\nההודעות שלי בצ'אט:\n${msgs.map((m, i) => `${i + 1}. ${m}`).join('\n')}\n\nאשמח להמשיך מכאן. תודה!`,
+        en: (msgs, tps, ag) =>
+          `Hi, I was chatting on the HandyMan TLV site${ag ? ' with ' + ag : ''}.\n` +
+          (tps.length ? `Topics: ${tps.join(' · ')}\n` : '') +
+          `\nMy messages in chat:\n${msgs.map((m, i) => `${i + 1}. ${m}`).join('\n')}\n\nHappy to continue here. Thanks!`,
+        fr: (msgs, tps, ag) =>
+          `Bonjour, je discutais sur le site HandyMan TLV${ag ? ' avec ' + ag : ''}.\n` +
+          (tps.length ? `Sujets : ${tps.join(' · ')}\n` : '') +
+          `\nMes messages dans le chat :\n${msgs.map((m, i) => `${i + 1}. ${m}`).join('\n')}\n\nJe peux continuer ici. Merci !`,
+        ru: (msgs, tps, ag) =>
+          `Здравствуйте, общался на сайте HandyMan TLV${ag ? ' с ' + ag : ''}.\n` +
+          (tps.length ? `Темы: ${tps.join(' · ')}\n` : '') +
+          `\nМои сообщения в чате:\n${msgs.map((m, i) => `${i + 1}. ${m}`).join('\n')}\n\nГотов продолжить здесь. Спасибо!`,
+        es: (msgs, tps, ag) =>
+          `Hola, estuve chateando en el sitio HandyMan TLV${ag ? ' con ' + ag : ''}.\n` +
+          (tps.length ? `Temas: ${tps.join(' · ')}\n` : '') +
+          `\nMis mensajes en el chat:\n${msgs.map((m, i) => `${i + 1}. ${m}`).join('\n')}\n\nMe gustaría seguir por aquí. ¡Gracias!`,
+      })[lang] || (() => '');
+
+      return tmpl(trimmed, topics, agent);
+    }
 
     /* ─── Chat State ──────────────────────────────────── */
     let chatHistory = [];
@@ -4082,6 +4141,8 @@ STYLE:
       wrap.appendChild(bubble);
       list.appendChild(wrap);
       list.scrollTop = list.scrollHeight;
+      // Track for the WhatsApp summary
+      chatLog.push({ role, text });
     }
 
     function showTyping() {
@@ -4121,7 +4182,8 @@ STYLE:
       wrap.appendChild(txt);
 
       const cta = document.createElement('a');
-      cta.href = 'https://wa.me/' + WA_NUMBER;
+      const summary = buildWASummary();
+      cta.href = 'https://wa.me/' + WA_NUMBER + (summary ? '?text=' + encodeURIComponent(summary) : '');
       cta.target = '_blank';
       cta.rel = 'noopener noreferrer';
       cta.className = 'mt-2 inline-flex items-center gap-2 rounded-full px-4 py-2 text-white font-bold text-xs';
@@ -4138,9 +4200,14 @@ STYLE:
     function handleQuickAction(item) {
       appendMsg('user', item.q);
       chatTurns++;
+      // Auto-tag topic for the WhatsApp summary
+      const detected = detectIntent(item.q);
+      if (detected) {
+        chatTopics.add(detected.id);
+        lastIntentId = detected.id;
+      }
       setChatStatus('typing');
       showTyping();
-      // Variable delay (700–1300ms) so it feels human, not scripted
       const delay = 700 + Math.floor(Math.random() * 600);
       setTimeout(() => {
         hideTyping();
@@ -4201,6 +4268,7 @@ STYLE:
             reply = intent.responses[chatLang()] || intent.responses.en;
             suggestWA = !!intent.wa;
             lastIntentId = intent.id;
+            chatTopics.add(intent.id);
           } else {
             reply = fallbackResponse();
             suggestWA = chatTurns >= 3;
@@ -4252,6 +4320,8 @@ STYLE:
       chatHistory = [];
       chatTurns = 0;
       lastIntentId = null;
+      chatLog = [];
+      chatTopics = new Set();
 
       // Phase 1 — "Daniel is connecting..."
       setChatStatus('connecting');
