@@ -1007,6 +1007,7 @@
   >
     <span class="relative w-8 h-8 rounded-full overflow-hidden flex-shrink-0 ring-2 ring-white/30 bg-charcoal-700">
       <img
+        data-agent-photo
         src="https://randomuser.me/api/portraits/men/32.jpg"
         alt=""
         class="w-full h-full object-cover"
@@ -1014,7 +1015,7 @@
         loading="lazy"
         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
       />
-      <span class="hidden absolute inset-0 items-center justify-center bg-gradient-to-br from-white/30 to-white/10 text-white font-black">D</span>
+      <span data-agent-initial class="hidden absolute inset-0 items-center justify-center bg-gradient-to-br from-white/30 to-white/10 text-white font-black">D</span>
     </span>
     <span data-i18n="fab.message" class="leading-tight">דניאל זמין לשאלות</span>
     <!-- Notification dot -->
@@ -1038,6 +1039,7 @@
     <div class="flex items-center gap-3 p-4 border-b border-charcoal-600/40" style="background: linear-gradient(180deg, rgba(255,95,31,0.12), transparent);">
       <div class="relative w-11 h-11 rounded-full overflow-hidden flex-shrink-0 ring-2 ring-neon/40 bg-charcoal-700">
         <img
+          data-agent-photo
           src="https://randomuser.me/api/portraits/men/32.jpg"
           alt=""
           class="w-full h-full object-cover"
@@ -1045,7 +1047,7 @@
           loading="lazy"
           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
         />
-        <span class="hidden absolute inset-0 items-center justify-center bg-gradient-to-br from-neon to-neon-soft text-white font-black text-sm">D</span>
+        <span data-agent-initial class="hidden absolute inset-0 items-center justify-center bg-gradient-to-br from-neon to-neon-soft text-white font-black text-sm">D</span>
         <span class="absolute -bottom-0.5 -end-0.5 w-3.5 h-3.5 rounded-full bg-emerald-400 border-2 border-charcoal-800" aria-hidden="true"></span>
       </div>
       <div class="flex-1 min-w-0">
@@ -3447,6 +3449,74 @@
     const LANG_DIR = { he: 'rtl', en: 'ltr', fr: 'ltr', ru: 'ltr', es: 'ltr' };
     const STORAGE_KEY = 'handymantlv-lang';
 
+    /* ─── Agent Persona Pool (rotates per session) ────── */
+    const AGENT_POOL = [
+      { gender:'m', photo:'https://randomuser.me/api/portraits/men/32.jpg',
+        he:'דניאל', en:'Daniel', fr:'Daniel', ru:'Даниэль', es:'Daniel', initial:'D' },
+      { gender:'m', photo:'https://randomuser.me/api/portraits/men/52.jpg',
+        he:'תום',   en:'Tom',    fr:'Tom',    ru:'Том',     es:'Tom',    initial:'T' },
+      { gender:'m', photo:'https://randomuser.me/api/portraits/men/78.jpg',
+        he:'רון',   en:'Ron',    fr:'Ron',    ru:'Рон',     es:'Ron',    initial:'R' },
+      { gender:'m', photo:'https://randomuser.me/api/portraits/men/15.jpg',
+        he:'אדם',   en:'Adam',   fr:'Adam',   ru:'Адам',    es:'Adam',   initial:'A' },
+      { gender:'f', photo:'https://randomuser.me/api/portraits/women/44.jpg',
+        he:'שרה',   en:'Sarah',  fr:'Sarah',  ru:'Сара',    es:'Sara',   initial:'S' },
+      { gender:'f', photo:'https://randomuser.me/api/portraits/women/68.jpg',
+        he:'מאיה',  en:'Maya',   fr:'Maya',   ru:'Майя',    es:'Maya',   initial:'M' },
+      { gender:'f', photo:'https://randomuser.me/api/portraits/women/12.jpg',
+        he:'נועה',  en:'Noa',    fr:'Noa',    ru:'Ноа',     es:'Noa',    initial:'N' },
+      { gender:'f', photo:'https://randomuser.me/api/portraits/women/89.jpg',
+        he:'ליה',   en:'Lia',    fr:'Lia',    ru:'Лия',     es:'Lia',    initial:'L' },
+    ];
+
+    const CURRENT_AGENT = (function() {
+      try {
+        const saved = sessionStorage.getItem('handymantlv-agent');
+        if (saved) {
+          const a = JSON.parse(saved);
+          if (AGENT_POOL.some(x => x.photo === a.photo)) return a;
+        }
+      } catch(_) {}
+      const pick = AGENT_POOL[Math.floor(Math.random() * AGENT_POOL.length)];
+      try { sessionStorage.setItem('handymantlv-agent', JSON.stringify(pick)); } catch(_) {}
+      return pick;
+    })();
+
+    /* Inject agent's name into the i18n dictionary BEFORE setLang runs */
+    (function injectAgent() {
+      const fabSuffix = {
+        he: ' זמין/ה לשאלות',
+        en: ' · here to help',
+        fr: ' · disponible',
+        ru: ' · отвечает',
+        es: ' · disponible',
+      };
+      // Hebrew has gendered "available". Use feminine form if female agent.
+      if (CURRENT_AGENT.gender === 'f') fabSuffix.he = ' זמינה לשאלות';
+      else fabSuffix.he = ' זמין לשאלות';
+
+      ['he','en','fr','ru','es'].forEach(lang => {
+        if (!I18N[lang]) return;
+        I18N[lang]['chat.name']    = CURRENT_AGENT[lang] + ' · HandyMan TLV';
+        I18N[lang]['fab.message']  = CURRENT_AGENT[lang] + fabSuffix[lang];
+      });
+    })();
+
+    /* Apply agent's photo + initial to all matching DOM elements */
+    function applyAgentPhotos() {
+      document.querySelectorAll('[data-agent-photo]').forEach(img => {
+        img.src = CURRENT_AGENT.photo;
+      });
+      document.querySelectorAll('[data-agent-initial]').forEach(el => {
+        el.textContent = CURRENT_AGENT.initial;
+      });
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', applyAgentPhotos);
+    } else {
+      applyAgentPhotos();
+    }
+
     function setLang(lang) {
       const dict = I18N[lang];
       if (!dict) return;
@@ -3695,22 +3765,24 @@ STYLE:
 
     function chatHandoverText() {
       return ({
-        he: 'בוא נמשיך בוואטסאפ.',
-        en: "Let's continue on WhatsApp.",
-        fr: 'Continuons sur WhatsApp.',
-        ru: 'Продолжим в WhatsApp.',
-        es: 'Sigamos por WhatsApp.'
+        he: 'אולי נמשיך את השיחה בוואטסאפ?',
+        en: 'Want to continue this on WhatsApp?',
+        fr: 'On continue sur WhatsApp ?',
+        ru: 'Может, продолжим в WhatsApp?',
+        es: '¿Seguimos en WhatsApp?'
       })[chatLang()];
     }
 
     function chatWelcomeText() {
+      const lang = chatLang();
+      const name = (typeof CURRENT_AGENT !== 'undefined' && CURRENT_AGENT[lang]) || 'Daniel';
       return ({
-        he: 'היי, אני דניאל מ-HandyMan TLV. במה אפשר לעזור?',
-        en: "Hi, I'm Daniel from HandyMan TLV. How can I help?",
-        fr: "Salut, je suis Daniel de HandyMan TLV. Comment puis-je aider ?",
-        ru: 'Привет! Я Даниэль из HandyMan TLV. Чем помочь?',
-        es: 'Hola, soy Daniel de HandyMan TLV. ¿En qué te ayudo?'
-      })[chatLang()];
+        he: `היי, אני ${name} מ-HandyMan TLV. במה אפשר לעזור?`,
+        en: `Hi, I'm ${name} from HandyMan TLV. How can I help?`,
+        fr: `Salut, je suis ${name} de HandyMan TLV. Comment puis-je aider ?`,
+        ru: `Привет! Я ${name} из HandyMan TLV. Чем помочь?`,
+        es: `Hola, soy ${name} de HandyMan TLV. ¿En qué te ayudo?`
+      })[lang];
     }
 
     /* ─── Chat Render ─────────────────────────────────── */
