@@ -347,10 +347,21 @@
       /* Cover the hero like object-fit:cover (16:9) */
       width: max(100vw, 177.78vh);
       height: max(56.25vw, 100vh);
-      transform: translate(-50%, -50%);
+      /* Scale up so YouTube's bottom UI bar overflows the visible area */
+      transform: translate(-50%, -50%) scale(1.35);
+      transform-origin: center center;
       border: 0;
       pointer-events: none;
       filter: grayscale(30%) contrast(1.05) brightness(0.7);
+    }
+    /* Hard click-shield: even if iframe pointer-events were enabled by browser
+       quirks, this transparent overlay catches every event. */
+    .hero-yt-wrap::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: transparent;
+      pointer-events: none; /* keep clicks flowing to hero CTAs */
+      z-index: 1;
     }
 
     /* Aurora-like rotating gradient layers */
@@ -4869,9 +4880,24 @@ STYLE:
               setTimeout(() => wrap.classList.add('is-ready'), 800);
             },
             onStateChange(e) {
-              // YouTube resets playback rate when looping — re-apply each time
-              if (e.data === YT.PlayerState.PLAYING && rate !== 1) {
-                try { e.target.setPlaybackRate(rate); } catch (_) {}
+              // Manual restart on ENDED to avoid YouTube's end-screen UI flash
+              if (e.data === YT.PlayerState.ENDED) {
+                try { e.target.seekTo(0, true); e.target.playVideo(); } catch (_) {}
+              }
+              // Restart ~1s before natural end as well (belt + suspenders)
+              if (e.data === YT.PlayerState.PLAYING) {
+                if (rate !== 1) { try { e.target.setPlaybackRate(rate); } catch (_) {} }
+                try {
+                  const dur = e.target.getDuration();
+                  if (dur && dur > 5) {
+                    clearTimeout(wrap._loopTimer);
+                    const cur = e.target.getCurrentTime();
+                    const msUntilLoop = Math.max(0, (dur - 1 - cur) * 1000 / rate);
+                    wrap._loopTimer = setTimeout(() => {
+                      try { e.target.seekTo(0, true); e.target.playVideo(); } catch (_) {}
+                    }, msUntilLoop);
+                  }
+                } catch (_) {}
               }
             },
           },
