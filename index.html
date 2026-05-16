@@ -323,27 +323,160 @@
     ::-webkit-scrollbar-track { background: #0E0E10; }
     ::-webkit-scrollbar-thumb { background: #FF5F1F; border-radius: 3px; }
 
-    /* ─── Hero video & overlay ─────────────────────────── */
-    .hero-video {
+    /* ─── Hero animated canvas (zero external deps) ───── */
+    .hero-canvas {
       position: absolute; inset: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      object-position: 50% 40%;
-      filter: grayscale(35%) contrast(1.08) brightness(0.62) saturate(0.95);
+      overflow: hidden;
+      background:
+        radial-gradient(80% 60% at 50% 50%, #1a0e08 0%, #0d0805 35%, #08080A 70%, #050507 100%);
+    }
+
+    /* YouTube background iframe — fills hero like object-fit:cover */
+    .hero-yt-wrap {
+      position: absolute; inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0;
+      transition: opacity 1.2s ease 0.3s;
+    }
+    .hero-yt-wrap.is-ready { opacity: 0.85; }
+    .hero-yt-wrap iframe {
+      position: absolute;
+      top: 50%; left: 50%;
+      /* Cover the hero like object-fit:cover (16:9) */
+      width: max(100vw, 177.78vh);
+      height: max(56.25vw, 100vh);
+      transform: translate(-50%, -50%);
+      border: 0;
+      pointer-events: none;
+      filter: grayscale(30%) contrast(1.05) brightness(0.7);
+    }
+
+    /* Aurora-like rotating gradient layers */
+    .hero-aurora {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.55;
       will-change: transform;
-      animation: hero-ken-burns 28s ease-in-out infinite alternate;
+      mix-blend-mode: screen;
     }
-    @keyframes hero-ken-burns {
-      0%   { transform: scale(1.04) translate3d(0,0,0); }
-      50%  { transform: scale(1.12) translate3d(-1.2%, -1%, 0); }
-      100% { transform: scale(1.08) translate3d(1%, -1.5%, 0); }
+    .hero-aurora-1 {
+      width: 70%; height: 70%;
+      top: -10%; left: -10%;
+      background: radial-gradient(closest-side, rgba(255,95,31,0.6), rgba(255,95,31,0) 70%);
+      animation: hero-aurora-drift 22s ease-in-out infinite alternate;
     }
-    @media (max-width: 640px) {
-      .hero-video { object-position: 50% 50%; }
+    .hero-aurora-2 {
+      width: 60%; height: 60%;
+      bottom: -15%; right: -10%;
+      background: radial-gradient(closest-side, rgba(255,180,80,0.45), rgba(255,180,80,0) 70%);
+      animation: hero-aurora-drift 28s ease-in-out infinite alternate-reverse;
+      animation-delay: -8s;
     }
+    .hero-aurora-3 {
+      width: 50%; height: 50%;
+      top: 30%; left: 35%;
+      background: radial-gradient(closest-side, rgba(255,255,255,0.08), rgba(255,255,255,0) 70%);
+      animation: hero-aurora-drift 18s ease-in-out infinite alternate;
+      animation-delay: -4s;
+    }
+    @keyframes hero-aurora-drift {
+      0%   { transform: translate3d(0,0,0) scale(1); }
+      50%  { transform: translate3d(6%, -4%, 0) scale(1.1); }
+      100% { transform: translate3d(-3%, 5%, 0) scale(0.95); }
+    }
+
+    /* Floating sparks (40 randomized dots) */
+    .hero-sparks {
+      position: absolute; inset: 0;
+      pointer-events: none;
+    }
+    .hero-sparks span {
+      position: absolute;
+      width: 2px; height: 2px;
+      border-radius: 50%;
+      background: #FF8347;
+      box-shadow: 0 0 6px rgba(255,131,71,0.8);
+      opacity: 0;
+      animation: hero-spark-rise linear infinite;
+    }
+    @keyframes hero-spark-rise {
+      0%   { opacity: 0; transform: translateY(0) scale(0.6); }
+      15%  { opacity: 0.9; }
+      85%  { opacity: 0.7; }
+      100% { opacity: 0; transform: translateY(-110vh) scale(1); }
+    }
+    /* 40 sparks with distinct positions/durations/delays */
+    .hero-sparks span:nth-child(1)  { left: 4%;  bottom: -10px; animation-duration: 14s; animation-delay: -2s;  }
+    .hero-sparks span:nth-child(2)  { left: 9%;  bottom: -10px; animation-duration: 18s; animation-delay: -7s;  }
+    .hero-sparks span:nth-child(3)  { left: 14%; bottom: -10px; animation-duration: 16s; animation-delay: -12s; }
+    .hero-sparks span:nth-child(4)  { left: 18%; bottom: -10px; animation-duration: 20s; animation-delay: -4s;  }
+    .hero-sparks span:nth-child(5)  { left: 23%; bottom: -10px; animation-duration: 13s; animation-delay: -9s;  }
+    .hero-sparks span:nth-child(6)  { left: 27%; bottom: -10px; animation-duration: 19s; animation-delay: -1s;  }
+    .hero-sparks span:nth-child(7)  { left: 32%; bottom: -10px; animation-duration: 15s; animation-delay: -11s; }
+    .hero-sparks span:nth-child(8)  { left: 37%; bottom: -10px; animation-duration: 22s; animation-delay: -6s;  }
+    .hero-sparks span:nth-child(9)  { left: 41%; bottom: -10px; animation-duration: 17s; animation-delay: -3s;  }
+    .hero-sparks span:nth-child(10) { left: 46%; bottom: -10px; animation-duration: 21s; animation-delay: -14s; }
+    .hero-sparks span:nth-child(11) { left: 51%; bottom: -10px; animation-duration: 14s; animation-delay: -5s;  }
+    .hero-sparks span:nth-child(12) { left: 56%; bottom: -10px; animation-duration: 18s; animation-delay: -10s; }
+    .hero-sparks span:nth-child(13) { left: 60%; bottom: -10px; animation-duration: 16s; animation-delay: -8s;  }
+    .hero-sparks span:nth-child(14) { left: 65%; bottom: -10px; animation-duration: 20s; animation-delay: -2s;  }
+    .hero-sparks span:nth-child(15) { left: 70%; bottom: -10px; animation-duration: 13s; animation-delay: -13s; }
+    .hero-sparks span:nth-child(16) { left: 74%; bottom: -10px; animation-duration: 19s; animation-delay: -0s;  }
+    .hero-sparks span:nth-child(17) { left: 79%; bottom: -10px; animation-duration: 15s; animation-delay: -11s; }
+    .hero-sparks span:nth-child(18) { left: 83%; bottom: -10px; animation-duration: 22s; animation-delay: -6s;  }
+    .hero-sparks span:nth-child(19) { left: 88%; bottom: -10px; animation-duration: 17s; animation-delay: -4s;  }
+    .hero-sparks span:nth-child(20) { left: 93%; bottom: -10px; animation-duration: 21s; animation-delay: -9s;  }
+    .hero-sparks span:nth-child(21) { left: 2%;  bottom: -10px; animation-duration: 16s; animation-delay: -7s;  background: #FFD088; }
+    .hero-sparks span:nth-child(22) { left: 11%; bottom: -10px; animation-duration: 20s; animation-delay: -3s;  background: #FFD088; }
+    .hero-sparks span:nth-child(23) { left: 21%; bottom: -10px; animation-duration: 14s; animation-delay: -12s; background: #FFD088; }
+    .hero-sparks span:nth-child(24) { left: 30%; bottom: -10px; animation-duration: 18s; animation-delay: -5s;  background: #FFD088; }
+    .hero-sparks span:nth-child(25) { left: 39%; bottom: -10px; animation-duration: 16s; animation-delay: -10s; background: #FFD088; }
+    .hero-sparks span:nth-child(26) { left: 48%; bottom: -10px; animation-duration: 22s; animation-delay: -1s;  background: #FFD088; }
+    .hero-sparks span:nth-child(27) { left: 57%; bottom: -10px; animation-duration: 15s; animation-delay: -8s;  background: #FFD088; }
+    .hero-sparks span:nth-child(28) { left: 66%; bottom: -10px; animation-duration: 19s; animation-delay: -4s;  background: #FFD088; }
+    .hero-sparks span:nth-child(29) { left: 76%; bottom: -10px; animation-duration: 17s; animation-delay: -11s; background: #FFD088; }
+    .hero-sparks span:nth-child(30) { left: 85%; bottom: -10px; animation-duration: 21s; animation-delay: -6s;  background: #FFD088; }
+    .hero-sparks span:nth-child(31) { left: 7%;  bottom: -10px; animation-duration: 24s; animation-delay: -2s;  width: 3px; height: 3px; }
+    .hero-sparks span:nth-child(32) { left: 16%; bottom: -10px; animation-duration: 26s; animation-delay: -9s;  width: 3px; height: 3px; }
+    .hero-sparks span:nth-child(33) { left: 25%; bottom: -10px; animation-duration: 25s; animation-delay: -5s;  width: 3px; height: 3px; }
+    .hero-sparks span:nth-child(34) { left: 34%; bottom: -10px; animation-duration: 23s; animation-delay: -13s; width: 3px; height: 3px; }
+    .hero-sparks span:nth-child(35) { left: 44%; bottom: -10px; animation-duration: 27s; animation-delay: -0s;  width: 3px; height: 3px; }
+    .hero-sparks span:nth-child(36) { left: 53%; bottom: -10px; animation-duration: 25s; animation-delay: -7s;  width: 3px; height: 3px; }
+    .hero-sparks span:nth-child(37) { left: 62%; bottom: -10px; animation-duration: 24s; animation-delay: -10s; width: 3px; height: 3px; }
+    .hero-sparks span:nth-child(38) { left: 72%; bottom: -10px; animation-duration: 26s; animation-delay: -3s;  width: 3px; height: 3px; }
+    .hero-sparks span:nth-child(39) { left: 81%; bottom: -10px; animation-duration: 23s; animation-delay: -12s; width: 3px; height: 3px; }
+    .hero-sparks span:nth-child(40) { left: 91%; bottom: -10px; animation-duration: 25s; animation-delay: -8s;  width: 3px; height: 3px; }
+
+    /* Subtle CRT-style scanlines */
+    .hero-scanlines {
+      position: absolute; inset: 0;
+      pointer-events: none;
+      background-image: repeating-linear-gradient(
+        180deg,
+        transparent 0,
+        transparent 3px,
+        rgba(0,0,0,0.04) 3px,
+        rgba(0,0,0,0.04) 4px
+      );
+      opacity: 0.5;
+      mix-blend-mode: multiply;
+    }
+
+    /* Reduced motion: stop the moving aurora + sparks */
     @media (prefers-reduced-motion: reduce) {
-      .hero-video { animation: none; }
+      .hero-aurora, .hero-sparks span { animation: none !important; }
+      .hero-sparks span { opacity: 0.4; }
     }
+
+    /* Light mode: invert/soften the hero so text stays readable on white-ish bg */
+    html.light .hero-canvas {
+      background:
+        radial-gradient(80% 60% at 50% 50%, #1a0e08 0%, #0d0805 35%, #181820 70%, #2a2a30 100%);
+    }
+    html.light .hero-scanlines { opacity: 0.2; }
 
     /* Spotlight that follows the cursor over the hero video */
     .hero-spotlight {
@@ -1484,43 +1617,40 @@
       class="relative min-h-dvh flex items-center justify-center overflow-hidden grain"
       aria-label="כותרת ראשית"
     >
-      <!-- Video background with art direction (mobile-portrait vs desktop-landscape) -->
-      <video
-        class="hero-video"
-        id="hero-video"
-        autoplay muted loop playsinline preload="metadata"
-        disablepictureinpicture disableremoteplayback
-        poster="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080'%3E%3Cdefs%3E%3CradialGradient id='g' cx='50%25' cy='60%25'%3E%3Cstop offset='0%25' stop-color='%23241510'/%3E%3Cstop offset='100%25' stop-color='%2308080A'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='1920' height='1080' fill='url(%23g)'/%3E%3C/svg%3E"
-        aria-hidden="true"
-      >
-        <!-- Desktop landscape (wider hero) — 4K + HD fallback -->
-        <source media="(min-width: 768px)" src="https://videos.pexels.com/video-files/4480534/4480534-uhd_2560_1440_25fps.mp4" type="video/mp4" />
-        <source media="(min-width: 768px)" src="https://videos.pexels.com/video-files/4480534/4480534-hd_1280_720_25fps.mp4" type="video/mp4" />
-        <!-- Mobile portrait (tighter close-up of hand-work) — lighter HD -->
-        <source src="https://videos.pexels.com/video-files/4480534/4480534-hd_1280_720_25fps.mp4" type="video/mp4" />
-      </video>
+      <!-- ─── Cinematic backdrop (YouTube + CSS fallback layers) ─── -->
+      <div class="hero-canvas" aria-hidden="true">
+        <!-- ═══════════════════════════════════════════════════
+             OPTIONAL: YouTube background video
+             ═══════════════════════════════════════════════════
+             To enable:
+               1. Upload your handyman footage to YouTube (any privacy)
+               2. Open the video, copy the ID from the URL
+                  Example: youtube.com/watch?v=eMRYYUuxSKE  →  ID = eMRYYUuxSKE
+               3. Replace YT_VIDEO_ID below with that ID
+               4. The CSS fallback layers below stay as a backup
+                  in case YouTube is blocked or slow to load
+        ═══════════════════════════════════════════════════ -->
+        <div class="hero-yt-wrap" id="hero-yt-wrap" data-video-id="Eay7798Tb7c"></div>
+
+        <!-- CSS-only fallback animated layers -->
+        <div class="hero-aurora hero-aurora-1"></div>
+        <div class="hero-aurora hero-aurora-2"></div>
+        <div class="hero-aurora hero-aurora-3"></div>
+        <!-- Drifting sparks (40 dots with random delays) -->
+        <div class="hero-sparks">
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <!-- Subtle scan lines -->
+        <div class="hero-scanlines"></div>
+      </div>
 
       <div class="hero-overlay" aria-hidden="true"></div>
       <div class="hero-grid" aria-hidden="true"></div>
-      <!-- Mouse/touch spotlight that follows the cursor over the video -->
+      <!-- Mouse/touch spotlight that follows the cursor -->
       <div class="hero-spotlight" aria-hidden="true"></div>
-
-      <!-- Mute/unmute / play-pause control (subtle, lower-corner) -->
-      <button
-        id="hero-video-toggle"
-        type="button"
-        aria-label="Pause video background"
-        class="absolute bottom-4 end-4 z-20 w-9 h-9 rounded-full bg-charcoal-950/70 border border-white/15 text-white/70 hover:text-white hover:border-neon/50 transition-colors flex items-center justify-center backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-neon"
-        style="-webkit-backdrop-filter: blur(8px);"
-      >
-        <svg id="hero-video-pause-icon" class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <rect x="6" y="5" width="4" height="14" rx="1"/>
-          <rect x="14" y="5" width="4" height="14" rx="1"/>
-        </svg>
-        <svg id="hero-video-play-icon" class="hidden w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M8 5v14l11-7z"/>
-        </svg>
-      </button>
 
       <!-- Ambient glows -->
       <div class="blob bg-neon w-96 h-96 -top-20 -right-20" aria-hidden="true"></div>
@@ -4697,17 +4827,56 @@ STYLE:
       window.addEventListener('load', initMap);
     }
 
-    /* ─── Hero video: spotlight + pause/play ──────────── */
+    /* ─── Hero: YouTube background iframe (if VIDEO_ID is set) ─── */
     (function () {
-      const hero = document.querySelector('section[aria-label="כותרת ראשית"], section.hero-pattern');
+      const wrap = document.getElementById('hero-yt-wrap');
+      if (!wrap) return;
+      const id = wrap.dataset.videoId;
+      // Only inject if user has filled in a real ID (not the placeholder)
+      if (!id || id === 'YT_VIDEO_ID' || id.length < 8) return;
+
+      // Build the YouTube embed URL with background-video friendly params
+      const params = new URLSearchParams({
+        autoplay: '1',
+        mute: '1',
+        loop: '1',
+        playlist: id,        // required for loop to work
+        controls: '0',
+        showinfo: '0',
+        modestbranding: '1',
+        playsinline: '1',
+        disablekb: '1',
+        fs: '0',
+        iv_load_policy: '3',
+        rel: '0',
+      });
+      const iframe = document.createElement('iframe');
+      iframe.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(id) + '?' + params;
+      iframe.title = 'Background video';
+      iframe.setAttribute('frameborder', '0');
+      iframe.setAttribute('allow', 'autoplay; encrypted-media; picture-in-picture');
+      iframe.setAttribute('allowfullscreen', '');
+      iframe.setAttribute('loading', 'lazy');
+      iframe.setAttribute('aria-hidden', 'true');
+      iframe.setAttribute('tabindex', '-1');
+      wrap.appendChild(iframe);
+
+      // Fade-in once YouTube has had a moment to start playing
+      iframe.addEventListener('load', () => {
+        setTimeout(() => wrap.classList.add('is-ready'), 800);
+      });
+
+      // Respect reduced-motion: don't load video at all
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        wrap.removeChild(iframe);
+      }
+    })();
+
+    /* ─── Hero: cursor-follow spotlight (no video needed) ── */
+    (function () {
       const heroSection = document.querySelector('.hero-pattern');
-      const video = document.getElementById('hero-video');
-      const toggle = document.getElementById('hero-video-toggle');
-      const pauseIcon = document.getElementById('hero-video-pause-icon');
-      const playIcon  = document.getElementById('hero-video-play-icon');
       if (!heroSection) return;
 
-      // Spotlight follows cursor over the hero
       const updateSpot = (x, y) => {
         const r = heroSection.getBoundingClientRect();
         heroSection.style.setProperty('--hero-mx', (x - r.left) + 'px');
@@ -4728,43 +4897,6 @@ STYLE:
       heroSection.addEventListener('touchend', () => {
         setTimeout(() => heroSection.classList.remove('is-hover'), 800);
       }, { passive: true });
-
-      // Pause/play toggle
-      toggle?.addEventListener('click', () => {
-        if (!video) return;
-        if (video.paused) {
-          video.play().catch(() => {});
-          pauseIcon?.classList.remove('hidden');
-          playIcon?.classList.add('hidden');
-          toggle.setAttribute('aria-label', 'Pause video background');
-        } else {
-          video.pause();
-          pauseIcon?.classList.add('hidden');
-          playIcon?.classList.remove('hidden');
-          toggle.setAttribute('aria-label', 'Play video background');
-        }
-      });
-
-      // Pause video when hero is off-screen (saves CPU/battery)
-      if ('IntersectionObserver' in window && video) {
-        const io = new IntersectionObserver(entries => {
-          entries.forEach(e => {
-            if (e.intersectionRatio > 0.1) {
-              if (video.paused && !toggle?.dataset.userPaused) video.play().catch(() => {});
-            } else {
-              if (!video.paused) video.pause();
-            }
-          });
-        }, { threshold: [0, 0.1, 0.5] });
-        io.observe(heroSection);
-      }
-
-      // Respect reduce-motion: stop the looping video for users who prefer less motion
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches && video) {
-        video.pause();
-        pauseIcon?.classList.add('hidden');
-        playIcon?.classList.remove('hidden');
-      }
     })();
 
     /* ─── Skyline mouse/touch spotlight ───────────────── */
