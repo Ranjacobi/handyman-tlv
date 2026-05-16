@@ -4963,7 +4963,7 @@ STYLE:
           el.textContent = current;
           phase = 'pause-full';
           phaseStart = performance.now();
-          return scheduleNext(7500);
+          return scheduleNext(16000);
         }
 
         const words = WORDS[lang];
@@ -4992,7 +4992,7 @@ STYLE:
           const next = words[idx];
           if (current.length >= next.length) {
             phase = 'pause-full';
-            return scheduleNext(7500);
+            return scheduleNext(16000);
           }
           current = next.slice(0, current.length + 1);
           el.textContent = current;
