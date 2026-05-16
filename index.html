@@ -1630,7 +1630,7 @@
                4. The CSS fallback layers below stay as a backup
                   in case YouTube is blocked or slow to load
         ═══════════════════════════════════════════════════ -->
-        <div class="hero-yt-wrap" id="hero-yt-wrap" data-video-id="Eay7798Tb7c"></div>
+        <div class="hero-yt-wrap" id="hero-yt-wrap" data-video-id="Eay7798Tb7c" data-playback-rate="1.75"></div>
 
         <!-- CSS-only fallback animated layers -->
         <div class="hero-aurora hero-aurora-1"></div>
@@ -4827,48 +4827,72 @@ STYLE:
       window.addEventListener('load', initMap);
     }
 
-    /* ─── Hero: YouTube background iframe (if VIDEO_ID is set) ─── */
+    /* ─── Hero: YouTube background via IFrame API (controls playback rate) ─── */
     (function () {
       const wrap = document.getElementById('hero-yt-wrap');
       if (!wrap) return;
       const id = wrap.dataset.videoId;
-      // Only inject if user has filled in a real ID (not the placeholder)
       if (!id || id === 'YT_VIDEO_ID' || id.length < 8) return;
 
-      // Build the YouTube embed URL with background-video friendly params
-      const params = new URLSearchParams({
-        autoplay: '1',
-        mute: '1',
-        loop: '1',
-        playlist: id,        // required for loop to work
-        controls: '0',
-        showinfo: '0',
-        modestbranding: '1',
-        playsinline: '1',
-        disablekb: '1',
-        fs: '0',
-        iv_load_policy: '3',
-        rel: '0',
-      });
-      const iframe = document.createElement('iframe');
-      iframe.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(id) + '?' + params;
-      iframe.title = 'Background video';
-      iframe.setAttribute('frameborder', '0');
-      iframe.setAttribute('allow', 'autoplay; encrypted-media; picture-in-picture');
-      iframe.setAttribute('allowfullscreen', '');
-      iframe.setAttribute('loading', 'lazy');
-      iframe.setAttribute('aria-hidden', 'true');
-      iframe.setAttribute('tabindex', '-1');
-      wrap.appendChild(iframe);
+      // Respect reduced-motion — skip the video entirely
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-      // Fade-in once YouTube has had a moment to start playing
-      iframe.addEventListener('load', () => {
-        setTimeout(() => wrap.classList.add('is-ready'), 800);
-      });
+      const rate = parseFloat(wrap.dataset.playbackRate) || 1;
 
-      // Respect reduced-motion: don't load video at all
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        wrap.removeChild(iframe);
+      // Container that the IFrame API will replace with the actual iframe
+      const playerDiv = document.createElement('div');
+      playerDiv.id = 'hero-yt-player';
+      wrap.appendChild(playerDiv);
+
+      function createPlayer() {
+        new YT.Player('hero-yt-player', {
+          videoId: id,
+          host: 'https://www.youtube-nocookie.com',
+          playerVars: {
+            autoplay: 1,
+            mute: 1,
+            loop: 1,
+            playlist: id,         // required for loop to work
+            controls: 0,
+            showinfo: 0,
+            modestbranding: 1,
+            playsinline: 1,
+            disablekb: 1,
+            fs: 0,
+            iv_load_policy: 3,
+            rel: 0,
+          },
+          events: {
+            onReady(e) {
+              try { if (rate !== 1) e.target.setPlaybackRate(rate); } catch (_) {}
+              try { e.target.mute(); e.target.playVideo(); } catch (_) {}
+              setTimeout(() => wrap.classList.add('is-ready'), 800);
+            },
+            onStateChange(e) {
+              // YouTube resets playback rate when looping — re-apply each time
+              if (e.data === YT.PlayerState.PLAYING && rate !== 1) {
+                try { e.target.setPlaybackRate(rate); } catch (_) {}
+              }
+            },
+          },
+        });
+      }
+
+      // Load the YT IFrame API (idempotent across reloads)
+      if (window.YT && window.YT.Player) {
+        createPlayer();
+      } else {
+        const prevReady = window.onYouTubeIframeAPIReady;
+        window.onYouTubeIframeAPIReady = function () {
+          if (typeof prevReady === 'function') { try { prevReady(); } catch (_) {} }
+          createPlayer();
+        };
+        if (!document.querySelector('script[src*="iframe_api"]')) {
+          const tag = document.createElement('script');
+          tag.src = 'https://www.youtube.com/iframe_api';
+          tag.async = true;
+          document.head.appendChild(tag);
+        }
       }
     })();
 
