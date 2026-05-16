@@ -323,24 +323,14 @@
     ::-webkit-scrollbar-track { background: #0E0E10; }
     ::-webkit-scrollbar-thumb { background: #FF5F1F; border-radius: 3px; }
 
-    /* ─── Hero headline: typewriter caret ─── */
-    #hero-caret {
+    /* ─── Hero headline: fading word swap (no layout jumps) ─── */
+    #hero-cycle {
       display: inline-block;
-      width: 0.06em;
-      height: 0.85em;
-      margin-inline-start: 0.05em;
-      background: #FF5F1F;
-      vertical-align: -0.08em;
-      animation: caret-blink 1s steps(1) infinite;
-      box-shadow: 0 0 18px rgba(255,95,31,0.7);
-      border-radius: 2px;
+      transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.16,1,0.3,1);
     }
-    @keyframes caret-blink {
-      0%, 49%   { opacity: 1; }
-      50%, 100% { opacity: 0; }
-    }
+    #hero-caret { display: none; } /* caret no longer needed with fade swap */
     @media (prefers-reduced-motion: reduce) {
-      #hero-caret { animation: none; opacity: 0; }
+      #hero-cycle { transition: none; }
     }
 
     /* ─── Floating tools: physics-driven (JS-controlled transform) ─── */
@@ -4927,7 +4917,7 @@ STYLE:
       window.addEventListener('load', initMap);
     }
 
-    /* ─── Hero: word cycling typewriter in headline ─── */
+    /* ─── Hero: word cycling with fade-swap (no layout jumps) ─── */
     (function () {
       const el = document.getElementById('hero-cycle');
       if (!el) return;
@@ -4941,71 +4931,47 @@ STYLE:
         es: ['Tel Aviv', 'tu casa', 'todo', 'Florentin', 'Ramat Aviv', 'Neve Tzedek', 'Jaffa'],
       };
 
+      const HOLD_MS  = 16000; // time each word stays fully visible
+      const FADE_MS  = 450;   // fade in/out duration
+
       let timer = null;
       let currentLang = null;
       let idx = 0;
-      let current = '';
-      let phase = 'pause-full'; // pause-full → erasing → pause-empty → typing
-      let phaseStart = 0;
 
       function getLang() {
         const l = (document.documentElement.lang || 'he').slice(0, 2);
         return WORDS[l] ? l : 'he';
       }
 
-      function tick() {
+      function swap() {
         const lang = getLang();
         if (lang !== currentLang) {
-          // Language switched — restart from first word of new language
           currentLang = lang;
           idx = 0;
-          current = WORDS[lang][0];
-          el.textContent = current;
-          phase = 'pause-full';
-          phaseStart = performance.now();
-          return scheduleNext(16000);
         }
-
         const words = WORDS[lang];
-        const target = words[idx];
 
-        if (phase === 'pause-full') {
-          phase = 'erasing';
-          phaseStart = performance.now();
-          return scheduleNext(55);
-        }
-        if (phase === 'erasing') {
-          if (current.length === 0) {
-            phase = 'pause-empty';
-            return scheduleNext(280);
-          }
-          current = current.slice(0, -1);
-          el.textContent = current;
-          return scheduleNext(55);
-        }
-        if (phase === 'pause-empty') {
-          idx = (idx + 1) % words.length;
-          phase = 'typing';
-          return scheduleNext(85);
-        }
-        if (phase === 'typing') {
-          const next = words[idx];
-          if (current.length >= next.length) {
-            phase = 'pause-full';
-            return scheduleNext(16000);
-          }
-          current = next.slice(0, current.length + 1);
-          el.textContent = current;
-          return scheduleNext(85 + Math.random() * 60);
-        }
-      }
-      function scheduleNext(ms) {
+        // Fade out (without erasing — word stays visible until invisible)
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(-6px)';
+
         clearTimeout(timer);
-        timer = setTimeout(tick, ms);
+        timer = setTimeout(() => {
+          // Swap the whole word in one shot (no letter-by-letter)
+          idx = (idx + 1) % words.length;
+          el.textContent = words[idx];
+          // Briefly slide-in from below
+          el.style.transform = 'translateY(6px)';
+          // Force a reflow so the next transition starts fresh
+          void el.offsetWidth;
+          el.style.opacity = '1';
+          el.style.transform = 'translateY(0)';
+          timer = setTimeout(swap, HOLD_MS);
+        }, FADE_MS);
       }
 
-      // Kick off after a small delay so initial i18n + render settle
-      setTimeout(tick, 1500);
+      // Initial hold — let user read the first word for a full HOLD_MS
+      setTimeout(swap, HOLD_MS);
     })();
 
     /* ─── Hero: floating tools with mouse-repel physics ─── */
