@@ -329,6 +329,14 @@
       overflow: hidden;
       background:
         radial-gradient(80% 60% at 50% 50%, #1a0e08 0%, #0d0805 35%, #08080A 70%, #050507 100%);
+      /* TO USE A STATIC HERO IMAGE INSTEAD:
+         1. Save image at /hero.jpg in repo root (1920×1080 recommended, < 250KB)
+         2. Uncomment the rule below:
+         background:
+           linear-gradient(rgba(8,8,10,0.55), rgba(8,8,10,0.85)),
+           url('/hero.jpg') center/cover no-repeat,
+           radial-gradient(80% 60% at 50% 50%, #1a0e08 0%, #08080A 70%);
+      */
     }
 
     /* YouTube background iframe — fills hero like object-fit:cover */
@@ -1628,22 +1636,11 @@
       class="relative min-h-dvh flex items-center justify-center overflow-hidden grain"
       aria-label="כותרת ראשית"
     >
-      <!-- ─── Cinematic backdrop (YouTube + CSS fallback layers) ─── -->
+      <!-- ─── Cinematic CSS backdrop (zero external deps, instant load) ─── -->
       <div class="hero-canvas" aria-hidden="true">
-        <!-- ═══════════════════════════════════════════════════
-             OPTIONAL: YouTube background video
-             ═══════════════════════════════════════════════════
-             To enable:
-               1. Upload your handyman footage to YouTube (any privacy)
-               2. Open the video, copy the ID from the URL
-                  Example: youtube.com/watch?v=eMRYYUuxSKE  →  ID = eMRYYUuxSKE
-               3. Replace YT_VIDEO_ID below with that ID
-               4. The CSS fallback layers below stay as a backup
-                  in case YouTube is blocked or slow to load
-        ═══════════════════════════════════════════════════ -->
-        <div class="hero-yt-wrap" id="hero-yt-wrap" data-video-id="Eay7798Tb7c" data-playback-rate="1.75"></div>
-
-        <!-- CSS-only fallback animated layers -->
+        <!-- Optional: drop in a high-quality static image by setting a CSS
+             background on .hero-canvas (see commented rule in <style>).
+             By default, the aurora + sparks animation runs alone. -->
         <div class="hero-aurora hero-aurora-1"></div>
         <div class="hero-aurora hero-aurora-2"></div>
         <div class="hero-aurora hero-aurora-3"></div>
@@ -4838,91 +4835,7 @@ STYLE:
       window.addEventListener('load', initMap);
     }
 
-    /* ─── Hero: YouTube background via IFrame API (controls playback rate) ─── */
-    (function () {
-      const wrap = document.getElementById('hero-yt-wrap');
-      if (!wrap) return;
-      const id = wrap.dataset.videoId;
-      if (!id || id === 'YT_VIDEO_ID' || id.length < 8) return;
-
-      // Respect reduced-motion — skip the video entirely
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-      const rate = parseFloat(wrap.dataset.playbackRate) || 1;
-
-      // Container that the IFrame API will replace with the actual iframe
-      const playerDiv = document.createElement('div');
-      playerDiv.id = 'hero-yt-player';
-      wrap.appendChild(playerDiv);
-
-      function createPlayer() {
-        new YT.Player('hero-yt-player', {
-          videoId: id,
-          host: 'https://www.youtube-nocookie.com',
-          playerVars: {
-            autoplay: 1,
-            mute: 1,
-            loop: 1,
-            playlist: id,         // required for loop to work
-            controls: 0,
-            showinfo: 0,
-            modestbranding: 1,
-            playsinline: 1,
-            disablekb: 1,
-            fs: 0,
-            iv_load_policy: 3,
-            rel: 0,
-          },
-          events: {
-            onReady(e) {
-              try { if (rate !== 1) e.target.setPlaybackRate(rate); } catch (_) {}
-              try { e.target.mute(); e.target.playVideo(); } catch (_) {}
-              setTimeout(() => wrap.classList.add('is-ready'), 800);
-            },
-            onStateChange(e) {
-              // Manual restart on ENDED to avoid YouTube's end-screen UI flash
-              if (e.data === YT.PlayerState.ENDED) {
-                try { e.target.seekTo(0, true); e.target.playVideo(); } catch (_) {}
-              }
-              // Restart ~1s before natural end as well (belt + suspenders)
-              if (e.data === YT.PlayerState.PLAYING) {
-                if (rate !== 1) { try { e.target.setPlaybackRate(rate); } catch (_) {} }
-                try {
-                  const dur = e.target.getDuration();
-                  if (dur && dur > 5) {
-                    clearTimeout(wrap._loopTimer);
-                    const cur = e.target.getCurrentTime();
-                    const msUntilLoop = Math.max(0, (dur - 1 - cur) * 1000 / rate);
-                    wrap._loopTimer = setTimeout(() => {
-                      try { e.target.seekTo(0, true); e.target.playVideo(); } catch (_) {}
-                    }, msUntilLoop);
-                  }
-                } catch (_) {}
-              }
-            },
-          },
-        });
-      }
-
-      // Load the YT IFrame API (idempotent across reloads)
-      if (window.YT && window.YT.Player) {
-        createPlayer();
-      } else {
-        const prevReady = window.onYouTubeIframeAPIReady;
-        window.onYouTubeIframeAPIReady = function () {
-          if (typeof prevReady === 'function') { try { prevReady(); } catch (_) {} }
-          createPlayer();
-        };
-        if (!document.querySelector('script[src*="iframe_api"]')) {
-          const tag = document.createElement('script');
-          tag.src = 'https://www.youtube.com/iframe_api';
-          tag.async = true;
-          document.head.appendChild(tag);
-        }
-      }
-    })();
-
-    /* ─── Hero: cursor-follow spotlight (no video needed) ── */
+    /* ─── Hero: cursor-follow spotlight ─── */
     (function () {
       const heroSection = document.querySelector('.hero-pattern');
       if (!heroSection) return;
