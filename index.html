@@ -4963,7 +4963,7 @@ STYLE:
           el.textContent = current;
           phase = 'pause-full';
           phaseStart = performance.now();
-          return scheduleNext(2400);
+          return scheduleNext(7500);
         }
 
         const words = WORDS[lang];
@@ -4972,31 +4972,31 @@ STYLE:
         if (phase === 'pause-full') {
           phase = 'erasing';
           phaseStart = performance.now();
-          return scheduleNext(45);
+          return scheduleNext(55);
         }
         if (phase === 'erasing') {
           if (current.length === 0) {
             phase = 'pause-empty';
-            return scheduleNext(180);
+            return scheduleNext(280);
           }
           current = current.slice(0, -1);
           el.textContent = current;
-          return scheduleNext(45);
+          return scheduleNext(55);
         }
         if (phase === 'pause-empty') {
           idx = (idx + 1) % words.length;
           phase = 'typing';
-          return scheduleNext(70);
+          return scheduleNext(85);
         }
         if (phase === 'typing') {
           const next = words[idx];
           if (current.length >= next.length) {
             phase = 'pause-full';
-            return scheduleNext(2200);
+            return scheduleNext(7500);
           }
           current = next.slice(0, current.length + 1);
           el.textContent = current;
-          return scheduleNext(70 + Math.random() * 50);
+          return scheduleNext(85 + Math.random() * 60);
         }
       }
       function scheduleNext(ms) {
